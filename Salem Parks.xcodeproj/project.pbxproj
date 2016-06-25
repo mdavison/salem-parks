@@ -1,0 +1,569 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9012FF1E1D1C997A0075519C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF1D1D1C997A0075519C /* AppDelegate.swift */; };
+		9012FF231D1C997A0075519C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9012FF211D1C997A0075519C /* Main.storyboard */; };
+		9012FF261D1C997A0075519C /* Salem_Parks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF241D1C997A0075519C /* Salem_Parks.xcdatamodeld */; };
+		9012FF281D1C997A0075519C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9012FF271D1C997A0075519C /* Assets.xcassets */; };
+		9012FF2B1D1C997A0075519C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9012FF291D1C997A0075519C /* LaunchScreen.storyboard */; };
+		9012FF361D1C997B0075519C /* Salem_ParksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF351D1C997B0075519C /* Salem_ParksTests.swift */; };
+		9012FF411D1C997B0075519C /* Salem_ParksUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF401D1C997B0075519C /* Salem_ParksUITests.swift */; };
+		9012FF501D1C99BE0075519C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9012FF4F1D1C99BE0075519C /* CloudKit.framework */; };
+		9012FF521D1CA5290075519C /* ParksListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF511D1CA5290075519C /* ParksListTableViewController.swift */; };
+		9012FF541D1CA55D0075519C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF531D1CA55D0075519C /* MapViewController.swift */; };
+		9012FF571D1CA67C0075519C /* Park+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF551D1CA67C0075519C /* Park+CoreDataProperties.swift */; };
+		9012FF581D1CA67C0075519C /* Park.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF561D1CA67C0075519C /* Park.swift */; };
+		9012FF5C1D1CA7DD0075519C /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF5B1D1CA7DD0075519C /* CoreDataStack.swift */; };
+		9012FF5E1D1D70630075519C /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF5D1D1D70630075519C /* GlobalVariables.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9012FF321D1C997B0075519C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9012FF121D1C997A0075519C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9012FF191D1C997A0075519C;
+			remoteInfo = "Salem Parks";
+		};
+		9012FF3D1D1C997B0075519C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9012FF121D1C997A0075519C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9012FF191D1C997A0075519C;
+			remoteInfo = "Salem Parks";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9012FF1A1D1C997A0075519C /* Salem Parks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Salem Parks.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9012FF1D1D1C997A0075519C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9012FF221D1C997A0075519C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9012FF251D1C997A0075519C /* Salem_Parks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Salem_Parks.xcdatamodel; sourceTree = "<group>"; };
+		9012FF271D1C997A0075519C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9012FF2A1D1C997A0075519C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9012FF2C1D1C997A0075519C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9012FF311D1C997B0075519C /* Salem ParksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Salem ParksTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9012FF351D1C997B0075519C /* Salem_ParksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salem_ParksTests.swift; sourceTree = "<group>"; };
+		9012FF371D1C997B0075519C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9012FF3C1D1C997B0075519C /* Salem ParksUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Salem ParksUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9012FF401D1C997B0075519C /* Salem_ParksUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salem_ParksUITests.swift; sourceTree = "<group>"; };
+		9012FF421D1C997B0075519C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9012FF4E1D1C99BB0075519C /* Salem Parks.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Salem Parks.entitlements"; sourceTree = "<group>"; };
+		9012FF4F1D1C99BE0075519C /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		9012FF511D1CA5290075519C /* ParksListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParksListTableViewController.swift; sourceTree = "<group>"; };
+		9012FF531D1CA55D0075519C /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		9012FF551D1CA67C0075519C /* Park+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Park+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9012FF561D1CA67C0075519C /* Park.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Park.swift; sourceTree = "<group>"; };
+		9012FF5B1D1CA7DD0075519C /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		9012FF5D1D1D70630075519C /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9012FF171D1C997A0075519C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9012FF501D1C99BE0075519C /* CloudKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9012FF2E1D1C997B0075519C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9012FF391D1C997B0075519C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9012FF111D1C997A0075519C = {
+			isa = PBXGroup;
+			children = (
+				9012FF4F1D1C99BE0075519C /* CloudKit.framework */,
+				9012FF1C1D1C997A0075519C /* Salem Parks */,
+				9012FF341D1C997B0075519C /* Salem ParksTests */,
+				9012FF3F1D1C997B0075519C /* Salem ParksUITests */,
+				9012FF1B1D1C997A0075519C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9012FF1B1D1C997A0075519C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9012FF1A1D1C997A0075519C /* Salem Parks.app */,
+				9012FF311D1C997B0075519C /* Salem ParksTests.xctest */,
+				9012FF3C1D1C997B0075519C /* Salem ParksUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9012FF1C1D1C997A0075519C /* Salem Parks */ = {
+			isa = PBXGroup;
+			children = (
+				9012FF511D1CA5290075519C /* ParksListTableViewController.swift */,
+				9012FF531D1CA55D0075519C /* MapViewController.swift */,
+				9012FF1D1D1C997A0075519C /* AppDelegate.swift */,
+				9012FF5D1D1D70630075519C /* GlobalVariables.swift */,
+				9012FF591D1CA6810075519C /* Core Data */,
+				9012FF211D1C997A0075519C /* Main.storyboard */,
+				9012FF291D1C997A0075519C /* LaunchScreen.storyboard */,
+				9012FF271D1C997A0075519C /* Assets.xcassets */,
+				9012FF2C1D1C997A0075519C /* Info.plist */,
+				9012FF4E1D1C99BB0075519C /* Salem Parks.entitlements */,
+				9012FF241D1C997A0075519C /* Salem_Parks.xcdatamodeld */,
+			);
+			path = "Salem Parks";
+			sourceTree = "<group>";
+		};
+		9012FF341D1C997B0075519C /* Salem ParksTests */ = {
+			isa = PBXGroup;
+			children = (
+				9012FF351D1C997B0075519C /* Salem_ParksTests.swift */,
+				9012FF371D1C997B0075519C /* Info.plist */,
+			);
+			path = "Salem ParksTests";
+			sourceTree = "<group>";
+		};
+		9012FF3F1D1C997B0075519C /* Salem ParksUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9012FF401D1C997B0075519C /* Salem_ParksUITests.swift */,
+				9012FF421D1C997B0075519C /* Info.plist */,
+			);
+			path = "Salem ParksUITests";
+			sourceTree = "<group>";
+		};
+		9012FF591D1CA6810075519C /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				9012FF5B1D1CA7DD0075519C /* CoreDataStack.swift */,
+				9012FF551D1CA67C0075519C /* Park+CoreDataProperties.swift */,
+				9012FF561D1CA67C0075519C /* Park.swift */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9012FF191D1C997A0075519C /* Salem Parks */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9012FF451D1C997B0075519C /* Build configuration list for PBXNativeTarget "Salem Parks" */;
+			buildPhases = (
+				9012FF161D1C997A0075519C /* Sources */,
+				9012FF171D1C997A0075519C /* Frameworks */,
+				9012FF181D1C997A0075519C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Salem Parks";
+			productName = "Salem Parks";
+			productReference = 9012FF1A1D1C997A0075519C /* Salem Parks.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9012FF301D1C997B0075519C /* Salem ParksTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9012FF481D1C997B0075519C /* Build configuration list for PBXNativeTarget "Salem ParksTests" */;
+			buildPhases = (
+				9012FF2D1D1C997B0075519C /* Sources */,
+				9012FF2E1D1C997B0075519C /* Frameworks */,
+				9012FF2F1D1C997B0075519C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9012FF331D1C997B0075519C /* PBXTargetDependency */,
+			);
+			name = "Salem ParksTests";
+			productName = "Salem ParksTests";
+			productReference = 9012FF311D1C997B0075519C /* Salem ParksTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9012FF3B1D1C997B0075519C /* Salem ParksUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9012FF4B1D1C997B0075519C /* Build configuration list for PBXNativeTarget "Salem ParksUITests" */;
+			buildPhases = (
+				9012FF381D1C997B0075519C /* Sources */,
+				9012FF391D1C997B0075519C /* Frameworks */,
+				9012FF3A1D1C997B0075519C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9012FF3E1D1C997B0075519C /* PBXTargetDependency */,
+			);
+			name = "Salem ParksUITests";
+			productName = "Salem ParksUITests";
+			productReference = 9012FF3C1D1C997B0075519C /* Salem ParksUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9012FF121D1C997A0075519C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Morgan Davison";
+				TargetAttributes = {
+					9012FF191D1C997A0075519C = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 2TEP68NZCD;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
+					};
+					9012FF301D1C997B0075519C = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 9012FF191D1C997A0075519C;
+					};
+					9012FF3B1D1C997B0075519C = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 9012FF191D1C997A0075519C;
+					};
+				};
+			};
+			buildConfigurationList = 9012FF151D1C997A0075519C /* Build configuration list for PBXProject "Salem Parks" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9012FF111D1C997A0075519C;
+			productRefGroup = 9012FF1B1D1C997A0075519C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9012FF191D1C997A0075519C /* Salem Parks */,
+				9012FF301D1C997B0075519C /* Salem ParksTests */,
+				9012FF3B1D1C997B0075519C /* Salem ParksUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9012FF181D1C997A0075519C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9012FF2B1D1C997A0075519C /* LaunchScreen.storyboard in Resources */,
+				9012FF281D1C997A0075519C /* Assets.xcassets in Resources */,
+				9012FF231D1C997A0075519C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9012FF2F1D1C997B0075519C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9012FF3A1D1C997B0075519C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9012FF161D1C997A0075519C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9012FF5C1D1CA7DD0075519C /* CoreDataStack.swift in Sources */,
+				9012FF521D1CA5290075519C /* ParksListTableViewController.swift in Sources */,
+				9012FF5E1D1D70630075519C /* GlobalVariables.swift in Sources */,
+				9012FF581D1CA67C0075519C /* Park.swift in Sources */,
+				9012FF571D1CA67C0075519C /* Park+CoreDataProperties.swift in Sources */,
+				9012FF261D1C997A0075519C /* Salem_Parks.xcdatamodeld in Sources */,
+				9012FF1E1D1C997A0075519C /* AppDelegate.swift in Sources */,
+				9012FF541D1CA55D0075519C /* MapViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9012FF2D1D1C997B0075519C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9012FF361D1C997B0075519C /* Salem_ParksTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9012FF381D1C997B0075519C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9012FF411D1C997B0075519C /* Salem_ParksUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9012FF331D1C997B0075519C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9012FF191D1C997A0075519C /* Salem Parks */;
+			targetProxy = 9012FF321D1C997B0075519C /* PBXContainerItemProxy */;
+		};
+		9012FF3E1D1C997B0075519C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9012FF191D1C997A0075519C /* Salem Parks */;
+			targetProxy = 9012FF3D1D1C997B0075519C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9012FF211D1C997A0075519C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9012FF221D1C997A0075519C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9012FF291D1C997A0075519C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9012FF2A1D1C997A0075519C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9012FF431D1C997B0075519C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9012FF441D1C997B0075519C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9012FF461D1C997B0075519C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Salem Parks/Salem Parks.entitlements";
+				INFOPLIST_FILE = "Salem Parks/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.morgandavison.Salem-Parks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9012FF471D1C997B0075519C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Salem Parks/Salem Parks.entitlements";
+				INFOPLIST_FILE = "Salem Parks/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.morgandavison.Salem-Parks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		9012FF491D1C997B0075519C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Salem ParksTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.morgandavison.Salem-ParksTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Salem Parks.app/Salem Parks";
+			};
+			name = Debug;
+		};
+		9012FF4A1D1C997B0075519C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Salem ParksTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.morgandavison.Salem-ParksTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Salem Parks.app/Salem Parks";
+			};
+			name = Release;
+		};
+		9012FF4C1D1C997B0075519C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Salem ParksUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.morgandavison.Salem-ParksUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Salem Parks";
+			};
+			name = Debug;
+		};
+		9012FF4D1D1C997B0075519C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Salem ParksUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.morgandavison.Salem-ParksUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Salem Parks";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9012FF151D1C997A0075519C /* Build configuration list for PBXProject "Salem Parks" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9012FF431D1C997B0075519C /* Debug */,
+				9012FF441D1C997B0075519C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9012FF451D1C997B0075519C /* Build configuration list for PBXNativeTarget "Salem Parks" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9012FF461D1C997B0075519C /* Debug */,
+				9012FF471D1C997B0075519C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		9012FF481D1C997B0075519C /* Build configuration list for PBXNativeTarget "Salem ParksTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9012FF491D1C997B0075519C /* Debug */,
+				9012FF4A1D1C997B0075519C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		9012FF4B1D1C997B0075519C /* Build configuration list for PBXNativeTarget "Salem ParksUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9012FF4C1D1C997B0075519C /* Debug */,
+				9012FF4D1D1C997B0075519C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9012FF241D1C997A0075519C /* Salem_Parks.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9012FF251D1C997A0075519C /* Salem_Parks.xcdatamodel */,
+			);
+			currentVersion = 9012FF251D1C997A0075519C /* Salem_Parks.xcdatamodel */;
+			path = Salem_Parks.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 9012FF121D1C997A0075519C /* Project object */;
+}
