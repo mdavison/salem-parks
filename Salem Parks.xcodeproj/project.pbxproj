@@ -25,6 +25,8 @@
 		9012FF901D209A270075519C /* park_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 9012FF8F1D209A270075519C /* park_data.json */; };
 		9012FF921D209A310075519C /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF911D209A310075519C /* JSON.swift */; };
 		9012FF941D209D2A0075519C /* ParkAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF931D209D2A0075519C /* ParkAnnotation.swift */; };
+		9012FF971D20B6830075519C /* ParkData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF961D20B6830075519C /* ParkData.swift */; };
+		9012FF991D20C0240075519C /* ParkItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF981D20C0240075519C /* ParkItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +72,8 @@
 		9012FF8F1D209A270075519C /* park_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = park_data.json; sourceTree = "<group>"; };
 		9012FF911D209A310075519C /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		9012FF931D209D2A0075519C /* ParkAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkAnnotation.swift; sourceTree = "<group>"; };
+		9012FF961D20B6830075519C /* ParkData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkData.swift; sourceTree = "<group>"; };
+		9012FF981D20C0240075519C /* ParkItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,17 +128,14 @@
 			children = (
 				9012FF511D1CA5290075519C /* ParksListTableViewController.swift */,
 				9012FF531D1CA55D0075519C /* MapViewController.swift */,
-				9012FF931D209D2A0075519C /* ParkAnnotation.swift */,
 				9012FF1D1D1C997A0075519C /* AppDelegate.swift */,
 				9012FF5D1D1D70630075519C /* GlobalVariables.swift */,
+				9012FF951D20B39F0075519C /* Model */,
 				9012FF591D1CA6810075519C /* Core Data */,
 				9012FF211D1C997A0075519C /* Main.storyboard */,
 				9012FF291D1C997A0075519C /* LaunchScreen.storyboard */,
 				9012FF271D1C997A0075519C /* Assets.xcassets */,
-				9012FF911D209A310075519C /* JSON.swift */,
-				9012FF8F1D209A270075519C /* park_data.json */,
 				9012FF2C1D1C997A0075519C /* Info.plist */,
-				9012FF8D1D2099E60075519C /* ParkCoordinates.plist */,
 				9012FF4E1D1C99BB0075519C /* Salem Parks.entitlements */,
 				9012FF241D1C997A0075519C /* Salem_Parks.xcdatamodeld */,
 			);
@@ -167,6 +168,19 @@
 				9012FF561D1CA67C0075519C /* Park.swift */,
 			);
 			name = "Core Data";
+			sourceTree = "<group>";
+		};
+		9012FF951D20B39F0075519C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9012FF981D20C0240075519C /* ParkItem.swift */,
+				9012FF931D209D2A0075519C /* ParkAnnotation.swift */,
+				9012FF961D20B6830075519C /* ParkData.swift */,
+				9012FF8F1D209A270075519C /* park_data.json */,
+				9012FF8D1D2099E60075519C /* ParkCoordinates.plist */,
+				9012FF911D209A310075519C /* JSON.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,12 +327,14 @@
 			files = (
 				9012FF941D209D2A0075519C /* ParkAnnotation.swift in Sources */,
 				9012FF5C1D1CA7DD0075519C /* CoreDataStack.swift in Sources */,
+				9012FF991D20C0240075519C /* ParkItem.swift in Sources */,
 				9012FF521D1CA5290075519C /* ParksListTableViewController.swift in Sources */,
 				9012FF5E1D1D70630075519C /* GlobalVariables.swift in Sources */,
 				9012FF921D209A310075519C /* JSON.swift in Sources */,
 				9012FF581D1CA67C0075519C /* Park.swift in Sources */,
 				9012FF571D1CA67C0075519C /* Park+CoreDataProperties.swift in Sources */,
 				9012FF261D1C997A0075519C /* Salem_Parks.xcdatamodeld in Sources */,
+				9012FF971D20B6830075519C /* ParkData.swift in Sources */,
 				9012FF1E1D1C997A0075519C /* AppDelegate.swift in Sources */,
 				9012FF541D1CA55D0075519C /* MapViewController.swift in Sources */,
 			);
@@ -549,6 +565,7 @@
 				9012FF471D1C997B0075519C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9012FF481D1C997B0075519C /* Build configuration list for PBXNativeTarget "Salem ParksTests" */ = {
 			isa = XCConfigurationList;
@@ -557,6 +574,7 @@
 				9012FF4A1D1C997B0075519C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9012FF4B1D1C997B0075519C /* Build configuration list for PBXNativeTarget "Salem ParksUITests" */ = {
 			isa = XCConfigurationList;
@@ -565,6 +583,7 @@
 				9012FF4D1D1C997B0075519C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

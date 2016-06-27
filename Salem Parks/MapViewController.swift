@@ -16,11 +16,6 @@ class MapViewController: UIViewController {
     let regionRadius: CLLocationDistance = 10_000 // This is meters
     var parksAnnotations = [ParkAnnotation]()
     
-    var data: NSData?
-    var jsonObject: AnyObject?
-    var parksJSONDataArray: [JSONValue]?
-    var parksStreetAddresses = [JSONValue]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,11 +24,9 @@ class MapViewController: UIViewController {
         // Set initial location in Salem
         let initialLocation = CLLocation(latitude: 44.9429, longitude: -123.0351)
         centerMapOnLocation(initialLocation)
-        
-        setJSONData()
-        loadJSONData()
-        
-        mapView.addAnnotations(parksAnnotations)
+
+        let parkData = ParkData()
+        mapView.addAnnotations(parkData.getMapAnnotations())
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,70 +40,6 @@ class MapViewController: UIViewController {
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
-    
-    func setJSONData() {
-        let fileName = NSBundle.mainBundle().pathForResource("park_data", ofType: "json")
-        do {
-            data = try NSData(contentsOfFile: fileName!, options: NSDataReadingOptions(rawValue: 0))
-        } catch {
-            print("Error getting NSData")
-        }
-        
-        var errorType: ErrorType?
-        do {
-            jsonObject = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(rawValue: 0))
-        } catch {
-            print("Error getting JSON Object")
-            errorType = error
-        }
-        
-        if let jsonObject = jsonObject as? [String: AnyObject] where errorType == nil,
-            let featuresArray = JSONValue.fromObject(jsonObject)?["features"]?.array {
-            parksJSONDataArray = featuresArray
-            
-            for feature in featuresArray {
-                if let feature = feature.object {
-                    //print(feature["attributes"])
-                    if let parkJSON = feature["attributes"], address = parkJSON["ADDRESS"] {
-                        //print(park["PARK_NAME"])
-                        //print(park["ADDRESS"])
-                        parksStreetAddresses.append(address)
-                    }
-                    
-                }
-            }
-        }
-    }
-    
-    func loadJSONData() {
-        if let parksJSONDataArray = parksJSONDataArray {
-            for feature in parksJSONDataArray {
-                if let feature = feature.object {
-                    if let parkJSON = feature["attributes"] {
-                        var title: String?
-                        var locationName: String?
-                        var discipline: String?
-                        
-                        if let parkName = parkJSON["PARK_NAME"]?.string,
-                            parkAddress = parkJSON["ADDRESS"]?.string,
-                            parkStatus = parkJSON["STATUS"]?.string,
-                            parkID = parkJSON["OBJECTID"]?.integer {
-                            
-                            title = parkName
-                            locationName = parkAddress
-                            discipline = parkStatus
-                            
-                            if let coordinate = ParkAnnotation.getCoordinate(forParkID: parkID) {
-                                let park = ParkAnnotation(title: title!, locationName: locationName!, discipline: discipline!, coordinate: coordinate)
-                                parksAnnotations.append(park)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
 }
 
 

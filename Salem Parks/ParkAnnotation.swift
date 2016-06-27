@@ -52,4 +52,5 @@ class ParkAnnotation: NSObject, MKAnnotation {
         
         return mapItem
     }
+    
 }

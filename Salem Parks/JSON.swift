@@ -117,7 +117,7 @@ enum JSONValue {
       return JSONValue.JSONString(value as String)
     case let value as NSNumber:
       return JSONValue.JSONNumber(value)
-    case let value as NSNull:
+    case _ as NSNull:
       return JSONValue.JSONNull
     case let value as NSDictionary:
       var jsonObject: [String:JSONValue] = [:]
