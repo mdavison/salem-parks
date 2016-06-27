@@ -16,9 +16,23 @@
                     <view key="view" contentMode="scaleToFill" id="t6D-Kk-TN0">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BFY-lM-pVn">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="BFY-lM-pVn" firstAttribute="bottom" secondItem="Y3J-jI-nKz" secondAttribute="top" id="4h5-rF-vAM"/>
+                            <constraint firstAttribute="trailing" secondItem="BFY-lM-pVn" secondAttribute="trailing" id="BK5-Eu-WgF"/>
+                            <constraint firstItem="BFY-lM-pVn" firstAttribute="leading" secondItem="t6D-Kk-TN0" secondAttribute="leading" id="GLQ-MK-gYH"/>
+                            <constraint firstItem="BFY-lM-pVn" firstAttribute="top" secondItem="t6D-Kk-TN0" secondAttribute="top" id="Nxu-vB-26L"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" id="YnE-db-dnw"/>
+                    <connections>
+                        <outlet property="mapView" destination="BFY-lM-pVn" id="m30-Mp-1m2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iPW-yI-g9A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
