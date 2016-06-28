@@ -10,6 +10,12 @@ import Foundation
 
 struct ParkItem {
     var parkName: String?
+    var street: String?
+    var objectID: Int?
+    var hasRestrooms = false
+    var hasPlayEquipment = false
+    var hasPicnicTables = false
+    var hasPicnicShelter = false
     
     static func getAll() -> [ParkItem] {
         var parkItems = [ParkItem]()
@@ -23,12 +29,23 @@ struct ParkItem {
                         
                         if let parkName = parkJSON["PARK_NAME"]?.string,
                             parkAddress = parkJSON["ADDRESS"]?.string,
-                            parkStatus = parkJSON["STATUS"]?.string,
-                            parkID = parkJSON["OBJECTID"]?.integer {
+                            objectID = parkJSON["OBJECTID"]?.integer,
+                            restrooms = parkJSON["RESTROOMS"]?.string,
+                            playEquip = parkJSON["PLAY_EQUIPMENT"]?.string,
+                            picnicTables = parkJSON["PICNIC_TABLES"]?.string,
+                            picnicShelter = parkJSON["PICNIC_SHELTER"]?.string {
                             
+                            var parkItem = ParkItem()
+                            parkItem.parkName = parkName
+                            parkItem.street = parkAddress
+                            parkItem.objectID = objectID
+                            //print("has picnic tables: \(picnicTables)")
                             
+                            parkItem.hasRestrooms = restrooms == "Yes" ? true : false
+                            parkItem.hasPlayEquipment = playEquip == "Yes" ? true : false
+                            parkItem.hasPicnicTables = picnicTables == "Yes" ? true : false
+                            parkItem.hasPicnicShelter = picnicShelter == "Yes" ? true : false
                             
-                            let parkItem = ParkItem(parkName: parkName)
                             parkItems.append(parkItem)
                         }
                     }

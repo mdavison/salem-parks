@@ -10,7 +10,6 @@ import Foundation
 import CoreData
 import CloudKit
 
-
 class Park: NSManagedObject {
     
     static let cloudKitDatabase = CKContainer.defaultContainer().publicCloudDatabase
@@ -47,6 +46,38 @@ class Park: NSManagedObject {
         }
         
         return fetchedResultsController
+    }
+    
+    static func getCKParkFromiCloud(forObjectID id: Int) {
+        let predicate = NSPredicate(format: "id == %d", id)
+        let query = CKQuery(recordType: CloudKitStrings.Entity.parks, predicate: predicate)
+        query.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        
+        cloudKitDatabase.performQuery(query, inZoneWithID: nil) { (records, error) in
+            if error !=  nil {
+                NSLog("Error fetching from iCloud: \(error?.localizedDescription)")
+                
+                // Post notification that iCloud fetched but got error
+                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.fetchAllFromiCloudFinishedNotification, object: error)
+            } else {
+                if let records = records, record = records.first {
+                    //print("got records from iCloud fetch: count: \(records.count)")
+                    if let parkName = record.objectForKey(CloudKitStrings.Attribute.name) as? String,
+                        image = record.objectForKey(CloudKitStrings.Attribute.image) as? CKAsset,
+                        id = record.objectForKey(CloudKitStrings.Attribute.id) as? Int {
+                        
+                        let park = CKPark()
+                        park.name = parkName
+                        park.image = image
+                        park.id = id
+                        park.ckRecordID = record.recordID
+
+                        // Post notification that Cloud fetch finished
+                        NSNotificationCenter.defaultCenter().postNotificationName(Notifications.fetchAllFromiCloudFinishedNotification, object: park)
+                    }
+                }
+            }
+        }
     }
     
     static func fetchAllFromiCloudAndSave(coreDataStack: CoreDataStack) {
@@ -92,7 +123,6 @@ class Park: NSManagedObject {
                 if let parkEntity = NSEntityDescription.entityForName(CoreDataStrings.Entity.park, inManagedObjectContext: coreDataStack.managedObjectContext) {
                     let park = Park(entity: parkEntity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
                     park.name = parkName
-                    park.id = record.recordID.recordName
                     park.ckRecordID = record.recordID
                 }
             }

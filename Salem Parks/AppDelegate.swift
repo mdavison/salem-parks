@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     lazy var coreDataStack = CoreDataStack()
+    var defaultNotificationCenter = NSNotificationCenter.defaultCenter()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -24,9 +25,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let parksListTableViewController = parksListNavController.viewControllers[0] as! ParksListTableViewController
         parksListTableViewController.coreDataStack = coreDataStack
         
-        let settings = UIUserNotificationSettings(forTypes: [], categories: nil)
+        let settings = UIUserNotificationSettings(forTypes: [.Badge], categories: nil)
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
+        
+        // Determine if user is signed into iCloud
+        if let _ = NSFileManager.defaultManager().ubiquityIdentityToken {
+            userIsSignedIntoiCloud = true
+        }
         
         return true
     }
@@ -63,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             userInfo: [CloudKitNotifications.notificationKey: cloudKitQueryNotification]
         )
         
-        NSNotificationCenter.defaultCenter().postNotification(notification)
+        defaultNotificationCenter.postNotification(notification)
         
         completionHandler(.NewData)
 

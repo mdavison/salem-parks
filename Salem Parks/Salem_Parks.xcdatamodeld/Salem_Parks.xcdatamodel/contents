@@ -2,7 +2,8 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
     <entity name="Park" representedClassName=".Park" syncable="YES">
         <attribute name="ckRecordID" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -11,6 +12,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Park" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="Park" positionX="-63" positionY="-18" width="128" height="105"/>
     </elements>
 </model>

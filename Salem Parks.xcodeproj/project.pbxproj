@@ -27,6 +27,8 @@
 		9012FF941D209D2A0075519C /* ParkAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF931D209D2A0075519C /* ParkAnnotation.swift */; };
 		9012FF971D20B6830075519C /* ParkData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF961D20B6830075519C /* ParkData.swift */; };
 		9012FF991D20C0240075519C /* ParkItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF981D20C0240075519C /* ParkItem.swift */; };
+		9012FF9B1D2162A10075519C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF9A1D2162A10075519C /* DetailViewController.swift */; };
+		9012FF9E1D21BFFB0075519C /* CKPark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF9D1D21BFFB0075519C /* CKPark.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		9012FF931D209D2A0075519C /* ParkAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkAnnotation.swift; sourceTree = "<group>"; };
 		9012FF961D20B6830075519C /* ParkData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkData.swift; sourceTree = "<group>"; };
 		9012FF981D20C0240075519C /* ParkItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkItem.swift; sourceTree = "<group>"; };
+		9012FF9A1D2162A10075519C /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		9012FF9D1D21BFFB0075519C /* CKPark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CKPark.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +132,7 @@
 			children = (
 				9012FF511D1CA5290075519C /* ParksListTableViewController.swift */,
 				9012FF531D1CA55D0075519C /* MapViewController.swift */,
+				9012FF9A1D2162A10075519C /* DetailViewController.swift */,
 				9012FF1D1D1C997A0075519C /* AppDelegate.swift */,
 				9012FF5D1D1D70630075519C /* GlobalVariables.swift */,
 				9012FF951D20B39F0075519C /* Model */,
@@ -174,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				9012FF981D20C0240075519C /* ParkItem.swift */,
+				9012FF9D1D21BFFB0075519C /* CKPark.swift */,
 				9012FF931D209D2A0075519C /* ParkAnnotation.swift */,
 				9012FF961D20B6830075519C /* ParkData.swift */,
 				9012FF8F1D209A270075519C /* park_data.json */,
@@ -325,6 +331,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9012FF9B1D2162A10075519C /* DetailViewController.swift in Sources */,
 				9012FF941D209D2A0075519C /* ParkAnnotation.swift in Sources */,
 				9012FF5C1D1CA7DD0075519C /* CoreDataStack.swift in Sources */,
 				9012FF991D20C0240075519C /* ParkItem.swift in Sources */,
@@ -333,6 +340,7 @@
 				9012FF921D209A310075519C /* JSON.swift in Sources */,
 				9012FF581D1CA67C0075519C /* Park.swift in Sources */,
 				9012FF571D1CA67C0075519C /* Park+CoreDataProperties.swift in Sources */,
+				9012FF9E1D21BFFB0075519C /* CKPark.swift in Sources */,
 				9012FF261D1C997A0075519C /* Salem_Parks.xcdatamodeld in Sources */,
 				9012FF971D20B6830075519C /* ParkData.swift in Sources */,
 				9012FF1E1D1C997A0075519C /* AppDelegate.swift in Sources */,

@@ -19,6 +19,7 @@ class ParksListTableViewController: UITableViewController {
     
     struct Storyboard {
         static let CellReuseIdentifier = "Park"
+        static let ShowParkDetailsSegueIdentifier = "ShowParkDetails"
     }
     
     override func viewDidLoad() {
@@ -55,25 +56,29 @@ class ParksListTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        Park.subscribeToiCloudChanges()
-        
-        defaultNotificationCenter.addObserverForName(
-            CloudKitNotifications.notificationReceived,
-            object: nil,
-            queue: NSOperationQueue.mainQueue(),
-            usingBlock: { notification in
-                if let ckQueryNotification = notification.userInfo?[CloudKitNotifications.notificationKey] as? CKQueryNotification {
-                    print("in cloud kit subscription notification observer block")
-                    self.iCloudHandleSubscriptionNotification(ckQueryNotification)
-                }
-        })
+        if userIsSignedIntoiCloud {
+            Park.subscribeToiCloudChanges()
+            
+            defaultNotificationCenter.addObserverForName(
+                CloudKitNotifications.notificationReceived,
+                object: nil,
+                queue: NSOperationQueue.mainQueue(),
+                usingBlock: { notification in
+                    if let ckQueryNotification = notification.userInfo?[CloudKitNotifications.notificationKey] as? CKQueryNotification {
+                        print("in cloud kit subscription notification observer block")
+                        self.iCloudHandleSubscriptionNotification(ckQueryNotification)
+                    }
+            })
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        Park.unsubscribeToiCloudChanges()
-        // TODO: remove observer
+        if userIsSignedIntoiCloud {
+            Park.unsubscribeToiCloudChanges()
+            defaultNotificationCenter.removeObserver(CloudKitNotifications.notificationReceived)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -156,83 +161,44 @@ class ParksListTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == Storyboard.ShowParkDetailsSegueIdentifier {
+            let detailViewController = segue.destinationViewController as! DetailViewController
+            let indexPath = tableView.indexPathForSelectedRow!
+            detailViewController.parkItem = parkItems[indexPath.row]
+        }
     }
-    */
+
     
     
     // MARK: - Notification Handling
     
-    @objc private func fetchAllFromiCloudAndSaveNotificationHandler(notification: NSNotification) {
-        print("iCloud fetched all records")
-        //_fetchedResultsController = nil
-    }
+//    @objc private func fetchAllFromiCloudAndSaveNotificationHandler(notification: NSNotification) {
+//        print("iCloud fetched all records")
+//        //_fetchedResultsController = nil
+//    }
     
     private func iCloudHandleSubscriptionNotification(ckQueryNotification: CKQueryNotification) {
         print("iCloudHandleSubscriptionNotification called")
+        // TODO: add a badge when new photos added
         
         // TODO: is reference to self here a memory cycle?
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
             
-            Park.updateCoreDataFromiCloudSubscriptionNotification(ckQueryNotification, coreDataStack: self.coreDataStack)
+            //Park.updateCoreDataFromiCloudSubscriptionNotification(ckQueryNotification, coreDataStack: self.coreDataStack)
             
             dispatch_async(dispatch_get_main_queue()) {
                 //self._fetchedResultsController = nil
             }
         }
-        
     }
 
+    
+    
 }
-
-
-//extension ParksListTableViewController: NSFetchedResultsControllerDelegate {
-//    
-//    func controllerWillChangeContent(controller: NSFetchedResultsController) {
-//        tableView.beginUpdates()
-//    }
-//    
-//    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-//        
-//        switch type {
-//        case .Insert:
-//            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
-//        case .Delete:
-//            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
-//        case .Update:
-//            // TODO: handle this
-////            let cell = tableView.cellForRowAtIndexPath(indexPath!) as! HeadacheListTableViewCell
-////            let headache = fetchedResultsController.objectAtIndexPath(indexPath!) as! Headache
-////            configureTableCell(cell, withHeadache: headache)
-//            print("updated")
-//        case .Move:
-//            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
-//            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
-//        }
-//    }
-//    
-//    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-//        tableView.endUpdates()
-//    }
-//    
-//    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-//        
-//        let indexSet = NSIndexSet(index: sectionIndex)
-//        
-//        switch type {
-//        case .Insert:
-//            tableView.insertSections(indexSet, withRowAnimation: .Automatic)
-//        case .Delete:
-//            tableView.deleteSections(indexSet, withRowAnimation: .Automatic)
-//        default:
-//            break
-//        }
-//    }
-//
-//}
