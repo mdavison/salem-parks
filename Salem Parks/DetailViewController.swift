@@ -14,6 +14,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var yelpRatingLabel: UILabel!
     @IBOutlet weak var amenityImage1: UIImageView! {
         didSet {
             amenityImage1.tintColor = UIColor.lightGrayColor()
@@ -46,6 +47,16 @@ class DetailViewController: UIViewController {
             }
         }
     }
+    var parkNetworkActivity = false {
+        didSet {
+            toggleNetworkActivitySpinner()
+        }
+    }
+    var yelpNetworkActivity = false {
+        didSet {
+            toggleNetworkActivitySpinner()
+        }
+    }
     
     let defaultNotificationCenter = NSNotificationCenter.defaultCenter()
     
@@ -56,32 +67,8 @@ class DetailViewController: UIViewController {
         addressLabel.text = parkItem?.street
         
         setAmenityImages()
-
-        if userIsSignedIntoiCloud {
-            // Fetch CKPark from cloudkit to populate image
-            if let id = parkItem?.objectID {
-                //Park.getCKParkFromiCloud(forObjectID: id)
-                Park.getCKParkFromiCloud(forObjectID: 48)
-            }
-            
-            // Add observer for when cloud fetch completes
-            defaultNotificationCenter.addObserver(
-                self,
-                selector: #selector(DetailViewController.fetchAllFromiCloudNotificationHandler(_:)),
-                name: Notifications.fetchAllFromiCloudFinishedNotification,
-                object: nil
-            )
-        } else {
-            if !userHasBeenAlertedToiCloudSignInRequired {
-                createiCloudSignInAlert()
-            }
-        }
-        
-        // Yelp
-        let client = YLPClient(consumerKey: <#T##String#>,
-                               consumerSecret: <#T##String#>,
-                               token: <#T##String#>,
-                               tokenSecret: <#T##String#>)
+        setParkImages()
+        setYelpData()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -113,6 +100,9 @@ class DetailViewController: UIViewController {
     // MARK: - Notification Handling
     
     @objc private func fetchAllFromiCloudNotificationHandler(notification: NSNotification) {
+        // Turn off network activity spinner
+        parkNetworkActivity = false
+        
         print("fetched from iCloud: \(notification.object)")
         if let park = notification.object as? CKPark {
             ckPark = park
@@ -169,6 +159,63 @@ class DetailViewController: UIViewController {
         presentViewController(alert, animated: true, completion: nil)
         
         userHasBeenAlertedToiCloudSignInRequired = true
+    }
+    
+    private func setParkImages() {
+        if userIsSignedIntoiCloud {
+            // Fetch CKPark from cloudkit to populate image
+            if let id = parkItem?.objectID {
+                // Turn on network activity spinner
+                parkNetworkActivity = true
+                
+                //Park.getCKParkFromiCloud(forObjectID: id)
+                Park.getCKParkFromiCloud(forObjectID: 48)
+            }
+            
+            // Add observer for when cloud fetch completes
+            defaultNotificationCenter.addObserver(
+                self,
+                selector: #selector(DetailViewController.fetchAllFromiCloudNotificationHandler(_:)),
+                name: Notifications.fetchAllFromiCloudFinishedNotification,
+                object: nil
+            )
+        } else {
+            if !userHasBeenAlertedToiCloudSignInRequired {
+                createiCloudSignInAlert()
+            }
+        }
+    }
+    
+    private func setYelpData() {
+        let client = YLPClient(consumerKey: YelpAPIKeys.consumerKey,
+                               consumerSecret: YelpAPIKeys.consumerSecret,
+                               token: YelpAPIKeys.token,
+                               tokenSecret: YelpAPIKeys.tokenSecret)
+        
+        // Turn on network activity spinner
+        yelpNetworkActivity = true
+        
+        // TODO: get current business id - create plist of all business ids for all parks
+        
+        client.businessWithId("riverfront-park-salem") { [weak weakSelf = self] (business, error) in
+            if let rating = business?.rating {
+                dispatch_async(dispatch_get_main_queue(), {
+                    weakSelf?.yelpRatingLabel.text = (weakSelf?.yelpRatingLabel.text)! + " \(rating)/5"
+                    
+                    // Turn off network activity spinner
+                    weakSelf?.yelpNetworkActivity = false
+                })
+            }
+        }
+    }
+    
+    // Coordinate multiple network activity indicators
+    private func toggleNetworkActivitySpinner() {
+        let sharedApplication = UIApplication.sharedApplication()
+        if parkNetworkActivity == yelpNetworkActivity {
+            sharedApplication.networkActivityIndicatorVisible = !sharedApplication.networkActivityIndicatorVisible
+        }
+        
     }
 
 }
