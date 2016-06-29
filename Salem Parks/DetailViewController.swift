@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import YelpAPI
 
 class DetailViewController: UIViewController {
 
@@ -75,6 +76,12 @@ class DetailViewController: UIViewController {
                 createiCloudSignInAlert()
             }
         }
+        
+        // Yelp
+        let client = YLPClient(consumerKey: <#T##String#>,
+                               consumerSecret: <#T##String#>,
+                               token: <#T##String#>,
+                               tokenSecret: <#T##String#>)
     }
     
     override func viewWillDisappear(animated: Bool) {

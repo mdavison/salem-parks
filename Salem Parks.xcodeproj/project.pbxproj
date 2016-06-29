@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8BA2F1BFDF7861CAC32E5A2A /* Pods_Salem_Parks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25740D43FDD2ED48D7B83AEC /* Pods_Salem_Parks.framework */; };
 		9012FF1E1D1C997A0075519C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF1D1D1C997A0075519C /* AppDelegate.swift */; };
 		9012FF231D1C997A0075519C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9012FF211D1C997A0075519C /* Main.storyboard */; };
 		9012FF261D1C997A0075519C /* Salem_Parks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF241D1C997A0075519C /* Salem_Parks.xcdatamodeld */; };
@@ -29,6 +30,7 @@
 		9012FF991D20C0240075519C /* ParkItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF981D20C0240075519C /* ParkItem.swift */; };
 		9012FF9B1D2162A10075519C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF9A1D2162A10075519C /* DetailViewController.swift */; };
 		9012FF9E1D21BFFB0075519C /* CKPark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF9D1D21BFFB0075519C /* CKPark.swift */; };
+		90C1F9DC1D2363F50063B89E /* YelpAPIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C1F9DB1D2363F50063B89E /* YelpAPIKeys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0310D70C20614B8299067951 /* Pods-Salem Parks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Salem Parks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Salem Parks/Pods-Salem Parks.release.xcconfig"; sourceTree = "<group>"; };
+		25740D43FDD2ED48D7B83AEC /* Pods_Salem_Parks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Salem_Parks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9012FF1A1D1C997A0075519C /* Salem Parks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Salem Parks.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9012FF1D1D1C997A0075519C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9012FF221D1C997A0075519C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -78,6 +82,8 @@
 		9012FF981D20C0240075519C /* ParkItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkItem.swift; sourceTree = "<group>"; };
 		9012FF9A1D2162A10075519C /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		9012FF9D1D21BFFB0075519C /* CKPark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CKPark.swift; sourceTree = "<group>"; };
+		90C1F9DB1D2363F50063B89E /* YelpAPIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpAPIKeys.swift; sourceTree = "<group>"; };
+		B9540BDBC4F9C6952259D168 /* Pods-Salem Parks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Salem Parks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Salem Parks/Pods-Salem Parks.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +92,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9012FF501D1C99BE0075519C /* CloudKit.framework in Frameworks */,
+				8BA2F1BFDF7861CAC32E5A2A /* Pods_Salem_Parks.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +113,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49F95384CC29F8758432A222 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				25740D43FDD2ED48D7B83AEC /* Pods_Salem_Parks.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9012FF111D1C997A0075519C = {
 			isa = PBXGroup;
 			children = (
@@ -114,6 +129,8 @@
 				9012FF341D1C997B0075519C /* Salem ParksTests */,
 				9012FF3F1D1C997B0075519C /* Salem ParksUITests */,
 				9012FF1B1D1C997A0075519C /* Products */,
+				C748B20D0A1B0F0C7E06CFE8 /* Pods */,
+				49F95384CC29F8758432A222 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				9012FF511D1CA5290075519C /* ParksListTableViewController.swift */,
+				90C1F9DB1D2363F50063B89E /* YelpAPIKeys.swift */,
 				9012FF531D1CA55D0075519C /* MapViewController.swift */,
 				9012FF9A1D2162A10075519C /* DetailViewController.swift */,
 				9012FF1D1D1C997A0075519C /* AppDelegate.swift */,
@@ -189,6 +207,15 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		C748B20D0A1B0F0C7E06CFE8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B9540BDBC4F9C6952259D168 /* Pods-Salem Parks.debug.xcconfig */,
+				0310D70C20614B8299067951 /* Pods-Salem Parks.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -196,9 +223,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9012FF451D1C997B0075519C /* Build configuration list for PBXNativeTarget "Salem Parks" */;
 			buildPhases = (
+				FFD5837EF36541ECFC1824EE /* Check Pods Manifest.lock */,
 				9012FF161D1C997A0075519C /* Sources */,
 				9012FF171D1C997A0075519C /* Frameworks */,
 				9012FF181D1C997A0075519C /* Resources */,
+				7FCA679D57B9923D1B225A17 /* Embed Pods Frameworks */,
+				C96443032B1F4F5BED995B12 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -326,6 +356,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7FCA679D57B9923D1B225A17 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Salem Parks/Pods-Salem Parks-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C96443032B1F4F5BED995B12 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Salem Parks/Pods-Salem Parks-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FFD5837EF36541ECFC1824EE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9012FF161D1C997A0075519C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -342,6 +420,7 @@
 				9012FF571D1CA67C0075519C /* Park+CoreDataProperties.swift in Sources */,
 				9012FF9E1D21BFFB0075519C /* CKPark.swift in Sources */,
 				9012FF261D1C997A0075519C /* Salem_Parks.xcdatamodeld in Sources */,
+				90C1F9DC1D2363F50063B89E /* YelpAPIKeys.swift in Sources */,
 				9012FF971D20B6830075519C /* ParkData.swift in Sources */,
 				9012FF1E1D1C997A0075519C /* AppDelegate.swift in Sources */,
 				9012FF541D1CA55D0075519C /* MapViewController.swift in Sources */,
@@ -486,6 +565,7 @@
 		};
 		9012FF461D1C997B0075519C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B9540BDBC4F9C6952259D168 /* Pods-Salem Parks.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Salem Parks/Salem Parks.entitlements";
@@ -498,6 +578,7 @@
 		};
 		9012FF471D1C997B0075519C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0310D70C20614B8299067951 /* Pods-Salem Parks.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Salem Parks/Salem Parks.entitlements";

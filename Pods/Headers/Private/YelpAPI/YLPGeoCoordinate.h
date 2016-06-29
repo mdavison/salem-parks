@@ -1,0 +1,1 @@
+../../../YelpAPI/Classes/Request/YLPGeoCoordinate.h
