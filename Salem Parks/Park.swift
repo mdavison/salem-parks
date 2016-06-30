@@ -48,10 +48,41 @@ class Park: NSManagedObject {
         return fetchedResultsController
     }
     
-    static func getCKParkFromiCloud(forObjectID id: Int) {
-        let predicate = NSPredicate(format: "id == %d", id)
-        let query = CKQuery(recordType: CloudKitStrings.Entity.parks, predicate: predicate)
-        query.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+//    static func getCKParkFromiCloud(forObjectID id: Int) {
+//        let predicate = NSPredicate(format: "id == %d", id)
+//        let query = CKQuery(recordType: CloudKitStrings.Entity.parks, predicate: predicate)
+//        query.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+//        
+//        cloudKitDatabase.performQuery(query, inZoneWithID: nil) { (records, error) in
+//            if error !=  nil {
+//                NSLog("Error fetching from iCloud: \(error?.localizedDescription)")
+//                
+//                // Post notification that iCloud fetched but got error
+//                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.fetchAllFromiCloudFinishedNotification, object: error)
+//            } else {
+//                if let records = records, record = records.first {
+//                    //print("got records from iCloud fetch: count: \(records.count)")
+//                    if let parkName = record.objectForKey(CloudKitStrings.Attribute.name) as? String,
+//                        id = record.objectForKey(CloudKitStrings.Attribute.id) as? Int {
+//                        
+//                        let park = CKPark()
+//                        park.name = parkName
+//                        park.id = id
+//                        park.ckRecordID = record.recordID
+//
+//                        // Post notification that Cloud fetch finished
+//                        NSNotificationCenter.defaultCenter().postNotificationName(Notifications.fetchAllFromiCloudFinishedNotification, object: park)
+//                    }
+//                }
+//            }
+//        }
+//    }
+    
+    static func getCKPhotosFromiCloud(forParkID id: Int) {
+        let predicate = NSPredicate(format: "parkID == %d", id)
+        
+        let query = CKQuery(recordType: CloudKitStrings.Entity.photos, predicate: predicate)
+        //query.sortDescriptors = [NSSortDescriptor(key: "created", ascending: false)]
         
         cloudKitDatabase.performQuery(query, inZoneWithID: nil) { (records, error) in
             if error !=  nil {
@@ -60,21 +91,24 @@ class Park: NSManagedObject {
                 // Post notification that iCloud fetched but got error
                 NSNotificationCenter.defaultCenter().postNotificationName(Notifications.fetchAllFromiCloudFinishedNotification, object: error)
             } else {
-                if let records = records, record = records.first {
+                if let records = records {
                     //print("got records from iCloud fetch: count: \(records.count)")
-                    if let parkName = record.objectForKey(CloudKitStrings.Attribute.name) as? String,
-                        image = record.objectForKey(CloudKitStrings.Attribute.image) as? CKAsset,
-                        id = record.objectForKey(CloudKitStrings.Attribute.id) as? Int {
-                        
-                        let park = CKPark()
-                        park.name = parkName
-                        park.image = image
-                        park.id = id
-                        park.ckRecordID = record.recordID
-
-                        // Post notification that Cloud fetch finished
-                        NSNotificationCenter.defaultCenter().postNotificationName(Notifications.fetchAllFromiCloudFinishedNotification, object: park)
+                    var ckPhotos = [CKPhoto]()
+                    
+                    for record in records {
+                        if let image = record.objectForKey(CloudKitStrings.Attribute.image) as? CKAsset {
+                            let ckPhoto = CKPhoto()
+                            ckPhoto.image = image 
+                            ckPhotos.append(ckPhoto)
+                        }
                     }
+                    // Post notification that Cloud fetch finished
+                    //NSNotificationCenter.defaultCenter().postNotificationName(Notifications.fetchAllFromiCloudFinishedNotification, object: ckPhotos as? AnyObject)
+                    
+                    NSNotificationCenter.defaultCenter().postNotificationName(
+                        Notifications.fetchAllFromiCloudFinishedNotification,
+                        object: self,
+                        userInfo: ["Photos": ckPhotos])
                 }
             }
         }

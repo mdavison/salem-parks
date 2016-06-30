@@ -11,9 +11,9 @@ import YelpAPI
 
 class DetailViewController: UIViewController {
 
-    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var photosCollectionView: UICollectionView!
     @IBOutlet weak var yelpRatingLabel: UILabel!
     @IBOutlet weak var amenityImage1: UIImageView! {
         didSet {
@@ -37,13 +37,26 @@ class DetailViewController: UIViewController {
     }
     
     var parkItem: ParkItem?
-    var ckPark: CKPark? {
+//    var ckPark: CKPark? {
+//        didSet {
+//            print("ckPark has been set")
+//            dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+////                if let imageFileURL = self.ckPark?.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
+////                    self.imageView.image = UIImage(data: data)
+////                }
+//            }
+//        }
+//    }
+    var ckPhotos: [CKPhoto]? {
         didSet {
-            print("ckPark has been set")
+            print("ckPhotos has been set")
             dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-                if let imageFileURL = self.ckPark?.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
-                    self.imageView.image = UIImage(data: data)
-                }
+//                if let firstPhoto = self.ckPhotos?.first {
+//                    if let imageFileURL = firstPhoto.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
+//                        self.imageView.image = UIImage(data: data)
+//                    }
+//                }
+                self.photosCollectionView.reloadData()
             }
         }
     }
@@ -59,6 +72,10 @@ class DetailViewController: UIViewController {
     }
     
     let defaultNotificationCenter = NSNotificationCenter.defaultCenter()
+    
+    struct Storyboard {
+        static let parkImageCellReuseIdentifier = "ParkImageCell"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,10 +121,18 @@ class DetailViewController: UIViewController {
         parkNetworkActivity = false
         
         print("fetched from iCloud: \(notification.object)")
-        if let park = notification.object as? CKPark {
-            ckPark = park
+//        if let park = notification.object as? CKPark {
+//            ckPark = park
+//        } else if let _ = notification.object as? NSError {
+//            // iCloud fetch error 
+//        }
+        if let userInfo = notification.userInfo as? [String: [CKPhoto]], photos = userInfo["Photos"] {
+//            for photo in photos {
+//                print("photo: \(photo.image)")
+//            }
+            ckPhotos = photos 
         } else if let _ = notification.object as? NSError {
-            // iCloud fetch error 
+            // iCloud fetch error
         }
     }
     
@@ -169,7 +194,8 @@ class DetailViewController: UIViewController {
                 parkNetworkActivity = true
                 
                 //Park.getCKParkFromiCloud(forObjectID: id)
-                Park.getCKParkFromiCloud(forObjectID: 48)
+                //Park.getCKParkFromiCloud(forObjectID: 48)
+                Park.getCKPhotosFromiCloud(forParkID: 48)
             }
             
             // Add observer for when cloud fetch completes
@@ -218,4 +244,37 @@ class DetailViewController: UIViewController {
         
     }
 
+}
+
+
+extension DetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        //return !(ckPhotos?.isEmpty)! ? ckPhotos!.count : 1
+        if let ckPhotos = ckPhotos where !ckPhotos.isEmpty {
+            return ckPhotos.count
+        }
+        return 1
+        
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = photosCollectionView.dequeueReusableCellWithReuseIdentifier(Storyboard.parkImageCellReuseIdentifier, forIndexPath: indexPath) as! PhotoCollectionViewCell
+        print("cellForItemAtIndexPath")
+        if let ckPhotos = ckPhotos where !ckPhotos.isEmpty {
+            print("have ckPhotos")
+            let photo = ckPhotos[indexPath.row]
+            if let imageFileURL = photo.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
+                //cell.imageView.image = UIImage(data: data)
+                cell.photoImageView.image = UIImage(data: data)
+            }
+        }
+        
+        return cell 
+    }
+    
 }

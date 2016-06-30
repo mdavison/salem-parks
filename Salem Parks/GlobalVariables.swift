@@ -24,6 +24,7 @@ struct CoreDataStrings {
 struct CloudKitStrings {
     struct Entity {
         static let parks = "Parks"
+        static let photos = "Photos"
     }
     
     struct Attribute {
