@@ -33,6 +33,7 @@
 		90C1F9DC1D2363F50063B89E /* YelpAPIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C1F9DB1D2363F50063B89E /* YelpAPIKeys.swift */; };
 		90DDBC491D24648800FD2BF3 /* CKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC481D24648800FD2BF3 /* CKPhoto.swift */; };
 		90DDBC4B1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC4A1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift */; };
+		90DDBC4D1D24BA2800FD2BF3 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC4C1D24BA2800FD2BF3 /* Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		90C1F9DB1D2363F50063B89E /* YelpAPIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpAPIKeys.swift; sourceTree = "<group>"; };
 		90DDBC481D24648800FD2BF3 /* CKPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CKPhoto.swift; sourceTree = "<group>"; };
 		90DDBC4A1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		90DDBC4C1D24BA2800FD2BF3 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B9540BDBC4F9C6952259D168 /* Pods-Salem Parks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Salem Parks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Salem Parks/Pods-Salem Parks.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -158,6 +160,7 @@
 				90DDBC4A1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift */,
 				9012FF1D1D1C997A0075519C /* AppDelegate.swift */,
 				9012FF5D1D1D70630075519C /* GlobalVariables.swift */,
+				90DDBC4C1D24BA2800FD2BF3 /* Theme.swift */,
 				9012FF951D20B39F0075519C /* Model */,
 				9012FF591D1CA6810075519C /* Core Data */,
 				9012FF211D1C997A0075519C /* Main.storyboard */,
@@ -424,6 +427,7 @@
 				9012FF521D1CA5290075519C /* ParksListTableViewController.swift in Sources */,
 				9012FF5E1D1D70630075519C /* GlobalVariables.swift in Sources */,
 				9012FF921D209A310075519C /* JSON.swift in Sources */,
+				90DDBC4D1D24BA2800FD2BF3 /* Theme.swift in Sources */,
 				9012FF581D1CA67C0075519C /* Park.swift in Sources */,
 				9012FF571D1CA67C0075519C /* Park+CoreDataProperties.swift in Sources */,
 				9012FF9E1D21BFFB0075519C /* CKPark.swift in Sources */,

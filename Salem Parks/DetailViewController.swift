@@ -17,22 +17,22 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var yelpRatingLabel: UILabel!
     @IBOutlet weak var amenityImage1: UIImageView! {
         didSet {
-            amenityImage1.tintColor = UIColor.lightGrayColor()
+            amenityImage1.tintColor = Theme.amenityIconDefaultColor
         }
     }
     @IBOutlet weak var amenityImage2: UIImageView! {
         didSet {
-            amenityImage2.tintColor = UIColor.lightGrayColor()
+            amenityImage2.tintColor = Theme.amenityIconDefaultColor
         }
     }
     @IBOutlet weak var amenityImage3: UIImageView! {
         didSet {
-            amenityImage3.tintColor = UIColor.lightGrayColor()
+            amenityImage3.tintColor = Theme.amenityIconDefaultColor
         }
     }
     @IBOutlet weak var amenityImage4: UIImageView! {
         didSet {
-            amenityImage4.tintColor = UIColor.lightGrayColor()
+            amenityImage4.tintColor = Theme.amenityIconDefaultColor
         }
     }
     
@@ -49,7 +49,7 @@ class DetailViewController: UIViewController {
 //    }
     var ckPhotos: [CKPhoto]? {
         didSet {
-            print("ckPhotos has been set")
+            //print("ckPhotos has been set")
             dispatch_async(dispatch_get_main_queue()) { [unowned self] in
 //                if let firstPhoto = self.ckPhotos?.first {
 //                    if let imageFileURL = firstPhoto.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
@@ -75,11 +75,12 @@ class DetailViewController: UIViewController {
     
     struct Storyboard {
         static let parkImageCellReuseIdentifier = "ParkImageCell"
+        static let amenityCellReuseIdentifier = "AmenityCell"
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         title = parkItem?.parkName
         addressLabel.text = parkItem?.street
         
@@ -120,7 +121,7 @@ class DetailViewController: UIViewController {
         // Turn off network activity spinner
         parkNetworkActivity = false
         
-        print("fetched from iCloud: \(notification.object)")
+        //print("fetched from iCloud: \(notification.object)")
 //        if let park = notification.object as? CKPark {
 //            ckPark = park
 //        } else if let _ = notification.object as? NSError {
@@ -137,10 +138,8 @@ class DetailViewController: UIViewController {
     }
     
     @objc private func notSignedIntoiCloudNotificationHandler(notification: NSNotification) {
-        print("not signed into icloud notification handler")
         let alert = UIAlertController(title: "iCloud Error", message: "You will need to sign into iCloud in order to see park photos.", preferredStyle: .Alert)
         let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        // TODO: add action that takes user to settings?
         alert.addAction(action)
         
         presentViewController(alert, animated: true, completion: nil)
@@ -150,17 +149,24 @@ class DetailViewController: UIViewController {
     // MARK: - Helper Methods 
     
     private func setAmenityImages() {
-        if let restrooms = parkItem?.hasRestrooms where restrooms == true {
-            amenityImage1.tintColor = UIColor.blackColor()
-        }
-        if let picnicTables = parkItem?.hasPicnicTables where picnicTables == true {
-            amenityImage2.tintColor = UIColor.blackColor()
-        }
-        if let picnicShelter = parkItem?.hasPicnicShelter where picnicShelter == true {
-            amenityImage3.tintColor = UIColor.blackColor()
-        }
-        if let playground = parkItem?.hasPlayEquipment where playground == true {
-            amenityImage4.tintColor = UIColor.blackColor()
+        if let amenities = parkItem?.amenities {
+            for amenity in amenities {
+                for (key, value) in amenity {
+                    switch key {
+                    case "Restrooms" where value as? String == "Yes":
+                        amenityImage1.tintColor = UIColor.blackColor()
+                    case "Picnic Tables" where value as? String == "Yes":
+                        amenityImage2.tintColor = UIColor.blackColor()
+                    case "Picnic Shelter" where value as? String == "Yes":
+                        amenityImage3.tintColor = UIColor.blackColor()
+                    case "Play Equipment" where value as? String == "Yes":
+                        amenityImage4.tintColor = UIColor.blackColor()
+                        
+                    default:
+                        break;
+                    }
+                }
+            }
         }
     }
     
@@ -258,7 +264,6 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //return !(ckPhotos?.isEmpty)! ? ckPhotos!.count : 1
         if let ckPhotos = ckPhotos where !ckPhotos.isEmpty {
             return ckPhotos.count
         }
@@ -268,12 +273,9 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = photosCollectionView.dequeueReusableCellWithReuseIdentifier(Storyboard.parkImageCellReuseIdentifier, forIndexPath: indexPath) as! PhotoCollectionViewCell
-        print("cellForItemAtIndexPath")
         if let ckPhotos = ckPhotos where !ckPhotos.isEmpty {
-            print("have ckPhotos")
             let photo = ckPhotos[indexPath.row]
             if let imageFileURL = photo.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
-                //cell.imageView.image = UIImage(data: data)
                 cell.photoImageView.image = UIImage(data: data)
             }
         }
@@ -281,4 +283,35 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
         return cell 
     }
     
+}
+
+
+extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let amenities = parkItem?.amenities where !amenities.isEmpty {
+            return amenities.count
+        }
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.amenityCellReuseIdentifier, forIndexPath: indexPath)
+        
+        if let amenities = parkItem?.amenities where !amenities.isEmpty {
+            let dict = amenities[indexPath.row]
+            for (key, value) in dict {
+                cell.textLabel?.text = key
+                cell.detailTextLabel?.text = value as? String
+            }
+        } else {
+            cell.textLabel?.text = "Error: Unable to fetch park data"
+            cell.detailTextLabel?.text = ""
+        }
+        
+        return cell
+    }
 }

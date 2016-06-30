@@ -152,6 +152,7 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Toilet" translatesAutoresizingMaskIntoConstraints="NO" id="aBx-5T-K1J">
                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                        <color key="tintColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="1J2-A8-LFD"/>
                                             <constraint firstAttribute="width" constant="25" id="cQV-k9-uJT"/>
@@ -186,22 +187,66 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IMo-YC-FAd">
+                                <rect key="frame" x="20" y="301" width="560" height="250"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AmenityCell" textLabel="WEh-Yy-sCN" detailTextLabel="0VT-dq-m8I" style="IBUITableViewCellStyleValue1" id="OrY-XB-uD7">
+                                        <rect key="frame" x="0.0" y="28" width="560" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OrY-XB-uD7" id="8kM-Q7-K0E">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WEh-Yy-sCN">
+                                                    <rect key="frame" x="15" y="12" width="31.5" height="19.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0VT-dq-m8I">
+                                                    <rect key="frame" x="503.5" y="12" width="41.5" height="19.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="72v-US-hjw" id="LOd-NA-pEq"/>
+                                    <outlet property="delegate" destination="72v-US-hjw" id="vl5-Vc-QJL"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="Nxj-VH-HDk" secondAttribute="trailing" id="33d-cE-SZL"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Zcy-lX-zAF" secondAttribute="leading" id="8y1-Ij-iAT"/>
                             <constraint firstAttribute="leadingMargin" secondItem="5Fh-xB-pNc" secondAttribute="leading" id="Dks-OP-ucQ"/>
+                            <constraint firstItem="osd-1n-MW5" firstAttribute="top" secondItem="IMo-YC-FAd" secondAttribute="bottom" constant="-49" id="J6l-ds-kEn"/>
                             <constraint firstItem="Nxj-VH-HDk" firstAttribute="leading" secondItem="FU5-xH-iCo" secondAttribute="trailing" constant="3" id="K55-d5-3ql"/>
+                            <constraint firstItem="IMo-YC-FAd" firstAttribute="top" secondItem="y7s-To-w0y" secondAttribute="bottom" constant="8" symbolic="YES" id="LiN-q7-9wY"/>
                             <constraint firstItem="FU5-xH-iCo" firstAttribute="top" secondItem="spv-u1-8jU" secondAttribute="bottom" constant="8" id="Mz8-ag-UPt"/>
                             <constraint firstItem="y7s-To-w0y" firstAttribute="top" secondItem="5Fh-xB-pNc" secondAttribute="bottom" constant="8" id="SEg-nU-39W"/>
                             <constraint firstAttribute="leadingMargin" secondItem="FU5-xH-iCo" secondAttribute="leading" id="STA-Ph-FKa"/>
                             <constraint firstItem="Nxj-VH-HDk" firstAttribute="top" secondItem="spv-u1-8jU" secondAttribute="bottom" constant="8" symbolic="YES" id="V4g-C2-KF1"/>
+                            <constraint firstItem="IMo-YC-FAd" firstAttribute="leading" secondItem="y7s-To-w0y" secondAttribute="leading" id="YMW-Aw-yuk"/>
                             <constraint firstItem="5Fh-xB-pNc" firstAttribute="top" secondItem="Zcy-lX-zAF" secondAttribute="bottom" constant="8" id="do8-3Y-rYQ"/>
+                            <constraint firstItem="IMo-YC-FAd" firstAttribute="bottom" secondItem="osd-1n-MW5" secondAttribute="top" id="gcQ-Fe-mNY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Zcy-lX-zAF" secondAttribute="trailing" id="jNe-sx-Lrl"/>
                             <constraint firstItem="Zcy-lX-zAF" firstAttribute="top" secondItem="Nxj-VH-HDk" secondAttribute="bottom" constant="8" id="jiL-SO-weL"/>
                             <constraint firstAttribute="leadingMargin" secondItem="y7s-To-w0y" secondAttribute="leading" id="rsh-Mz-JAq"/>
+                            <constraint firstItem="IMo-YC-FAd" firstAttribute="trailing" secondItem="Zcy-lX-zAF" secondAttribute="trailing" id="y6g-W9-nwt"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="J6l-ds-kEn"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="addressLabel" destination="FU5-xH-iCo" id="hUM-32-Lhm"/>
