@@ -238,8 +238,12 @@ class DetailViewController: UIViewController {
     // Coordinate multiple network activity indicators
     private func toggleNetworkActivitySpinner() {
         let sharedApplication = UIApplication.sharedApplication()
-        if parkNetworkActivity == yelpNetworkActivity {
-            sharedApplication.networkActivityIndicatorVisible = !sharedApplication.networkActivityIndicatorVisible
+        if !userIsSignedIntoiCloud {
+            sharedApplication.networkActivityIndicatorVisible = yelpNetworkActivity
+        } else {
+            if parkNetworkActivity == yelpNetworkActivity {
+                sharedApplication.networkActivityIndicatorVisible = !sharedApplication.networkActivityIndicatorVisible
+            }
         }
         
     }
