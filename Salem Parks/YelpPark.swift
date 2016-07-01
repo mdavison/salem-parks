@@ -113,4 +113,14 @@ struct YelpPark {
 
         return starsImages
     }
+    
+    
+    static func getBusinessIDForParkID(parkID: Int) -> String? {
+        if let path = NSBundle.mainBundle().pathForResource("Yelp", ofType: "plist") {
+            if let parks = NSDictionary(contentsOfFile: path) {
+                return parks.objectForKey("\(parkID)")?.objectForKey("businessID") as? String
+            }
+        }
+        return nil
+    }
 }

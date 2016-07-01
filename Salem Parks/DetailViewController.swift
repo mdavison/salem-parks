@@ -42,25 +42,9 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var ratingStarImage5: UIImageView!
     
     var parkItem: ParkItem?
-//    var ckPark: CKPark? {
-//        didSet {
-//            print("ckPark has been set")
-//            dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-////                if let imageFileURL = self.ckPark?.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
-////                    self.imageView.image = UIImage(data: data)
-////                }
-//            }
-//        }
-//    }
     var ckPhotos: [CKPhoto]? {
         didSet {
-            //print("ckPhotos has been set")
             dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-//                if let firstPhoto = self.ckPhotos?.first {
-//                    if let imageFileURL = firstPhoto.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
-//                        self.imageView.image = UIImage(data: data)
-//                    }
-//                }
                 self.photosCollectionView.reloadData()
             }
         }
@@ -126,16 +110,7 @@ class DetailViewController: UIViewController {
         // Turn off network activity spinner
         parkNetworkActivity = false
         
-        //print("fetched from iCloud: \(notification.object)")
-//        if let park = notification.object as? CKPark {
-//            ckPark = park
-//        } else if let _ = notification.object as? NSError {
-//            // iCloud fetch error 
-//        }
         if let userInfo = notification.userInfo as? [String: [CKPhoto]], photos = userInfo["Photos"] {
-//            for photo in photos {
-//                print("photo: \(photo.image)")
-//            }
             ckPhotos = photos 
         } else if let _ = notification.object as? NSError {
             // iCloud fetch error
@@ -203,10 +178,8 @@ class DetailViewController: UIViewController {
             if let id = parkItem?.objectID {
                 // Turn on network activity spinner
                 parkNetworkActivity = true
-                
-                //Park.getCKParkFromiCloud(forObjectID: id)
-                //Park.getCKParkFromiCloud(forObjectID: 48)
-                Park.getCKPhotosFromiCloud(forParkID: 48)
+
+                Park.getCKPhotosFromiCloud(forParkID: id)
             }
             
             // Add observer for when cloud fetch completes
@@ -229,20 +202,19 @@ class DetailViewController: UIViewController {
                                token: YelpAPIKeys.token,
                                tokenSecret: YelpAPIKeys.tokenSecret)
         
-        // Turn on network activity spinner
-        yelpNetworkActivity = true
-        
-        // TODO: get current business id - create plist of all business ids for all parks
-        
-        client.businessWithId("riverfront-park-salem") { [weak weakSelf = self] (business, error) in
-            if let rating = business?.rating {
-                dispatch_async(dispatch_get_main_queue(), {
-                    //weakSelf?.yelpRatingLabel.text = (weakSelf?.yelpRatingLabel.text)! + " \(rating)/5"
-                    weakSelf?.setStarsForRating(rating)
-                    
-                    // Turn off network activity spinner
-                    weakSelf?.yelpNetworkActivity = false
-                })
+        if let parkItemID = parkItem?.objectID, businessID = YelpPark.getBusinessIDForParkID(parkItemID) {
+            // Turn on network activity spinner
+            yelpNetworkActivity = true
+            
+            client.businessWithId(businessID) { [weak weakSelf = self] (business, error) in
+                if let rating = business?.rating {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        weakSelf?.setStarsForRating(rating)
+                        
+                        // Turn off network activity spinner
+                        weakSelf?.yelpNetworkActivity = false
+                    })
+                }
             }
         }
     }
@@ -250,14 +222,12 @@ class DetailViewController: UIViewController {
     // Coordinate multiple network activity indicators
     private func toggleNetworkActivitySpinner() {
         let sharedApplication = UIApplication.sharedApplication()
-        if !userIsSignedIntoiCloud {
-            sharedApplication.networkActivityIndicatorVisible = yelpNetworkActivity
+
+        if parkNetworkActivity == false && yelpNetworkActivity == false {
+            sharedApplication.networkActivityIndicatorVisible = false
         } else {
-            if parkNetworkActivity == yelpNetworkActivity {
-                sharedApplication.networkActivityIndicatorVisible = !sharedApplication.networkActivityIndicatorVisible
-            }
+            sharedApplication.networkActivityIndicatorVisible = true
         }
-        
     }
     
     private func setStarsForRating(rating: Double) {
