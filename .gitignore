@@ -25,6 +25,7 @@ xcuserdata/
 *.moved-aside
 *.xcuserstate
 Salem Parks/YelpAPIKeys.swift
+Salem Parks/Yelp.plist
 
 ## Obj-C/Swift specific
 *.hmap
