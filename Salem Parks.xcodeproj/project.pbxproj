@@ -35,6 +35,7 @@
 		90DDBC4B1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC4A1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift */; };
 		90DDBC4D1D24BA2800FD2BF3 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC4C1D24BA2800FD2BF3 /* Theme.swift */; };
 		90DDBC501D25FB8300FD2BF3 /* YelpPark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC4F1D25FB8300FD2BF3 /* YelpPark.swift */; };
+		90DDBC521D2606A000FD2BF3 /* Yelp.plist in Resources */ = {isa = PBXBuildFile; fileRef = 90DDBC511D2606A000FD2BF3 /* Yelp.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		90DDBC4A1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		90DDBC4C1D24BA2800FD2BF3 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		90DDBC4F1D25FB8300FD2BF3 /* YelpPark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpPark.swift; sourceTree = "<group>"; };
+		90DDBC511D2606A000FD2BF3 /* Yelp.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Yelp.plist; sourceTree = "<group>"; };
 		B9540BDBC4F9C6952259D168 /* Pods-Salem Parks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Salem Parks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Salem Parks/Pods-Salem Parks.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -214,6 +216,7 @@
 				9012FF961D20B6830075519C /* ParkData.swift */,
 				9012FF8F1D209A270075519C /* park_data.json */,
 				9012FF8D1D2099E60075519C /* ParkCoordinates.plist */,
+				90DDBC511D2606A000FD2BF3 /* Yelp.plist */,
 				9012FF911D209A310075519C /* JSON.swift */,
 			);
 			name = Model;
@@ -346,6 +349,7 @@
 			files = (
 				9012FF8E1D2099E60075519C /* ParkCoordinates.plist in Resources */,
 				9012FF2B1D1C997A0075519C /* LaunchScreen.storyboard in Resources */,
+				90DDBC521D2606A000FD2BF3 /* Yelp.plist in Resources */,
 				9012FF281D1C997A0075519C /* Assets.xcassets in Resources */,
 				9012FF901D209A270075519C /* park_data.json in Resources */,
 				9012FF231D1C997A0075519C /* Main.storyboard in Resources */,
