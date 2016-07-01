@@ -14,7 +14,6 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var photosCollectionView: UICollectionView!
-    @IBOutlet weak var yelpRatingLabel: UILabel!
     @IBOutlet weak var amenityImage1: UIImageView! {
         didSet {
             amenityImage1.tintColor = Theme.amenityIconDefaultColor
@@ -35,6 +34,12 @@ class DetailViewController: UIViewController {
             amenityImage4.tintColor = Theme.amenityIconDefaultColor
         }
     }
+    
+    @IBOutlet weak var ratingStarImage1: UIImageView!
+    @IBOutlet weak var ratingStarImage2: UIImageView!
+    @IBOutlet weak var ratingStarImage3: UIImageView!
+    @IBOutlet weak var ratingStarImage4: UIImageView!
+    @IBOutlet weak var ratingStarImage5: UIImageView!
     
     var parkItem: ParkItem?
 //    var ckPark: CKPark? {
@@ -232,7 +237,8 @@ class DetailViewController: UIViewController {
         client.businessWithId("riverfront-park-salem") { [weak weakSelf = self] (business, error) in
             if let rating = business?.rating {
                 dispatch_async(dispatch_get_main_queue(), {
-                    weakSelf?.yelpRatingLabel.text = (weakSelf?.yelpRatingLabel.text)! + " \(rating)/5"
+                    //weakSelf?.yelpRatingLabel.text = (weakSelf?.yelpRatingLabel.text)! + " \(rating)/5"
+                    weakSelf?.setStarsForRating(rating)
                     
                     // Turn off network activity spinner
                     weakSelf?.yelpNetworkActivity = false
@@ -252,6 +258,20 @@ class DetailViewController: UIViewController {
             }
         }
         
+    }
+    
+    private func setStarsForRating(rating: Double) {
+        let stars = YelpPark.convertRatingToStarsImages(rating)
+        
+        if let image1 = stars["image1"], image2 = stars["image2"], image3 = stars["image3"],
+            image4 = stars["image4"], image5 = stars["image5"] {
+            
+            ratingStarImage1.image = UIImage(named: image1)
+            ratingStarImage2.image = UIImage(named: image2)
+            ratingStarImage3.image = UIImage(named: image3)
+            ratingStarImage4.image = UIImage(named: image4)
+            ratingStarImage5.image = UIImage(named: image5)
+        }
     }
 
 }
