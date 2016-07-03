@@ -156,13 +156,13 @@
 			isa = PBXGroup;
 			children = (
 				9012FF511D1CA5290075519C /* ParksListTableViewController.swift */,
-				90C1F9DB1D2363F50063B89E /* YelpAPIKeys.swift */,
 				9012FF531D1CA55D0075519C /* MapViewController.swift */,
 				9012FF9A1D2162A10075519C /* DetailViewController.swift */,
 				90DDBC4A1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift */,
 				9012FF1D1D1C997A0075519C /* AppDelegate.swift */,
 				9012FF5D1D1D70630075519C /* GlobalVariables.swift */,
 				90DDBC4C1D24BA2800FD2BF3 /* Theme.swift */,
+				90C1F9DB1D2363F50063B89E /* YelpAPIKeys.swift */,
 				9012FF951D20B39F0075519C /* Model */,
 				9012FF591D1CA6810075519C /* Core Data */,
 				9012FF211D1C997A0075519C /* Main.storyboard */,

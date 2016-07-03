@@ -17,7 +17,11 @@ struct CoreDataStrings {
     }
     
     struct Attribute {
+        static let id = "id"
         static let name = "name"
+        static let isFavorite = "isFavorite"
+        static let street = "street"
+        static let status = "status"
     }
 }
 
@@ -35,7 +39,7 @@ struct CloudKitStrings {
 }
 
 struct Notifications {
-    static let fetchAllFromiCloudAndSaveFinishedNotification = "FetchAllFromiCloudAndSaveFinishedNotification"
+    //static let fetchAllFromiCloudAndSaveFinishedNotification = "FetchAllFromiCloudAndSaveFinishedNotification"
     static let fetchAllFromiCloudFinishedNotification = "FetchAllFromiCloudFinishedNotification"
 }
 

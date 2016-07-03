@@ -33,11 +33,11 @@ class CoreDataStack {
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
             let options =
-                [NSPersistentStoreUbiquitousContentNameKey: "Salem_Parks",
+                [NSPersistentStoreUbiquitousContentNameKey: "SalemParks",
                  NSMigratePersistentStoresAutomaticallyOption: true,
                  NSInferMappingModelAutomaticallyOption: true]
             
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()

@@ -1,17 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
     <entity name="Park" representedClassName=".Park" syncable="YES">
-        <attribute name="ckRecordID" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="daysOpen" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hasBallfields" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasBasketball" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasBike" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasGardens" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasHorseshoes" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasJogging" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasMultiUseCourt" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasPicnicShelter" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasPicnicTables" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasPlayEquip" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasRestrooms" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasSkate" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasSoccer" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasSprayPad" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasStage" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasTennis" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasWalking" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hours" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isReservable" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="ckRecordID"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
+        <attribute name="parkType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Park" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Park" positionX="-63" positionY="-18" width="128" height="435"/>
     </elements>
 </model>

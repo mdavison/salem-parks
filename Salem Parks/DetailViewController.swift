@@ -41,7 +41,9 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var ratingStarImage4: UIImageView!
     @IBOutlet weak var ratingStarImage5: UIImageView!
     
-    var parkItem: ParkItem?
+    var coreDataStack: CoreDataStack!
+    //var parkItem: ParkItem?
+    var park: Park?
     var ckPhotos: [CKPhoto]? {
         didSet {
             dispatch_async(dispatch_get_main_queue()) { [unowned self] in
@@ -70,10 +72,11 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = parkItem?.parkName
-        addressLabel.text = parkItem?.street
+        title = park?.name
+        addressLabel.text = park?.street
         
         setAmenityImages()
+        setFavorite()
         setParkImages()
         setYelpData()
     }
@@ -104,6 +107,21 @@ class DetailViewController: UIViewController {
     }
     */
     
+    // MARK: - Actions
+    
+    @IBAction func toggleFavorite(sender: UIButton) {
+        if park?.isFavorite == true {
+            favoriteButton.setImage(UIImage(named: "Like"), forState: .Normal)
+            park?.isFavorite = false
+        } else { // false or nil
+            favoriteButton.setImage(UIImage(named: "Like Filled"), forState: .Normal)
+            park?.isFavorite = true
+        }
+        
+        coreDataStack.saveContext()
+    }
+    
+    
     // MARK: - Notification Handling
     
     @objc private func fetchAllFromiCloudNotificationHandler(notification: NSNotification) {
@@ -118,8 +136,10 @@ class DetailViewController: UIViewController {
     }
     
     @objc private func notSignedIntoiCloudNotificationHandler(notification: NSNotification) {
-        let alert = UIAlertController(title: "iCloud Error", message: "You will need to sign into iCloud in order to see park photos.", preferredStyle: .Alert)
-        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let alertTitle = NSLocalizedString("iCloud Error", comment: "")
+        let alertMessage = NSLocalizedString("You'll need to sign into iCloud in order to see park photos.", comment: "User needs to sign into iCloud to see photos.")
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .Alert)
+        let action = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil)
         alert.addAction(action)
         
         presentViewController(alert, animated: true, completion: nil)
@@ -129,24 +149,36 @@ class DetailViewController: UIViewController {
     // MARK: - Helper Methods 
     
     private func setAmenityImages() {
-        if let amenities = parkItem?.amenities {
-            for amenity in amenities {
-                for (key, value) in amenity {
-                    switch key {
-                    case "Restrooms" where value as? String == "Yes":
-                        amenityImage1.tintColor = UIColor.blackColor()
-                    case "Picnic Tables" where value as? String == "Yes":
-                        amenityImage2.tintColor = UIColor.blackColor()
-                    case "Picnic Shelter" where value as? String == "Yes":
-                        amenityImage3.tintColor = UIColor.blackColor()
-                    case "Play Equipment" where value as? String == "Yes":
-                        amenityImage4.tintColor = UIColor.blackColor()
-                        
-                    default:
-                        break;
-                    }
-                }
-            }
+//        if let amenities = park?.getAmenities() {
+//            for amenity in amenities {
+//                for (key, value) in amenity {
+//                    switch key {
+//                    case "Restrooms" where value == "Yes":
+//                        amenityImage1.tintColor = UIColor.blackColor()
+//                    case "Picnic Tables" where value == "Yes":
+//                        amenityImage2.tintColor = UIColor.blackColor()
+//                    case "Picnic Shelter" where value == "Yes":
+//                        amenityImage3.tintColor = UIColor.blackColor()
+//                    case "Play Equipment" where value == "Yes":
+//                        amenityImage4.tintColor = UIColor.blackColor()
+//                        
+//                    default:
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+        if park?.hasRestrooms == true {
+            amenityImage1.tintColor = UIColor.blackColor()
+        }
+        if park?.hasPicnicTables == true {
+            amenityImage2.tintColor = UIColor.blackColor()
+        }
+        if park?.hasPicnicShelter == true {
+            amenityImage3.tintColor = UIColor.blackColor()
+        }
+        if park?.hasPlayEquip == true {
+            amenityImage4.tintColor = UIColor.blackColor()
         }
     }
     
@@ -172,10 +204,16 @@ class DetailViewController: UIViewController {
         userHasBeenAlertedToiCloudSignInRequired = true
     }
     
+    private func setFavorite() {
+        if park?.isFavorite == true {
+            favoriteButton.setImage(UIImage(named: "Like Filled"), forState: .Normal)
+        } 
+    }
+    
     private func setParkImages() {
         if userIsSignedIntoiCloud {
             // Fetch CKPark from cloudkit to populate image
-            if let id = parkItem?.objectID {
+            if let park = park, id = park.id as? Int {
                 // Turn on network activity spinner
                 parkNetworkActivity = true
 
@@ -202,7 +240,7 @@ class DetailViewController: UIViewController {
                                token: YelpAPIKeys.token,
                                tokenSecret: YelpAPIKeys.tokenSecret)
         
-        if let parkItemID = parkItem?.objectID, businessID = YelpPark.getBusinessIDForParkID(parkItemID) {
+        if let park = park, parkItemID = park.id as? Int, businessID = YelpPark.getBusinessIDForParkID(parkItemID) {
             // Turn on network activity spinner
             yelpNetworkActivity = true
             
@@ -282,7 +320,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let amenities = parkItem?.amenities where !amenities.isEmpty {
+        if let amenities = park?.getAmenities() where !amenities.isEmpty {
             return amenities.count
         }
         return 1
@@ -291,17 +329,17 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.amenityCellReuseIdentifier, forIndexPath: indexPath)
         
-        if let amenities = parkItem?.amenities where !amenities.isEmpty {
+        if let amenities = park?.getAmenities() where !amenities.isEmpty {
             let dict = amenities[indexPath.row]
             for (key, value) in dict {
                 cell.textLabel?.text = key
-                cell.detailTextLabel?.text = value as? String
+                cell.detailTextLabel?.text = value
             }
         } else {
             cell.textLabel?.text = "Error: Unable to fetch park data"
             cell.detailTextLabel?.text = ""
         }
-        
+                
         return cell
     }
 }

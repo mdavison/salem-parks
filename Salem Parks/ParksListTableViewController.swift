@@ -15,7 +15,8 @@ class ParksListTableViewController: UITableViewController {
     let defaultNotificationCenter = NSNotificationCenter.defaultCenter()
     
     var coreDataStack: CoreDataStack!
-    var parkItems = [ParkItem]()
+    //var parkItems = [ParkItem]()
+    //var parks: [Park]?
     
     struct Storyboard {
         static let CellReuseIdentifier = "Park"
@@ -31,7 +32,7 @@ class ParksListTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        //fetchedResultsController.delegate = self
+        fetchedResultsController.delegate = self
         
         // If local database is empty, fetch all records from cloud
         // TODO: get images but don't set them to fetchedResultsController
@@ -50,7 +51,13 @@ class ParksListTableViewController: UITableViewController {
         // For Development
         //Park.deleteAll(coreDataStack)
         
-        parkItems = ParkItem.getAll()
+        //parkItems = ParkItem.getAll()
+
+        if fetchedResultsController.fetchedObjects?.count == 0 {
+            print("core data is empty")
+            Park.saveJSONDataToCoreData(coreDataStack)
+            _fetchedResultsController = nil
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -65,7 +72,6 @@ class ParksListTableViewController: UITableViewController {
                 queue: NSOperationQueue.mainQueue(),
                 usingBlock: { notification in
                     if let ckQueryNotification = notification.userInfo?[CloudKitNotifications.notificationKey] as? CKQueryNotification {
-                        print("in cloud kit subscription notification observer block")
                         self.iCloudHandleSubscriptionNotification(ckQueryNotification)
                     }
             })
@@ -89,39 +95,44 @@ class ParksListTableViewController: UITableViewController {
     
     // MARK: - Fetched results controller
     
-//    var fetchedResultsController: NSFetchedResultsController {
-//        if _fetchedResultsController != nil {
-//            return _fetchedResultsController!
-//        }
-//        
-//        let fetchedResultsController = Park.getFetchedResultsController(coreDataStack)
-//        fetchedResultsController.delegate = self
-//        _fetchedResultsController = fetchedResultsController
-//        
-//        return _fetchedResultsController!
-//    }
-//    var _fetchedResultsController: NSFetchedResultsController? = nil {
-//        didSet {
-//            tableView.reloadData()
-//        }
-//    }
+    var fetchedResultsController: NSFetchedResultsController {
+        if _fetchedResultsController != nil {
+            return _fetchedResultsController!
+        }
+        
+        let fetchedResultsController = Park.getFetchedResultsController(coreDataStack)
+        fetchedResultsController.delegate = self
+        _fetchedResultsController = fetchedResultsController
+        
+        return _fetchedResultsController!
+    }
+    var _fetchedResultsController: NSFetchedResultsController? = nil {
+        didSet {
+            tableView.reloadData()
+        }
+    }
 
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        //return 1
+        return fetchedResultsController.sections?.count ?? 0
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return parkItems.count
+        //return parkItems.count
+        let sectionInfo = fetchedResultsController.sections![section]
+        return sectionInfo.numberOfObjects
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.CellReuseIdentifier, forIndexPath: indexPath)
 
-        let park = parkItems[indexPath.row]
-        cell.textLabel?.text = park.parkName
+        //let park = parkItems[indexPath.row]
+        if let park = fetchedResultsController.objectAtIndexPath(indexPath) as? Park {
+            cell.textLabel?.text = park.name
+        }
 
         return cell
     }
@@ -171,7 +182,9 @@ class ParksListTableViewController: UITableViewController {
         if segue.identifier == Storyboard.ShowParkDetailsSegueIdentifier {
             let detailViewController = segue.destinationViewController as! DetailViewController
             let indexPath = tableView.indexPathForSelectedRow!
-            detailViewController.parkItem = parkItems[indexPath.row]
+            //detailViewController.parkItem = parkItems[indexPath.row]
+            detailViewController.coreDataStack = coreDataStack
+            detailViewController.park = fetchedResultsController.objectAtIndexPath(indexPath) as? Park
         }
     }
 
@@ -198,7 +211,56 @@ class ParksListTableViewController: UITableViewController {
             }
         }
     }
+    
+}
 
+
+extension ParksListTableViewController: NSFetchedResultsControllerDelegate {
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        switch type {
+        case .Insert:
+            self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        case .Delete:
+            self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        default:
+            return
+        }
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        switch type {
+        case .Insert:
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+        case .Delete:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+        case .Update:
+            if let indexPath = indexPath, let cell =  tableView.cellForRowAtIndexPath(indexPath) {
+                // TODO:
+                //self.configureCell(cell, atIndexPath: indexPath)
+            }
+        case .Move:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+        }
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.endUpdates()
+    }
+    
+    /*
+     // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
+     
+     func controllerDidChangeContent(controller: NSFetchedResultsController) {
+     // In the simplest, most efficient, case, reload the table view.
+     self.tableView.reloadData()
+     }
+     */
     
     
 }
