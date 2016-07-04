@@ -12,7 +12,11 @@ import YelpAPI
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var addressLabel: UILabel!
-    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton! {
+        didSet {
+            favoriteButton.tintColor = Theme.isFavoriteIconColor
+        }
+    }
     @IBOutlet weak var photosCollectionView: UICollectionView!
     @IBOutlet weak var amenityImage1: UIImageView! {
         didSet {
@@ -35,11 +39,31 @@ class DetailViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var ratingStarImage1: UIImageView!
-    @IBOutlet weak var ratingStarImage2: UIImageView!
-    @IBOutlet weak var ratingStarImage3: UIImageView!
-    @IBOutlet weak var ratingStarImage4: UIImageView!
-    @IBOutlet weak var ratingStarImage5: UIImageView!
+    @IBOutlet weak var ratingStarImage1: UIImageView! {
+        didSet {
+            ratingStarImage1.tintColor = Theme.ratingStarIconColor
+        }
+    }
+    @IBOutlet weak var ratingStarImage2: UIImageView! {
+        didSet {
+            ratingStarImage2.tintColor = Theme.ratingStarIconColor
+        }
+    }
+    @IBOutlet weak var ratingStarImage3: UIImageView! {
+        didSet {
+            ratingStarImage3.tintColor = Theme.ratingStarIconColor
+        }
+    }
+    @IBOutlet weak var ratingStarImage4: UIImageView! {
+        didSet {
+            ratingStarImage4.tintColor = Theme.ratingStarIconColor
+        }
+    }
+    @IBOutlet weak var ratingStarImage5: UIImageView! {
+        didSet {
+            ratingStarImage5.tintColor = Theme.ratingStarIconColor
+        }
+    }
     
     var coreDataStack: CoreDataStack!
     //var parkItem: ParkItem?
@@ -169,16 +193,16 @@ class DetailViewController: UIViewController {
 //            }
 //        }
         if park?.hasRestrooms == true {
-            amenityImage1.tintColor = UIColor.blackColor()
+            amenityImage1.tintColor = Theme.amenityIconHighlightColor
         }
         if park?.hasPicnicTables == true {
-            amenityImage2.tintColor = UIColor.blackColor()
+            amenityImage2.tintColor = Theme.amenityIconHighlightColor
         }
         if park?.hasPicnicShelter == true {
-            amenityImage3.tintColor = UIColor.blackColor()
+            amenityImage3.tintColor = Theme.amenityIconHighlightColor
         }
         if park?.hasPlayEquip == true {
-            amenityImage4.tintColor = UIColor.blackColor()
+            amenityImage4.tintColor = Theme.amenityIconHighlightColor
         }
     }
     

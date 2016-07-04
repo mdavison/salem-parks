@@ -35,6 +35,7 @@
 		90DDBC501D25FB8300FD2BF3 /* YelpPark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC4F1D25FB8300FD2BF3 /* YelpPark.swift */; };
 		90DDBC521D2606A000FD2BF3 /* Yelp.plist in Resources */ = {isa = PBXBuildFile; fileRef = 90DDBC511D2606A000FD2BF3 /* Yelp.plist */; };
 		90DDBC541D26C93600FD2BF3 /* ParkCoordinates.plist in Resources */ = {isa = PBXBuildFile; fileRef = 90DDBC531D26C93600FD2BF3 /* ParkCoordinates.plist */; };
+		90DDBC941D2A9ED600FD2BF3 /* ParksListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC931D2A9ED600FD2BF3 /* ParksListTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		90DDBC4F1D25FB8300FD2BF3 /* YelpPark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpPark.swift; sourceTree = "<group>"; };
 		90DDBC511D2606A000FD2BF3 /* Yelp.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Yelp.plist; sourceTree = "<group>"; };
 		90DDBC531D26C93600FD2BF3 /* ParkCoordinates.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ParkCoordinates.plist; sourceTree = "<group>"; };
+		90DDBC931D2A9ED600FD2BF3 /* ParksListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParksListTableViewCell.swift; sourceTree = "<group>"; };
 		B9540BDBC4F9C6952259D168 /* Pods-Salem Parks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Salem Parks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Salem Parks/Pods-Salem Parks.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				9012FF511D1CA5290075519C /* ParksListTableViewController.swift */,
+				90DDBC931D2A9ED600FD2BF3 /* ParksListTableViewCell.swift */,
 				9012FF531D1CA55D0075519C /* MapViewController.swift */,
 				9012FF9A1D2162A10075519C /* DetailViewController.swift */,
 				90DDBC4A1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift */,
@@ -424,6 +427,7 @@
 			files = (
 				90DDBC491D24648800FD2BF3 /* CKPhoto.swift in Sources */,
 				9012FF9B1D2162A10075519C /* DetailViewController.swift in Sources */,
+				90DDBC941D2A9ED600FD2BF3 /* ParksListTableViewCell.swift in Sources */,
 				9012FF941D209D2A0075519C /* ParkAnnotation.swift in Sources */,
 				9012FF5C1D1CA7DD0075519C /* CoreDataStack.swift in Sources */,
 				90DDBC4B1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift in Sources */,

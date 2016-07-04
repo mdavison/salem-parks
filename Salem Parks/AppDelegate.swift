@@ -34,6 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             userIsSignedIntoiCloud = true
         }
         
+        // Theme
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Theme.navigationTextColor]
+        
         return true
     }
     

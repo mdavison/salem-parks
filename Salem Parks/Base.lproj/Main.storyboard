@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Map-->
+        <!--Map View Controller-->
         <scene sceneID="7NN-Ma-QDJ">
             <objects>
                 <viewController id="NR9-Zr-aWf" customClass="MapViewController" customModule="Salem_Parks" customModuleProvider="target" sceneMemberID="viewController">
@@ -30,7 +30,7 @@
                             <constraint firstItem="BFY-lM-pVn" firstAttribute="top" secondItem="t6D-Kk-TN0" secondAttribute="top" id="Nxu-vB-26L"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Map" id="YnE-db-dnw"/>
+                    <tabBarItem key="tabBarItem" title="" image="Map" id="YnE-db-dnw"/>
                     <connections>
                         <outlet property="mapView" destination="BFY-lM-pVn" id="m30-Mp-1m2"/>
                     </connections>
@@ -39,32 +39,86 @@
             </objects>
             <point key="canvasLocation" x="461" y="1211"/>
         </scene>
-        <!--Parks List Table View Controller-->
+        <!--List-->
         <scene sceneID="zyV-1N-z6a">
             <objects>
                 <tableViewController id="ZLB-li-NXq" customClass="ParksListTableViewController" customModule="Salem_Parks" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="xzP-OO-q61">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="xzP-OO-q61">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Park" textLabel="IwC-hf-2H7" style="IBUITableViewCellStyleDefault" id="cz0-He-6rs">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Park" rowHeight="80" id="cz0-He-6rs" customClass="ParksListTableViewCell" customModule="Salem_Parks" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cz0-He-6rs" id="UVO-it-mDi">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IwC-hf-2H7">
-                                            <rect key="frame" x="15" y="0.0" width="550" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41Z-N6-79d">
+                                            <rect key="frame" x="8" y="8" width="518" height="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qgC-JI-gT2">
+                                            <rect key="frame" x="8" y="33" width="124" height="25"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Toilet" translatesAutoresizingMaskIntoConstraints="NO" id="1jf-Hs-ADM">
+                                                    <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="Ih8-E4-LKq"/>
+                                                        <constraint firstAttribute="width" constant="25" id="Jbi-8p-i2o"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Table" translatesAutoresizingMaskIntoConstraints="NO" id="Tak-Xg-Bdb">
+                                                    <rect key="frame" x="33" y="0.0" width="25" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="Y1z-zj-RZS"/>
+                                                        <constraint firstAttribute="width" constant="25" id="qpP-OZ-fcr"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pavilion" translatesAutoresizingMaskIntoConstraints="NO" id="Fp5-gw-f5Z">
+                                                    <rect key="frame" x="66" y="0.0" width="25" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="DIs-3n-fPb"/>
+                                                        <constraint firstAttribute="height" constant="25" id="ZAt-wI-nys"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Playground" translatesAutoresizingMaskIntoConstraints="NO" id="ANi-p9-DwT">
+                                                    <rect key="frame" x="99" y="0.0" width="25" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="ASS-X4-Hcq"/>
+                                                        <constraint firstAttribute="height" constant="25" id="YTG-dI-Y7f"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                        </stackView>
+                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Like Filled" translatesAutoresizingMaskIntoConstraints="NO" id="giY-6f-5JX">
+                                            <rect key="frame" x="534" y="8" width="25" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="25" id="jSO-jf-omf"/>
+                                                <constraint firstAttribute="width" constant="25" id="nGw-N7-eIH"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="leadingMargin" secondItem="41Z-N6-79d" secondAttribute="leading" id="4yV-9Q-PM2"/>
+                                        <constraint firstAttribute="topMargin" secondItem="41Z-N6-79d" secondAttribute="top" id="Lhg-fu-Ne9"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="qgC-JI-gT2" secondAttribute="leading" id="ZVa-F9-wn5"/>
+                                        <constraint firstAttribute="topMargin" secondItem="giY-6f-5JX" secondAttribute="top" id="b8c-5F-OmO"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="giY-6f-5JX" secondAttribute="trailing" id="bm6-0K-dgL"/>
+                                        <constraint firstItem="qgC-JI-gT2" firstAttribute="top" secondItem="41Z-N6-79d" secondAttribute="bottom" constant="8" id="kJ7-RV-ktH"/>
+                                        <constraint firstItem="giY-6f-5JX" firstAttribute="leading" secondItem="41Z-N6-79d" secondAttribute="trailing" constant="8" id="ubt-XK-l5U"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="amenityImage1" destination="1jf-Hs-ADM" id="GUd-Ut-XbO"/>
+                                    <outlet property="amenityImage2" destination="Tak-Xg-Bdb" id="LNh-qF-4LL"/>
+                                    <outlet property="amenityImage3" destination="Fp5-gw-f5Z" id="fTb-xw-hIZ"/>
+                                    <outlet property="amenityImage4" destination="ANi-p9-DwT" id="QKM-AE-AbA"/>
+                                    <outlet property="isFavoriteImageView" destination="giY-6f-5JX" id="K1Q-dU-a99"/>
+                                    <outlet property="parkNameLabel" destination="41Z-N6-79d" id="N8s-ag-LXx"/>
                                     <segue destination="72v-US-hjw" kind="show" identifier="ShowParkDetails" id="KOe-kh-Fch"/>
                                 </connections>
                             </tableViewCell>
@@ -74,7 +128,7 @@
                             <outlet property="delegate" destination="ZLB-li-NXq" id="pWh-vj-glJ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="k54-JS-7JQ"/>
+                    <navigationItem key="navigationItem" title="List" id="k54-JS-7JQ"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TNH-3Q-Tw5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -404,11 +458,11 @@
             </objects>
             <point key="canvasLocation" x="-354" y="887"/>
         </scene>
-        <!--List-->
+        <!--Navigation Controller-->
         <scene sceneID="2uJ-1y-Pia">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Mp1-5O-I75" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="List" id="ktX-Sz-2Xx"/>
+                    <tabBarItem key="tabBarItem" title="" image="List" id="ktX-Sz-2Xx"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="cwb-jL-pAR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -426,6 +480,9 @@
     </scenes>
     <resources>
         <image name="Like" width="25" height="25"/>
+        <image name="Like Filled" width="25" height="25"/>
+        <image name="List" width="25" height="25"/>
+        <image name="Map" width="25" height="25"/>
         <image name="Pavilion" width="25" height="25"/>
         <image name="Playground" width="25" height="25"/>
         <image name="Star" width="32" height="32"/>

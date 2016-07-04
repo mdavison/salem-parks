@@ -58,6 +58,10 @@ class ParksListTableViewController: UITableViewController {
             Park.saveJSONDataToCoreData(coreDataStack)
             _fetchedResultsController = nil
         }
+        
+        // Theme
+        tabBarController?.tabBar.tintColor = Theme.tabBarTint
+        navigationController?.navigationBar.tintColor = Theme.navigationTint
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -127,11 +131,12 @@ class ParksListTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.CellReuseIdentifier, forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.CellReuseIdentifier, forIndexPath: indexPath) as! ParksListTableViewCell
 
         //let park = parkItems[indexPath.row]
         if let park = fetchedResultsController.objectAtIndexPath(indexPath) as? Park {
-            cell.textLabel?.text = park.name
+            //cell.textLabel?.text = park.name
+            configureCell(cell, park: park)
         }
 
         return cell
@@ -209,6 +214,30 @@ class ParksListTableViewController: UITableViewController {
             dispatch_async(dispatch_get_main_queue()) {
                 //self._fetchedResultsController = nil
             }
+        }
+    }
+    
+    
+    // MARK: - Helper Methods 
+    
+    private func configureCell(cell: ParksListTableViewCell, park: Park) {
+        cell.parkNameLabel.text = park.name
+        
+        if park.hasRestrooms == true {
+            cell.amenityImage1.tintColor = Theme.amenityIconHighlightColor
+        }
+        if park.hasPicnicTables == true {
+            cell.amenityImage2.tintColor = Theme.amenityIconHighlightColor
+        }
+        if park.hasPicnicShelter == true {
+            cell.amenityImage3.tintColor = Theme.amenityIconHighlightColor
+        }
+        if park.hasPlayEquip == true {
+            cell.amenityImage4.tintColor = Theme.amenityIconHighlightColor
+        }
+        
+        if let isFavorite = park.isFavorite as? Bool {
+            cell.isFavoriteImageView.hidden = !isFavorite
         }
     }
     
