@@ -221,6 +221,7 @@ class ParksListTableViewController: UITableViewController {
     // MARK: - Helper Methods 
     
     private func configureCell(cell: ParksListTableViewCell, park: Park) {
+        resetCell(cell)
         cell.parkNameLabel.text = park.name
         
         if park.hasRestrooms == true {
@@ -234,11 +235,19 @@ class ParksListTableViewController: UITableViewController {
         }
         if park.hasPlayEquip == true {
             cell.amenityImage4.tintColor = Theme.amenityIconHighlightColor
-        }
+        } 
         
         if let isFavorite = park.isFavorite as? Bool {
             cell.isFavoriteImageView.hidden = !isFavorite
         }
+    }
+    
+    private func resetCell(cell: ParksListTableViewCell) {
+        cell.isFavoriteImageView.hidden = true
+        cell.amenityImage1.tintColor = Theme.amenityIconDefaultColor
+        cell.amenityImage2.tintColor = Theme.amenityIconDefaultColor
+        cell.amenityImage3.tintColor = Theme.amenityIconDefaultColor
+        cell.amenityImage4.tintColor = Theme.amenityIconDefaultColor
     }
     
 }
