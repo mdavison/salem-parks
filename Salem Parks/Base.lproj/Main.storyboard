@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Map View Controller-->
+        <!--Map-->
         <scene sceneID="7NN-Ma-QDJ">
             <objects>
                 <viewController id="NR9-Zr-aWf" customClass="MapViewController" customModule="Salem_Parks" customModuleProvider="target" sceneMemberID="viewController">
@@ -30,14 +30,15 @@
                             <constraint firstItem="BFY-lM-pVn" firstAttribute="top" secondItem="t6D-Kk-TN0" secondAttribute="top" id="Nxu-vB-26L"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="Map" id="YnE-db-dnw"/>
+                    <navigationItem key="navigationItem" title="Map" id="Iyf-7j-ZuW"/>
                     <connections>
                         <outlet property="mapView" destination="BFY-lM-pVn" id="m30-Mp-1m2"/>
+                        <segue destination="72v-US-hjw" kind="show" identifier="ShowParkDetailsFromMap" id="uNA-3w-Fnk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iPW-yI-g9A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="461" y="1211"/>
+            <point key="canvasLocation" x="1926" y="1149"/>
         </scene>
         <!--List-->
         <scene sceneID="zyV-1N-z6a">
@@ -451,7 +452,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="Mp1-5O-I75" kind="relationship" relationship="viewControllers" id="Xo1-sF-MlQ"/>
-                        <segue destination="NR9-Zr-aWf" kind="relationship" relationship="viewControllers" id="X7c-dg-MWZ"/>
+                        <segue destination="JRK-LP-jBf" kind="relationship" relationship="viewControllers" id="X7c-dg-MWZ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A7d-rw-gUs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -477,6 +478,25 @@
             </objects>
             <point key="canvasLocation" x="450" y="464"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="0RS-kT-xtU">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JRK-LP-jBf" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="Map" id="YnE-db-dnw"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="o4W-ci-g4b">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="NR9-Zr-aWf" kind="relationship" relationship="rootViewController" id="zhG-SS-EHT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nY1-Qh-5Xw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1262" y="1149"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Like" width="25" height="25"/>
@@ -491,4 +511,7 @@
         <image name="Yelp" width="24" height="24"/>
         <image name="placeholder" width="150" height="150"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="uNA-3w-Fnk"/>
+    </inferredMetricsTieBreakers>
 </document>

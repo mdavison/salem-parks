@@ -61,6 +61,22 @@ class Park: NSManagedObject {
         return fetchedResultsController
     }
     
+    static func getPark(forID id: Int, coreDataStack: CoreDataStack) -> Park? {
+        let fetchRequest = NSFetchRequest(entityName: CoreDataStrings.Entity.park)
+        fetchRequest.predicate = NSPredicate(format: "id == %i", id)
+        
+        do {
+            if let results = try coreDataStack.managedObjectContext.executeFetchRequest(fetchRequest) as? [Park] {
+                return results.first
+            }
+            
+        } catch let error as NSError {
+            print("Error: \(error) " + "description \(error.localizedDescription)")
+        }
+        
+        return nil 
+    }
+    
     static func saveJSONDataToCoreData(coreDataStack: CoreDataStack) {
         let parkData = ParkData()
         
@@ -316,6 +332,7 @@ class Park: NSManagedObject {
             }
         }
     }
+    
     
 //    static func updateCoreDataFromiCloudSubscriptionNotification(ckQueryNotification: CKQueryNotification, coreDataStack: CoreDataStack) {
 //        if ckQueryNotification.subscriptionID == subscriptionID {

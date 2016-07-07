@@ -64,7 +64,7 @@ class ParkData {
                             discipline = parkStatus
                             
                             if let coordinate = ParkAnnotation.getCoordinate(forParkID: parkID) {
-                                let park = ParkAnnotation(title: title!, locationName: locationName!, discipline: discipline!, coordinate: coordinate)
+                                let park = ParkAnnotation(title: title!, locationName: locationName!, discipline: discipline!, coordinate: coordinate, objectID: parkID)
                                 parkAnnotations.append(park)
                             }
                         }

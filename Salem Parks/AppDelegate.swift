@@ -25,6 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let parksListTableViewController = parksListNavController.viewControllers[0] as! ParksListTableViewController
         parksListTableViewController.coreDataStack = coreDataStack
         
+        let mapViewNavController = tabBarController.viewControllers![1] as! UINavigationController
+        let mapViewController = mapViewNavController.viewControllers[0] as! MapViewController
+        mapViewController.coreDataStack = coreDataStack
+        
         let settings = UIUserNotificationSettings(forTypes: [.Badge], categories: nil)
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
