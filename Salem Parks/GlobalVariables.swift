@@ -35,16 +35,19 @@ struct CloudKitStrings {
         static let name = "name"
         static let image = "image"
         static let id = "id"
+        static let parkID = "parkID"
     }
 }
 
 struct Notifications {
     //static let fetchAllFromiCloudAndSaveFinishedNotification = "FetchAllFromiCloudAndSaveFinishedNotification"
     static let fetchAllFromiCloudFinishedNotification = "FetchAllFromiCloudFinishedNotification"
+    static let getParkForCKRecordIDFinishedNotification = "GetParkForCKRecordIDFinishedNotification"
 }
 
 struct CloudKitNotifications {
     static let notificationReceived = "iCloudRemoteNotificationReceived"
     static let notificationKey = "Notification"
     static let notSignedIntoiCloudNotification = "notSignedIntoiCloudNotification"
+    //static let hasNewPhotosFinishedNotification = "HasNewPhotosFinishedNotification"
 }

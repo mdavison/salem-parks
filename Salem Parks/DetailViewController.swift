@@ -105,11 +105,21 @@ class DetailViewController: UIViewController {
         setYelpData()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Clear "new photos"
+//        if park?.hasNewPhotos == true {
+//            park?.hasNewPhotos = false
+//            coreDataStack.saveContext()
+//        }
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
         if userIsSignedIntoiCloud {
-            Park.unsubscribeToiCloudChanges()
+            //Park.unsubscribeToiCloudChanges()
             defaultNotificationCenter.removeObserver(CloudKitNotifications.notificationReceived)
         }
         defaultNotificationCenter.removeObserver(CloudKitNotifications.notSignedIntoiCloudNotification)
@@ -173,25 +183,6 @@ class DetailViewController: UIViewController {
     // MARK: - Helper Methods 
     
     private func setAmenityImages() {
-//        if let amenities = park?.getAmenities() {
-//            for amenity in amenities {
-//                for (key, value) in amenity {
-//                    switch key {
-//                    case "Restrooms" where value == "Yes":
-//                        amenityImage1.tintColor = UIColor.blackColor()
-//                    case "Picnic Tables" where value == "Yes":
-//                        amenityImage2.tintColor = UIColor.blackColor()
-//                    case "Picnic Shelter" where value == "Yes":
-//                        amenityImage3.tintColor = UIColor.blackColor()
-//                    case "Play Equipment" where value == "Yes":
-//                        amenityImage4.tintColor = UIColor.blackColor()
-//                        
-//                    default:
-//                        break;
-//                    }
-//                }
-//            }
-//        }
         if park?.hasRestrooms == true {
             amenityImage1.tintColor = Theme.amenityIconHighlightColor
         }
@@ -309,6 +300,7 @@ class DetailViewController: UIViewController {
 }
 
 
+// Photos Collection View
 extension DetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -338,6 +330,7 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
 }
 
 
+// Amenities Table View
 extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1

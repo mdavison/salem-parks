@@ -15,8 +15,6 @@ class ParksListTableViewController: UITableViewController {
     let defaultNotificationCenter = NSNotificationCenter.defaultCenter()
     
     var coreDataStack: CoreDataStack!
-    //var parkItems = [ParkItem]()
-    //var parks: [Park]?
     
     struct Storyboard {
         static let CellReuseIdentifier = "Park"
@@ -50,8 +48,6 @@ class ParksListTableViewController: UITableViewController {
         
         // For Development
         //Park.deleteAll(coreDataStack)
-        
-        //parkItems = ParkItem.getAll()
 
         if fetchedResultsController.fetchedObjects?.count == 0 {
             print("core data is empty")
@@ -62,31 +58,34 @@ class ParksListTableViewController: UITableViewController {
         // Theme
         tabBarController?.tabBar.tintColor = Theme.tabBarTint
         navigationController?.navigationBar.tintColor = Theme.navigationTint
+        
+        //clearBadge()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if userIsSignedIntoiCloud {
-            Park.subscribeToiCloudChanges()
-            
-            defaultNotificationCenter.addObserverForName(
-                CloudKitNotifications.notificationReceived,
-                object: nil,
-                queue: NSOperationQueue.mainQueue(),
-                usingBlock: { notification in
-                    if let ckQueryNotification = notification.userInfo?[CloudKitNotifications.notificationKey] as? CKQueryNotification {
-                        self.iCloudHandleSubscriptionNotification(ckQueryNotification)
-                    }
-            })
-        }
+        //tableView.reloadData()
+        
+//        if userIsSignedIntoiCloud {
+//            Park.subscribeToiCloudChanges()
+//
+//            defaultNotificationCenter.addObserverForName(
+//                CloudKitNotifications.hasNewPhotosFinishedNotification,
+//                object: nil,
+//                queue: NSOperationQueue.mainQueue(),
+//                usingBlock: { [weak weakSelf = self] notification in
+//                    weakSelf!.tableView.reloadData()
+//                }
+//            )
+//        }
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
         if userIsSignedIntoiCloud {
-            Park.unsubscribeToiCloudChanges()
+            //Park.unsubscribeToiCloudChanges()
             defaultNotificationCenter.removeObserver(CloudKitNotifications.notificationReceived)
         }
     }
@@ -133,9 +132,7 @@ class ParksListTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.CellReuseIdentifier, forIndexPath: indexPath) as! ParksListTableViewCell
 
-        //let park = parkItems[indexPath.row]
         if let park = fetchedResultsController.objectAtIndexPath(indexPath) as? Park {
-            //cell.textLabel?.text = park.name
             configureCell(cell, park: park)
         }
 
@@ -184,7 +181,7 @@ class ParksListTableViewController: UITableViewController {
         if segue.identifier == Storyboard.ShowParkDetailsSegueIdentifier {
             let detailViewController = segue.destinationViewController as! DetailViewController
             let indexPath = tableView.indexPathForSelectedRow!
-            //detailViewController.parkItem = parkItems[indexPath.row]
+            
             detailViewController.coreDataStack = coreDataStack
             detailViewController.park = fetchedResultsController.objectAtIndexPath(indexPath) as? Park
         }
@@ -199,20 +196,28 @@ class ParksListTableViewController: UITableViewController {
 //        //_fetchedResultsController = nil
 //    }
     
-    private func iCloudHandleSubscriptionNotification(ckQueryNotification: CKQueryNotification) {
-        print("iCloudHandleSubscriptionNotification called")
-        // TODO: add a badge when new photos added
-        
-        // TODO: is reference to self here a memory cycle?
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
-            
-            //Park.updateCoreDataFromiCloudSubscriptionNotification(ckQueryNotification, coreDataStack: self.coreDataStack)
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                //self._fetchedResultsController = nil
-            }
-        }
-    }
+//    private func iCloudHandleSubscriptionNotification(ckQueryNotification: CKQueryNotification) {
+//        print("iCloudHandleSubscriptionNotification called")
+//        
+//        print("notification info: \(ckQueryNotification.recordID)")
+//        if let recordID = ckQueryNotification.recordID {
+//            Park.getPark(forCKRecordID: recordID, coreDataStack: coreDataStack)
+//            
+//            defaultNotificationCenter.addObserverForName(
+//                Notifications.getParkForCKRecordIDFinishedNotification,
+//                object: nil,
+//                queue: NSOperationQueue.mainQueue(),
+//                usingBlock: { [weak weakSelf = self] notification in
+//                    if let park = notification.userInfo?["Park"] as? Park {
+//                        //park.hasNewPhotos = true
+//                        //weakSelf!.coreDataStack.saveContext()
+//                        weakSelf?._fetchedResultsController = nil
+//                        weakSelf!.tableView.reloadData()
+//                    }
+//                }
+//            )
+//        }
+//    }
     
     
     // MARK: - Helper Methods 
@@ -245,8 +250,22 @@ class ParksListTableViewController: UITableViewController {
         cell.amenityImage2.tintColor = Theme.amenityIconDefaultColor
         cell.amenityImage3.tintColor = Theme.amenityIconDefaultColor
         cell.amenityImage4.tintColor = Theme.amenityIconDefaultColor
+        cell.backgroundColor = UIColor.whiteColor()
     }
     
+//    private func clearBadge() {
+//        let badgeResetOperation = CKModifyBadgeOperation(badgeValue: 0)
+//        badgeResetOperation.modifyBadgeCompletionBlock = { (error) -> Void in
+//            if error != nil {
+//                print("Error resetting badge: \(error)")
+//            }
+//            else {
+//                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+//            }
+//        }
+//        CKContainer.defaultContainer().addOperation(badgeResetOperation)
+//    }
+
 }
 
 
@@ -274,10 +293,7 @@ extension ParksListTableViewController: NSFetchedResultsControllerDelegate {
         case .Delete:
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
         case .Update:
-            if let indexPath = indexPath, let cell =  tableView.cellForRowAtIndexPath(indexPath) {
-                // TODO:
-                //self.configureCell(cell, atIndexPath: indexPath)
-            }
+            break
         case .Move:
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)

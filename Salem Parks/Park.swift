@@ -14,8 +14,14 @@ class Park: NSManagedObject {
     
     static let cloudKitDatabase = CKContainer.defaultContainer().publicCloudDatabase
     static let subscriptionID = "All park photos creations, deletions, and updates"
+    static var fetchAllFromiCloudQuery: CKQuery {
+        let predicate = NSPredicate(format: "TRUEPREDICATE")
+        let query = CKQuery(recordType: CloudKitStrings.Entity.parks, predicate: predicate)
+        query.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         
-    
+        return query
+    }
+        
 //    static func getAll(coreDataStack: CoreDataStack) -> [Park]? {
 //        let fetchRequest = NSFetchRequest(entityName: CoreDataStrings.Entity.park)
 //        do {
@@ -27,14 +33,6 @@ class Park: NSManagedObject {
 //        
 //        return nil
 //    }
-    
-    static var fetchAllFromiCloudQuery: CKQuery {
-        let predicate = NSPredicate(format: "TRUEPREDICATE")
-        let query = CKQuery(recordType: CloudKitStrings.Entity.parks, predicate: predicate)
-        query.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        
-        return query
-    }
     
     static func getFetchedResultsController(coreDataStack: CoreDataStack) -> NSFetchedResultsController {
         let fetchRequest = NSFetchRequest()
@@ -75,6 +73,23 @@ class Park: NSManagedObject {
         }
         
         return nil 
+    }
+    
+    static func getPark(forCKRecordID ckRecordID: CKRecordID, coreDataStack: CoreDataStack) {
+        cloudKitDatabase.fetchRecordWithID(ckRecordID) { (record, error) in
+            if let record = record {
+                //print("got records from iCloud fetch: count: \(records.count)")
+                print("ckRecord for ckRecordID: \(record.objectForKey(CloudKitStrings.Attribute.parkID))")
+                if let id = record.objectForKey(CloudKitStrings.Attribute.parkID) as? Int {
+                    if let park = Park.getPark(forID: id, coreDataStack: coreDataStack) {
+                        NSNotificationCenter.defaultCenter().postNotificationName(
+                            Notifications.getParkForCKRecordIDFinishedNotification,
+                            object: self,
+                            userInfo: ["Park": park])
+                    }
+                }
+            }
+        }
     }
     
     static func saveJSONDataToCoreData(coreDataStack: CoreDataStack) {
@@ -308,30 +323,33 @@ class Park: NSManagedObject {
         coreDataStack.saveContext()
     }
     
-    static func subscribeToiCloudChanges() {
-        print("subscribing to iCloud changes")
-        let predicate = NSPredicate(format: "TRUEPREDICATE")
-        let subscription = CKSubscription(
-            recordType: CloudKitStrings.Entity.parks,
-            predicate: predicate,
-            subscriptionID: subscriptionID,
-            options: [.FiresOnRecordUpdate, .FiresOnRecordCreation, .FiresOnRecordDeletion]
-        )
-        
-        cloudKitDatabase.saveSubscription(subscription) { (savedSubscription, error) in
-            if error != nil {
-                NSLog("iCloud subscription error: \(error?.localizedDescription)")
-            }
-        }
-    }
+//    static func subscribeToiCloudChanges() {
+//        print("subscribing to iCloud changes")
+//        let predicate = NSPredicate(format: "TRUEPREDICATE")
+//        let subscription = CKSubscription(
+//            recordType: CloudKitStrings.Entity.photos,
+//            predicate: predicate,
+//            subscriptionID: subscriptionID,
+//            options: [.FiresOnRecordCreation]
+//        )
+//        let info = CKNotificationInfo()
+//        info.shouldBadge = true
+//        subscription.notificationInfo = info 
+//        
+//        cloudKitDatabase.saveSubscription(subscription) { (savedSubscription, error) in
+//            if error != nil {
+//                NSLog("iCloud subscription error: \(error?.localizedDescription)")
+//            }
+//        }
+//    }
     
-    static func unsubscribeToiCloudChanges() {
-        cloudKitDatabase.deleteSubscriptionWithID(subscriptionID) { (subscription, error) in
-            if error != nil {
-                NSLog("Error deleting iCloud subscription: \(error?.localizedDescription)")
-            }
-        }
-    }
+//    static func unsubscribeToiCloudChanges() {
+//        cloudKitDatabase.deleteSubscriptionWithID(subscriptionID) { (subscription, error) in
+//            if error != nil {
+//                NSLog("Error deleting iCloud subscription: \(error?.localizedDescription)")
+//            }
+//        }
+//    }
     
     
 //    static func updateCoreDataFromiCloudSubscriptionNotification(ckQueryNotification: CKQueryNotification, coreDataStack: CoreDataStack) {
