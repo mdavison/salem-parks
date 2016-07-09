@@ -230,7 +230,7 @@ class Park: NSManagedObject {
                 NSLog("Error fetching from iCloud: \(error?.localizedDescription)")
                 
                 // Post notification that iCloud fetched but got error
-                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.fetchAllFromiCloudFinishedNotification, object: error)
+                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.fetchPhotosForParkFromiCloudFinishedNotification, object: error)
             } else {
                 if let records = records {
                     //print("got records from iCloud fetch: count: \(records.count)")
@@ -247,7 +247,7 @@ class Park: NSManagedObject {
                     //NSNotificationCenter.defaultCenter().postNotificationName(Notifications.fetchAllFromiCloudFinishedNotification, object: ckPhotos as? AnyObject)
                     
                     NSNotificationCenter.defaultCenter().postNotificationName(
-                        Notifications.fetchAllFromiCloudFinishedNotification,
+                        Notifications.fetchPhotosForParkFromiCloudFinishedNotification,
                         object: self,
                         userInfo: ["Photos": ckPhotos])
                 }

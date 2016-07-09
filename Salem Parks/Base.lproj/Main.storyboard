@@ -200,6 +200,10 @@
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
+                                                <activityIndicatorView key="backgroundView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" id="IVu-Ly-RwZ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="560" height="130"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
                                                 <cells>
                                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ParkImageCell" id="g5H-o3-IIS" customClass="PhotoCollectionViewCell" customModule="Salem_Parks" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="15" width="100" height="100"/>
@@ -431,6 +435,7 @@
                         <outlet property="amenityImage3" destination="Tz2-mR-h4W" id="tj6-3S-1PB"/>
                         <outlet property="amenityImage4" destination="6Mt-Zf-VOf" id="QnD-07-hz2"/>
                         <outlet property="favoriteButton" destination="Nxj-VH-HDk" id="aVw-xI-S6q"/>
+                        <outlet property="photosActivityIndicator" destination="IVu-Ly-RwZ" id="akC-8C-dsb"/>
                         <outlet property="photosCollectionView" destination="Zcy-lX-zAF" id="zH4-5F-I1m"/>
                         <outlet property="ratingStarImage1" destination="Cwd-dP-yjN" id="sA0-ql-ASM"/>
                         <outlet property="ratingStarImage2" destination="FCA-2C-4jL" id="lfg-uV-a49"/>

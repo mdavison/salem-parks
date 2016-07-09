@@ -41,7 +41,7 @@ struct CloudKitStrings {
 
 struct Notifications {
     //static let fetchAllFromiCloudAndSaveFinishedNotification = "FetchAllFromiCloudAndSaveFinishedNotification"
-    static let fetchAllFromiCloudFinishedNotification = "FetchAllFromiCloudFinishedNotification"
+    static let fetchPhotosForParkFromiCloudFinishedNotification = "FetchPhotosForParkFromiCloudFinishedNotification"
     static let getParkForCKRecordIDFinishedNotification = "GetParkForCKRecordIDFinishedNotification"
 }
 

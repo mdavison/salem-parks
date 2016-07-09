@@ -18,6 +18,7 @@ class DetailViewController: UIViewController {
         }
     }
     @IBOutlet weak var photosCollectionView: UICollectionView!
+    @IBOutlet weak var photosActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var amenityImage1: UIImageView! {
         didSet {
             amenityImage1.tintColor = Theme.amenityIconDefaultColor
@@ -170,12 +171,13 @@ class DetailViewController: UIViewController {
     
     // MARK: - Notification Handling
     
-    @objc private func fetchAllFromiCloudNotificationHandler(notification: NSNotification) {
+    @objc private func fetchPhotosForParkFromiCloudNotificationHandler(notification: NSNotification) {
         // Turn off network activity spinner
         parkNetworkActivity = false
+        photosActivityIndicator.hidden = true 
         
         if let userInfo = notification.userInfo as? [String: [CKPhoto]], photos = userInfo["Photos"] {
-            ckPhotos = photos 
+            ckPhotos = photos
         } else if let _ = notification.object as? NSError {
             // iCloud fetch error
         }
@@ -243,6 +245,7 @@ class DetailViewController: UIViewController {
             if let park = park, id = park.id as? Int {
                 // Turn on network activity spinner
                 parkNetworkActivity = true
+                photosActivityIndicator.hidden = false
 
                 Park.getCKPhotosFromiCloud(forParkID: id)
             }
@@ -250,8 +253,8 @@ class DetailViewController: UIViewController {
             // Add observer for when cloud fetch completes
             defaultNotificationCenter.addObserver(
                 self,
-                selector: #selector(DetailViewController.fetchAllFromiCloudNotificationHandler(_:)),
-                name: Notifications.fetchAllFromiCloudFinishedNotification,
+                selector: #selector(DetailViewController.fetchPhotosForParkFromiCloudNotificationHandler(_:)),
+                name: Notifications.fetchPhotosForParkFromiCloudFinishedNotification,
                 object: nil
             )
         } else {
@@ -329,11 +332,11 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = photosCollectionView.dequeueReusableCellWithReuseIdentifier(Storyboard.parkImageCellReuseIdentifier, forIndexPath: indexPath) as! PhotoCollectionViewCell
+        
         if let ckPhotos = ckPhotos where !ckPhotos.isEmpty {
             let photo = ckPhotos[indexPath.row]
             if let imageFileURL = photo.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
                 cell.photoImageView.image = UIImage(data: data)
-                //cell.photoButton.imageView?.image = UIImage(data: data)
             }
         }
         
