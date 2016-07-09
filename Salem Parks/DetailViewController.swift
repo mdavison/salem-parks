@@ -91,6 +91,7 @@ class DetailViewController: UIViewController {
     struct Storyboard {
         static let parkImageCellReuseIdentifier = "ParkImageCell"
         static let amenityCellReuseIdentifier = "AmenityCell"
+        static let showLargePhotoSegueIdentifier = "showLargePhoto"
     }
     
     override func viewDidLoad() {
@@ -107,12 +108,6 @@ class DetailViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // Clear "new photos"
-//        if park?.hasNewPhotos == true {
-//            park?.hasNewPhotos = false
-//            coreDataStack.saveContext()
-//        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -131,15 +126,32 @@ class DetailViewController: UIViewController {
     }
     
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == Storyboard.showLargePhotoSegueIdentifier {
+            if ckPhotos?.count < 1 {
+                return false
+            }
+        }
+        
+        return true
     }
-    */
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let photoViewController = segue.destinationViewController as? PhotoViewController {
+            // Need to get the collection view item selected
+            if let selectedCell = sender as? PhotoCollectionViewCell, indexPath = photosCollectionView.indexPathForCell(selectedCell) {
+                // Make sure photo exists
+                if ckPhotos?.count > indexPath.item {
+                    if let photo = ckPhotos?[indexPath.item], imageFileURL = photo.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
+                        photoViewController.photoImage = UIImage(data: data)
+                    }
+                }
+                
+            }
+        }
+    }
     
     // MARK: - Actions
     
@@ -321,6 +333,7 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
             let photo = ckPhotos[indexPath.row]
             if let imageFileURL = photo.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
                 cell.photoImageView.image = UIImage(data: data)
+                //cell.photoButton.imageView?.image = UIImage(data: data)
             }
         }
         

@@ -36,6 +36,7 @@
 		90DDBC521D2606A000FD2BF3 /* Yelp.plist in Resources */ = {isa = PBXBuildFile; fileRef = 90DDBC511D2606A000FD2BF3 /* Yelp.plist */; };
 		90DDBC541D26C93600FD2BF3 /* ParkCoordinates.plist in Resources */ = {isa = PBXBuildFile; fileRef = 90DDBC531D26C93600FD2BF3 /* ParkCoordinates.plist */; };
 		90DDBC941D2A9ED600FD2BF3 /* ParksListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC931D2A9ED600FD2BF3 /* ParksListTableViewCell.swift */; };
+		90DDBC971D31541E00FD2BF3 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC961D31541E00FD2BF3 /* PhotoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		90DDBC511D2606A000FD2BF3 /* Yelp.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Yelp.plist; sourceTree = "<group>"; };
 		90DDBC531D26C93600FD2BF3 /* ParkCoordinates.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ParkCoordinates.plist; sourceTree = "<group>"; };
 		90DDBC931D2A9ED600FD2BF3 /* ParksListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParksListTableViewCell.swift; sourceTree = "<group>"; };
+		90DDBC961D31541E00FD2BF3 /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		B9540BDBC4F9C6952259D168 /* Pods-Salem Parks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Salem Parks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Salem Parks/Pods-Salem Parks.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -161,6 +163,7 @@
 				90DDBC931D2A9ED600FD2BF3 /* ParksListTableViewCell.swift */,
 				9012FF531D1CA55D0075519C /* MapViewController.swift */,
 				9012FF9A1D2162A10075519C /* DetailViewController.swift */,
+				90DDBC961D31541E00FD2BF3 /* PhotoViewController.swift */,
 				90DDBC4A1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift */,
 				9012FF1D1D1C997A0075519C /* AppDelegate.swift */,
 				9012FF5D1D1D70630075519C /* GlobalVariables.swift */,
@@ -434,6 +437,7 @@
 				9012FF991D20C0240075519C /* ParkItem.swift in Sources */,
 				9012FF521D1CA5290075519C /* ParksListTableViewController.swift in Sources */,
 				9012FF5E1D1D70630075519C /* GlobalVariables.swift in Sources */,
+				90DDBC971D31541E00FD2BF3 /* PhotoViewController.swift in Sources */,
 				9012FF921D209A310075519C /* JSON.swift in Sources */,
 				90DDBC501D25FB8300FD2BF3 /* YelpPark.swift in Sources */,
 				90DDBC4D1D24BA2800FD2BF3 /* Theme.swift in Sources */,

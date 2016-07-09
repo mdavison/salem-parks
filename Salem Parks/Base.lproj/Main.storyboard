@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -224,6 +225,7 @@
                                                         <size key="customSize" width="100" height="100"/>
                                                         <connections>
                                                             <outlet property="photoImageView" destination="Ufh-gH-tJy" id="Jf2-P4-HU9"/>
+                                                            <segue destination="maA-04-6ol" kind="show" identifier="showLargePhoto" id="tue-1j-ZHB"/>
                                                         </connections>
                                                     </collectionViewCell>
                                                 </cells>
@@ -440,6 +442,46 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="djs-4d-eaN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1926" y="464"/>
+        </scene>
+        <!--Photo View Controller-->
+        <scene sceneID="mFd-b1-KkB">
+            <objects>
+                <viewController id="maA-04-6ol" customClass="PhotoViewController" customModule="Salem_Parks" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="V4W-Zu-62C"/>
+                        <viewControllerLayoutGuide type="bottom" id="7fw-2Y-RuO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="stI-zV-ZqU">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jew-M7-Ywr">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="jew-M7-Ywr" secondAttribute="height" multiplier="600:487" id="g7W-Jd-Eq0"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="g7W-Jd-Eq0"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="jew-M7-Ywr" firstAttribute="bottom" secondItem="7fw-2Y-RuO" secondAttribute="top" id="XLR-CE-ODJ"/>
+                            <constraint firstAttribute="trailing" secondItem="jew-M7-Ywr" secondAttribute="trailing" id="Xed-JG-5TY"/>
+                            <constraint firstItem="jew-M7-Ywr" firstAttribute="top" secondItem="V4W-Zu-62C" secondAttribute="bottom" id="Zze-Nj-jqi"/>
+                            <constraint firstItem="jew-M7-Ywr" firstAttribute="leading" secondItem="stI-zV-ZqU" secondAttribute="leading" id="dg6-51-7NG"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="photoImageView" destination="jew-M7-Ywr" id="z8h-kB-KgF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dLH-Aq-gtk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2590" y="464"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="8l1-50-RS4">
