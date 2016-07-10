@@ -34,13 +34,18 @@ class Park: NSManagedObject {
 //        return nil
 //    }
     
-    static func getFetchedResultsController(coreDataStack: CoreDataStack) -> NSFetchedResultsController {
+    static func getFetchedResultsController(searchText: String?, coreDataStack: CoreDataStack) -> NSFetchedResultsController {
         let fetchRequest = NSFetchRequest()
         let entity = NSEntityDescription.entityForName(CoreDataStrings.Entity.park, inManagedObjectContext: coreDataStack.managedObjectContext)
         fetchRequest.entity = entity
         
         // Set the batch size to a suitable number.
         fetchRequest.fetchBatchSize = 20
+        
+        // Predicate
+        if let searchText = searchText {
+            fetchRequest.predicate = NSPredicate(format: "name contains[cd] %@", searchText)
+        }
         
         // Edit the sort key as appropriate.
         let favSortDescriptor = NSSortDescriptor(key: CoreDataStrings.Attribute.isFavorite, ascending: false)

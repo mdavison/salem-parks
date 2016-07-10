@@ -15,6 +15,7 @@ class ParksListTableViewController: UITableViewController {
     let defaultNotificationCenter = NSNotificationCenter.defaultCenter()
     
     var coreDataStack: CoreDataStack!
+    var hasSearched = false
     
     struct Storyboard {
         static let CellReuseIdentifier = "Park"
@@ -103,7 +104,7 @@ class ParksListTableViewController: UITableViewController {
             return _fetchedResultsController!
         }
         
-        let fetchedResultsController = Park.getFetchedResultsController(coreDataStack)
+        let fetchedResultsController = Park.getFetchedResultsController(nil, coreDataStack: coreDataStack)
         fetchedResultsController.delegate = self
         _fetchedResultsController = fetchedResultsController
         
@@ -126,17 +127,27 @@ class ParksListTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //return parkItems.count
         let sectionInfo = fetchedResultsController.sections![section]
+        
+        if hasSearched == true && sectionInfo.numberOfObjects == 0 {
+            // User searched and no results
+            return 1
+        }
         return sectionInfo.numberOfObjects
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.CellReuseIdentifier, forIndexPath: indexPath) as! ParksListTableViewCell
-
-        if let park = fetchedResultsController.objectAtIndexPath(indexPath) as? Park {
-            configureCell(cell, park: park)
+        if fetchedResultsController.fetchedObjects?.count == 0 {
+            let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+            cell.textLabel?.text = "Nothing found"
+            cell.selectionStyle = .None
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.CellReuseIdentifier, forIndexPath: indexPath) as! ParksListTableViewCell
+            if let park = fetchedResultsController.objectAtIndexPath(indexPath) as? Park {
+                configureCell(cell, park: park)
+            }
+            return cell
         }
-
-        return cell
     }
 
     /*
@@ -313,5 +324,22 @@ extension ParksListTableViewController: NSFetchedResultsControllerDelegate {
      }
      */
     
+}
+
+
+extension ParksListTableViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        //print("The search text is: '\(searchBar.text!)'")
+        searchBar.resignFirstResponder()
+        hasSearched = true
+        _fetchedResultsController = Park.getFetchedResultsController(searchBar.text, coreDataStack: coreDataStack)
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        hasSearched = false
+        _fetchedResultsController = Park.getFetchedResultsController(nil, coreDataStack: coreDataStack)
+    }
     
 }
