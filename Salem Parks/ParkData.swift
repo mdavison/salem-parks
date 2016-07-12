@@ -45,6 +45,7 @@ class ParkData {
         return nil
     }()
     
+    
     private func setParkAnnotations() {
         if let jsonDataArray = jsonDataArray {
             for feature in jsonDataArray {

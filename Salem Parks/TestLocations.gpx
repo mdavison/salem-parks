@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="Xcode">
+    <wpt lat="44.9397015" lon="-123.0900524">
+        <name>Home</name>
+    </wpt>
+    <wpt lat="44.9798066718336" lon="-123.087883012112">
+        <name>Ellen Lane Property</name>
+    </wpt>
+    <wpt lat="44.858265" lon="-123.02551">
+        <name>Rees Park</name>
+    </wpt>
+    <wpt lat="44.9942309" lon="-122.9560688">
+        <name>Hammond School Park</name>
+    </wpt>
+    <wpt lat="44.95489999" lon="-123.07999568">
+        <name>Chapman Hill School Park</name>
+    </wpt>
+</gpx>

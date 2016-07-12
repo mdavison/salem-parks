@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 import CloudKit
+import MapKit
 
 class Park: NSManagedObject {
     
@@ -21,18 +22,18 @@ class Park: NSManagedObject {
         
         return query
     }
+    
+    static func getAll(coreDataStack: CoreDataStack) -> [Park]? {
+        let fetchRequest = NSFetchRequest(entityName: CoreDataStrings.Entity.park)
+        do {
+            let results = try coreDataStack.managedObjectContext.executeFetchRequest(fetchRequest) as? [Park]
+            return results
+        } catch let error as NSError {
+            NSLog("Error fetching parks: \(error.localizedDescription)")
+        }
         
-//    static func getAll(coreDataStack: CoreDataStack) -> [Park]? {
-//        let fetchRequest = NSFetchRequest(entityName: CoreDataStrings.Entity.park)
-//        do {
-//            let results = try coreDataStack.managedObjectContext.executeFetchRequest(fetchRequest) as? [Park]
-//            return results
-//        } catch let error as NSError {
-//            NSLog("Error fetching parks: \(error.localizedDescription)")
-//        }
-//        
-//        return nil
-//    }
+        return nil
+    }
     
     static func getFetchedResultsController(searchText: String?, coreDataStack: CoreDataStack) -> NSFetchedResultsController {
         let fetchRequest = NSFetchRequest()
@@ -194,6 +195,7 @@ class Park: NSManagedObject {
         coreDataStack.saveContext()
     }
     
+    
 //    static func getCKParkFromiCloud(forObjectID id: Int) {
 //        let predicate = NSPredicate(format: "id == %d", id)
 //        let query = CKQuery(recordType: CloudKitStrings.Entity.parks, predicate: predicate)
@@ -258,6 +260,34 @@ class Park: NSManagedObject {
                 }
             }
         }
+    }
+    
+    static func getRegions(forAnnotations annotations: [ParkAnnotation], currentLocation: CLLocation) -> [CLCircularRegion] {
+        var regions = [CLCircularRegion]()
+        
+        // Sort the annotations according to coordinate
+        var annotationLocations = [ParkAnnotation: CLLocationDistance]()
+        // Get all the distances in dictionary
+        for annotation in annotations {
+            let annotationLocation = CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
+            let distance = annotationLocation.distanceFromLocation(currentLocation)
+            annotationLocations[annotation] = distance
+        }
+        // Sort the dictionary and just take the first 20
+        let sortedKeys = Array(annotationLocations.keys).sort({annotationLocations[$0] < annotationLocations[$1]}).prefix(20)
+        
+        for annotation in sortedKeys {
+            let coordinate = annotation.coordinate
+            let title = annotation.title ?? ""
+            let region = CLCircularRegion(center: coordinate, radius: 500, identifier: title)
+            regions.append(region)
+            
+//            if annotation.locationName == "1490 Doaks Ferry Rd NW" {
+//                regions.append(region)
+//            }
+        }
+        
+        return regions
     }
     
 //    static func fetchAllFromiCloudAndSave(coreDataStack: CoreDataStack) {

@@ -6,10 +6,11 @@
 //  Copyright © 2016 Morgan Davison. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 var userIsSignedIntoiCloud = false
-var userHasBeenAlertedToiCloudSignInRequired = false 
+var userHasBeenAlertedToiCloudSignInRequired = false
+var isMonitoringRegions = false 
 
 struct CoreDataStrings {
     struct Entity {
@@ -50,4 +51,16 @@ struct CloudKitNotifications {
     static let notificationKey = "Notification"
     static let notSignedIntoiCloudNotification = "notSignedIntoiCloudNotification"
     //static let hasNewPhotosFinishedNotification = "HasNewPhotosFinishedNotification"
+}
+
+func showAlert(withTitle title: String, message: String, viewController: UIViewController) {
+    if viewController.presentedViewController == nil { // Prevent multiple alerts at the same time
+        let localizedTitle = NSLocalizedString(title, comment: "")
+        let localizedMessage = NSLocalizedString(message, comment: "")
+        let alert = UIAlertController(title: localizedTitle, message: localizedMessage, preferredStyle: .Alert)
+        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alert.addAction(action)
+        
+        viewController.presentViewController(alert, animated: true, completion: nil)
+    }
 }

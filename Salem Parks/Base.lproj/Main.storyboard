@@ -31,9 +31,16 @@
                             <constraint firstItem="BFY-lM-pVn" firstAttribute="top" secondItem="t6D-Kk-TN0" secondAttribute="top" id="Nxu-vB-26L"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Map" id="Iyf-7j-ZuW"/>
+                    <navigationItem key="navigationItem" title="Map" id="Iyf-7j-ZuW">
+                        <barButtonItem key="rightBarButtonItem" title="Nearby" id="VrP-m1-rjM">
+                            <connections>
+                                <action selector="showNearbyParks:" destination="NR9-Zr-aWf" id="Ox4-rf-s5l"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="BFY-lM-pVn" id="m30-Mp-1m2"/>
+                        <outlet property="nearbyButton" destination="VrP-m1-rjM" id="GIX-Ea-SXv"/>
                         <segue destination="72v-US-hjw" kind="show" identifier="ShowParkDetailsFromMap" id="uNA-3w-Fnk"/>
                     </connections>
                 </viewController>

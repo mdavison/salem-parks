@@ -9,16 +9,23 @@
 import UIKit
 import MapKit
 
+class AnnotationButton: UIButton {
+    var view: MKPinAnnotationView?
+}
+
+
 class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var nearbyButton: UIBarButtonItem!
     
     let regionRadius: CLLocationDistance = 10_000 // This is meters
     let parkData = ParkData()
     
     var coreDataStack: CoreDataStack!
-    var parksAnnotations = [ParkAnnotation]()
+    var parkAnnotations = [ParkAnnotation]()
     var park: Park?
+    var parkLocationManager: ParkLocationManager!
     
     struct Storyboard {
         static let ShowParkDetailsSegueIdentifier = "ShowParkDetailsFromMap"
@@ -27,14 +34,16 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        parkLocationManager = ParkLocationManager(mapViewController: self)
+        parkAnnotations = parkData.getMapAnnotations()
+        
         mapView.delegate = self
 
         // Set initial location in Salem
         let initialLocation = CLLocation(latitude: 44.9429, longitude: -123.0351)
         centerMapOnLocation(initialLocation)
 
-        //parkData = ParkData()
-        mapView.addAnnotations(parkData.getMapAnnotations())
+        mapView.addAnnotations(parkAnnotations)
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,9 +63,24 @@ class MapViewController: UIViewController {
         }
     }
     
+    // MARK: - Actions
+    
+    @IBAction func showNearbyParks(sender: AnyObject) {
+        if isMonitoringRegions == true { // Turn it OFF
+            parkLocationManager.stopMonitoringNearbyParks()
+            nearbyButton.title = "Nearby"
+            mapView.showsUserLocation = false
+        } else {                        // Turn it ON
+            parkLocationManager.startMonitoringNearbyParks()
+            mapView.showsUserLocation = true
+            nearbyButton.title = "Turn Off"
+        }
+    }
+    
+    
     // MARK: - Helper Methods
     
-    func centerMapOnLocation(location: CLLocation) {
+    private func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
     }
@@ -116,6 +140,26 @@ extension MapViewController: MKMapViewDelegate {
     }
 }
 
-class AnnotationButton: UIButton {
-    var view: MKPinAnnotationView?
+
+extension MapViewController: CLLocationManagerDelegate {
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        parkLocationManager.handleUpdateLocations(locations, parkAnnotations: parkAnnotations)
+    }
+    
+    func locationManager(manager: CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error: NSError) {
+        NSLog("Monitering failed for region: \(region?.identifier). Error: \(error)")
+        print("managed regions: \(manager.monitoredRegions.count)")
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        NSLog("Location manager failed with the following error: \(error)")
+    }
+    
+    func locationManager(manager: CLLocationManager, didDetermineState state: CLRegionState, forRegion region: CLRegion) {
+        NSLog("User is already in region: \(region.identifier)")
+        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+            appDelegate.handleRegionEvent(region)
+        }
+    }
 }

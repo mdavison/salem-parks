@@ -9,17 +9,22 @@
 import UIKit
 import CoreData
 import CloudKit
+import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
     var window: UIWindow?
     lazy var coreDataStack = CoreDataStack()
     var defaultNotificationCenter = NSNotificationCenter.defaultCenter()
+    let locationManager = CLLocationManager()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        
         let tabBarController = window!.rootViewController as! UITabBarController
         let parksListNavController = tabBarController.viewControllers![0] as! UINavigationController
         let parksListTableViewController = parksListNavController.viewControllers[0] as! ParksListTableViewController
@@ -32,6 +37,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let settings = UIUserNotificationSettings(forTypes: [.Badge], categories: nil)
 //        application.registerUserNotificationSettings(settings)
 //        application.registerForRemoteNotifications()
+        let notificationSettings = UIUserNotificationSettings(forTypes: [.Sound, .Alert], categories: nil)
+        application.registerUserNotificationSettings(notificationSettings)
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        
         
         // Determine if user is signed into iCloud
         if let _ = NSFileManager.defaultManager().ubiquityIdentityToken {
@@ -136,6 +145,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            )
 //        }
 //    }
+    
+    func handleRegionEvent(region: CLRegion) {
+        print("Geofence triggered!")
+        if UIApplication.sharedApplication().applicationState == .Active {
+            // Alert near a park
+            if let viewController = window?.rootViewController {
+                showAlert(withTitle: "Park Nearby!", message: "You are near \(region.identifier).", viewController: viewController)
+            }
+        } else {
+            // Local Notification
+            let notification = UILocalNotification()
+            notification.alertBody = "You are near \(region.identifier)"
+            notification.soundName = "Default"
+            UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+        }
+    }
+    
+    
+    // MARK: - CLLocationManagerDelegate methods
+    
+    func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        if isMonitoringRegions == true && region is CLCircularRegion {
+            handleRegionEvent(region)
+        }
+    }
 
 }
 
