@@ -257,13 +257,6 @@
                                                     <outlet property="delegate" destination="72v-US-hjw" id="lfK-UR-XhI"/>
                                                 </connections>
                                             </collectionView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Yelp" translatesAutoresizingMaskIntoConstraints="NO" id="fMV-Sg-90k">
-                                                <rect key="frame" x="20" y="224" width="40" height="40"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="40" id="Dut-b2-iOF"/>
-                                                    <constraint firstAttribute="height" constant="40" id="dh5-o7-cyw"/>
-                                                </constraints>
-                                            </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="sLx-Ro-wgt">
                                                 <rect key="frame" x="68" y="231" width="157" height="25"/>
                                                 <subviews>
@@ -351,34 +344,45 @@
                                                     <action selector="toggleFavorite:" destination="72v-US-hjw" eventType="touchUpInside" id="XXd-Ko-c3n"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K1I-CW-6BK">
+                                                <rect key="frame" x="20" y="224" width="40" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="dqb-he-HMf"/>
+                                                    <constraint firstAttribute="width" constant="40" id="nje-f4-ziY"/>
+                                                </constraints>
+                                                <state key="normal" title="Button" image="Yelp"/>
+                                                <connections>
+                                                    <action selector="openYelp:" destination="72v-US-hjw" eventType="touchUpInside" id="gdV-RJ-3fB"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstItem="K1I-CW-6BK" firstAttribute="leading" secondItem="UTP-hC-DHi" secondAttribute="leading" constant="20" symbolic="YES" id="1v1-ap-bIM"/>
                                             <constraint firstItem="FU5-xH-iCo" firstAttribute="top" secondItem="UTP-hC-DHi" secondAttribute="topMargin" id="2O0-xA-M5f"/>
                                             <constraint firstItem="FU5-xH-iCo" firstAttribute="top" secondItem="UTP-hC-DHi" secondAttribute="top" constant="20" symbolic="YES" id="2nW-k6-QOg"/>
                                             <constraint firstAttribute="bottom" secondItem="IMo-YC-FAd" secondAttribute="bottom" constant="20" symbolic="YES" id="3f4-JG-qfm"/>
                                             <constraint firstItem="sLx-Ro-wgt" firstAttribute="top" secondItem="Tla-o9-7t9" secondAttribute="bottom" constant="8" symbolic="YES" id="5gW-Na-1Lt"/>
                                             <constraint firstItem="Tla-o9-7t9" firstAttribute="leading" secondItem="UTP-hC-DHi" secondAttribute="leading" constant="20" id="7eS-Gs-fEG"/>
+                                            <constraint firstItem="sLx-Ro-wgt" firstAttribute="leading" secondItem="K1I-CW-6BK" secondAttribute="trailing" constant="8" symbolic="YES" id="Dl1-uW-X6h"/>
                                             <constraint firstItem="IMo-YC-FAd" firstAttribute="leading" secondItem="UTP-hC-DHi" secondAttribute="leading" constant="20" symbolic="YES" id="GDz-kq-gQZ"/>
                                             <constraint firstItem="Nxj-VH-HDk" firstAttribute="leading" secondItem="FU5-xH-iCo" secondAttribute="trailing" constant="8" symbolic="YES" id="L4t-MT-SA9"/>
+                                            <constraint firstItem="K1I-CW-6BK" firstAttribute="top" secondItem="Tla-o9-7t9" secondAttribute="bottom" constant="8" symbolic="YES" id="OQt-eG-esp"/>
                                             <constraint firstItem="Zcy-lX-zAF" firstAttribute="leading" secondItem="UTP-hC-DHi" secondAttribute="leading" constant="20" symbolic="YES" id="Pgs-mU-B60"/>
                                             <constraint firstAttribute="bottom" secondItem="IMo-YC-FAd" secondAttribute="bottom" id="U0T-dw-c12"/>
                                             <constraint firstItem="Zcy-lX-zAF" firstAttribute="top" secondItem="Nxj-VH-HDk" secondAttribute="bottom" constant="8" symbolic="YES" id="W24-GM-L3w"/>
                                             <constraint firstAttribute="trailing" secondItem="Nxj-VH-HDk" secondAttribute="trailing" constant="20" symbolic="YES" id="YWU-EC-Dbd"/>
                                             <constraint firstItem="Tla-o9-7t9" firstAttribute="top" secondItem="Zcy-lX-zAF" secondAttribute="bottom" constant="8" id="aIf-CW-IF1"/>
-                                            <constraint firstItem="sLx-Ro-wgt" firstAttribute="centerY" secondItem="fMV-Sg-90k" secondAttribute="centerY" id="b07-nZ-m80"/>
                                             <constraint firstItem="Nxj-VH-HDk" firstAttribute="top" secondItem="UTP-hC-DHi" secondAttribute="top" constant="20" symbolic="YES" id="bHF-Op-cHY"/>
                                             <constraint firstAttribute="bottom" secondItem="IMo-YC-FAd" secondAttribute="bottom" id="cej-Ue-wGQ"/>
                                             <constraint firstItem="FU5-xH-iCo" firstAttribute="top" secondItem="UTP-hC-DHi" secondAttribute="top" constant="84" id="crE-Tn-IOF"/>
                                             <constraint firstItem="Nxj-VH-HDk" firstAttribute="top" secondItem="UTP-hC-DHi" secondAttribute="top" constant="20" symbolic="YES" id="crS-sg-MuW"/>
                                             <constraint firstAttribute="bottom" secondItem="IMo-YC-FAd" secondAttribute="bottom" id="fH3-xQ-SiD"/>
                                             <constraint firstAttribute="trailing" secondItem="IMo-YC-FAd" secondAttribute="trailing" constant="20" symbolic="YES" id="fy5-7s-2z9"/>
-                                            <constraint firstItem="IMo-YC-FAd" firstAttribute="top" secondItem="fMV-Sg-90k" secondAttribute="bottom" constant="8" symbolic="YES" id="gS2-Mi-fsS"/>
+                                            <constraint firstItem="IMo-YC-FAd" firstAttribute="top" secondItem="K1I-CW-6BK" secondAttribute="bottom" constant="8" symbolic="YES" id="ksi-T5-kFW"/>
                                             <constraint firstAttribute="trailing" secondItem="Zcy-lX-zAF" secondAttribute="trailing" constant="20" symbolic="YES" id="mid-D1-aeR"/>
+                                            <constraint firstItem="sLx-Ro-wgt" firstAttribute="centerY" secondItem="K1I-CW-6BK" secondAttribute="centerY" id="nuV-Iq-6NP"/>
                                             <constraint firstItem="FU5-xH-iCo" firstAttribute="top" secondItem="UTP-hC-DHi" secondAttribute="top" constant="20" symbolic="YES" id="pLH-0u-mLw"/>
-                                            <constraint firstItem="fMV-Sg-90k" firstAttribute="leading" secondItem="UTP-hC-DHi" secondAttribute="leading" constant="20" symbolic="YES" id="rN2-Fp-NZV"/>
-                                            <constraint firstItem="fMV-Sg-90k" firstAttribute="top" secondItem="Tla-o9-7t9" secondAttribute="bottom" constant="8" symbolic="YES" id="ttN-8a-Fbb"/>
-                                            <constraint firstItem="sLx-Ro-wgt" firstAttribute="leading" secondItem="fMV-Sg-90k" secondAttribute="trailing" constant="8" symbolic="YES" id="vxj-Q7-2aD"/>
                                             <constraint firstItem="FU5-xH-iCo" firstAttribute="leading" secondItem="UTP-hC-DHi" secondAttribute="leading" constant="20" symbolic="YES" id="wpf-Kz-8Pk"/>
                                         </constraints>
                                         <variation key="default">
@@ -574,7 +578,7 @@
         <image name="Star" width="32" height="32"/>
         <image name="Table" width="25" height="25"/>
         <image name="Toilet" width="25" height="25"/>
-        <image name="Yelp" width="24" height="24"/>
+        <image name="Yelp" width="48" height="48"/>
         <image name="placeholder" width="150" height="150"/>
     </resources>
     <inferredMetricsTieBreakers>

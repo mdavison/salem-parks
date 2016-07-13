@@ -67,7 +67,6 @@ class DetailViewController: UIViewController {
     }
     
     var coreDataStack: CoreDataStack!
-    //var parkItem: ParkItem?
     var park: Park?
     var ckPhotos: [CKPhoto]? {
         didSet {
@@ -86,6 +85,7 @@ class DetailViewController: UIViewController {
             toggleNetworkActivitySpinner()
         }
     }
+    var yelpBusiness: YLPBusiness?
     
     let defaultNotificationCenter = NSNotificationCenter.defaultCenter()
     
@@ -94,6 +94,7 @@ class DetailViewController: UIViewController {
         static let amenityCellReuseIdentifier = "AmenityCell"
         static let showLargePhotoSegueIdentifier = "showLargePhoto"
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -168,6 +169,13 @@ class DetailViewController: UIViewController {
         coreDataStack.saveContext()
     }
     
+    @IBAction func openYelp(sender: UIButton) {
+        if let yelpBusiness = yelpBusiness {
+            if let url = YelpPark.getURL(yelpBusiness.identifier) {
+                UIApplication.sharedApplication().openURL(url)
+            }
+        }
+    }
     
     // MARK: - Notification Handling
     
@@ -274,15 +282,16 @@ class DetailViewController: UIViewController {
             // Turn on network activity spinner
             yelpNetworkActivity = true
             
-            client.businessWithId(businessID) { [weak weakSelf = self] (business, error) in
+            client.businessWithId(businessID) { [weak self] (business, error) in
+                self?.yelpBusiness = business
                 if let rating = business?.rating {
                     dispatch_async(dispatch_get_main_queue(), {
-                        weakSelf?.setStarsForRating(rating)
-                        
-                        // Turn off network activity spinner
-                        weakSelf?.yelpNetworkActivity = false
+                        self?.setStarsForRating(rating)
                     })
                 }
+                
+                // Turn off network activity spinner
+                self?.yelpNetworkActivity = false
             }
         }
     }

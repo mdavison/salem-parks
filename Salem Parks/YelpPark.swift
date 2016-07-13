@@ -6,7 +6,7 @@
 //  Copyright © 2016 Morgan Davison. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct YelpPark {
     static func convertRatingToStarsImages(rating: Double) -> [String: String] {
@@ -122,5 +122,21 @@ struct YelpPark {
             }
         }
         return nil
+    }
+    
+    static func yelpIsInstalled() -> Bool {
+        if let url = NSURL(string: "yelp:") {
+            return UIApplication.sharedApplication().canOpenURL(url)
+        }
+        
+        return false
+    }
+    
+    static func getURL(identifier: String) -> NSURL? {
+        if YelpPark.yelpIsInstalled() == true {
+            return NSURL(string: "yelp:///biz/\(identifier)")
+        } else {
+            return NSURL(string: "https://www.yelp.com/biz/\(identifier)")
+        }
     }
 }

@@ -19,7 +19,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var nearbyButton: UIBarButtonItem!
     
-    let regionRadius: CLLocationDistance = 10_000 // This is meters
+    let regionRadius: CLLocationDistance = 10_000 // Meters
     let parkData = ParkData()
     
     var coreDataStack: CoreDataStack!
@@ -126,13 +126,11 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if let annotation = view.annotation as? ParkAnnotation {
             park = Park.getPark(forID: annotation.objectID, coreDataStack: coreDataStack)
-            print("park: \(park?.id)")
             performSegueWithIdentifier(Storyboard.ShowParkDetailsSegueIdentifier, sender: self)
         }
     }
     
     func getDrivingDirections(button: AnnotationButton) {
-        print("get driving directions")
         if let location = button.view?.annotation as? ParkAnnotation {
             let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
             location.mapItem().openInMapsWithLaunchOptions(launchOptions)
