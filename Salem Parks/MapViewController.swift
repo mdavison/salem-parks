@@ -68,12 +68,14 @@ class MapViewController: UIViewController {
     @IBAction func showNearbyParks(sender: AnyObject) {
         if isMonitoringRegions == true { // Turn it OFF
             parkLocationManager.stopMonitoringNearbyParks()
-            nearbyButton.title = "Nearby"
+            //nearbyButton.title = "Nearby"
+            nearbyButton.image = UIImage(named: "Near Me")
             mapView.showsUserLocation = false
         } else {                        // Turn it ON
             parkLocationManager.startMonitoringNearbyParks()
             mapView.showsUserLocation = true
-            nearbyButton.title = "Turn Off"
+            //nearbyButton.title = "Turn Off"
+            nearbyButton.image = UIImage(named: "Near Me Filled")
         }
     }
     
