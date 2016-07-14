@@ -81,22 +81,22 @@ class Park: NSManagedObject {
         return nil 
     }
     
-    static func getPark(forCKRecordID ckRecordID: CKRecordID, coreDataStack: CoreDataStack) {
-        cloudKitDatabase.fetchRecordWithID(ckRecordID) { (record, error) in
-            if let record = record {
-                //print("got records from iCloud fetch: count: \(records.count)")
-                print("ckRecord for ckRecordID: \(record.objectForKey(CloudKitStrings.Attribute.parkID))")
-                if let id = record.objectForKey(CloudKitStrings.Attribute.parkID) as? Int {
-                    if let park = Park.getPark(forID: id, coreDataStack: coreDataStack) {
-                        NSNotificationCenter.defaultCenter().postNotificationName(
-                            Notifications.getParkForCKRecordIDFinishedNotification,
-                            object: self,
-                            userInfo: ["Park": park])
-                    }
-                }
-            }
-        }
-    }
+//    static func getPark(forCKRecordID ckRecordID: CKRecordID, coreDataStack: CoreDataStack) {
+//        cloudKitDatabase.fetchRecordWithID(ckRecordID) { (record, error) in
+//            if let record = record {
+//                //print("got records from iCloud fetch: count: \(records.count)")
+//                print("ckRecord for ckRecordID: \(record.objectForKey(CloudKitStrings.Attribute.parkID))")
+//                if let id = record.objectForKey(CloudKitStrings.Attribute.parkID) as? Int {
+//                    if let park = Park.getPark(forID: id, coreDataStack: coreDataStack) {
+//                        NSNotificationCenter.defaultCenter().postNotificationName(
+//                            Notifications.getParkForCKRecordIDFinishedNotification,
+//                            object: self,
+//                            userInfo: ["Park": park])
+//                    }
+//                }
+//            }
+//        }
+//    }
     
     static func saveJSONDataToCoreData(coreDataStack: CoreDataStack) {
         let parkData = ParkData()

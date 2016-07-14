@@ -38,6 +38,11 @@
 		90DDBC971D31541E00FD2BF3 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC961D31541E00FD2BF3 /* PhotoViewController.swift */; };
 		90DDBC991D34398D00FD2BF3 /* TestLocations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 90DDBC981D34398D00FD2BF3 /* TestLocations.gpx */; };
 		90DDBC9B1D358AB200FD2BF3 /* ParkLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC9A1D358AB200FD2BF3 /* ParkLocationManager.swift */; };
+		90DDBC9D1D3675F500FD2BF3 /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC9C1D3675F500FD2BF3 /* TestCoreDataStack.swift */; };
+		90DDBC9F1D36768800FD2BF3 /* ParkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC9E1D36768800FD2BF3 /* ParkTests.swift */; };
+		90DDBCA11D36C5DF00FD2BF3 /* YelpParkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBCA01D36C5DF00FD2BF3 /* YelpParkTests.swift */; };
+		90DDBCA31D36DCBC00FD2BF3 /* ParkAnnotationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBCA21D36DCBC00FD2BF3 /* ParkAnnotationTests.swift */; };
+		90DDBCA51D36E50400FD2BF3 /* ParkDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBCA41D36E50400FD2BF3 /* ParkDataTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +102,11 @@
 		90DDBC961D31541E00FD2BF3 /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		90DDBC981D34398D00FD2BF3 /* TestLocations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestLocations.gpx; sourceTree = "<group>"; };
 		90DDBC9A1D358AB200FD2BF3 /* ParkLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkLocationManager.swift; sourceTree = "<group>"; };
+		90DDBC9C1D3675F500FD2BF3 /* TestCoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
+		90DDBC9E1D36768800FD2BF3 /* ParkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkTests.swift; sourceTree = "<group>"; };
+		90DDBCA01D36C5DF00FD2BF3 /* YelpParkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpParkTests.swift; sourceTree = "<group>"; };
+		90DDBCA21D36DCBC00FD2BF3 /* ParkAnnotationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkAnnotationTests.swift; sourceTree = "<group>"; };
+		90DDBCA41D36E50400FD2BF3 /* ParkDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkDataTests.swift; sourceTree = "<group>"; };
 		B9540BDBC4F9C6952259D168 /* Pods-Salem Parks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Salem Parks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Salem Parks/Pods-Salem Parks.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -187,6 +197,11 @@
 			isa = PBXGroup;
 			children = (
 				9012FF351D1C997B0075519C /* Salem_ParksTests.swift */,
+				90DDBC9E1D36768800FD2BF3 /* ParkTests.swift */,
+				90DDBCA41D36E50400FD2BF3 /* ParkDataTests.swift */,
+				90DDBCA21D36DCBC00FD2BF3 /* ParkAnnotationTests.swift */,
+				90DDBCA01D36C5DF00FD2BF3 /* YelpParkTests.swift */,
+				90DDBC9C1D3675F500FD2BF3 /* TestCoreDataStack.swift */,
 				9012FF371D1C997B0075519C /* Info.plist */,
 			);
 			path = "Salem ParksTests";
@@ -462,7 +477,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90DDBC9F1D36768800FD2BF3 /* ParkTests.swift in Sources */,
+				90DDBCA11D36C5DF00FD2BF3 /* YelpParkTests.swift in Sources */,
+				90DDBCA31D36DCBC00FD2BF3 /* ParkAnnotationTests.swift in Sources */,
 				9012FF361D1C997B0075519C /* Salem_ParksTests.swift in Sources */,
+				90DDBC9D1D3675F500FD2BF3 /* TestCoreDataStack.swift in Sources */,
+				90DDBCA51D36E50400FD2BF3 /* ParkDataTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
