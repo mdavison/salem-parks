@@ -34,6 +34,9 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Theme
+        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
         parkLocationManager = ParkLocationManager(mapViewController: self)
         parkAnnotations = parkData.getMapAnnotations()
         

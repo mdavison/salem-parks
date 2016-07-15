@@ -12,6 +12,8 @@ import CloudKit
 
 class ParksListTableViewController: UITableViewController {
 
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     let defaultNotificationCenter = NSNotificationCenter.defaultCenter()
     
     var coreDataStack: CoreDataStack!
@@ -24,28 +26,14 @@ class ParksListTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        // Theme
+        tabBarController?.tabBar.tintColor = Theme.tabBarTint
+        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        let searchBarCancelButton = searchBar.subviews[0].subviews[3] // UINavigationButton
+        searchBarCancelButton.tintColor = UIColor.whiteColor()
         
         fetchedResultsController.delegate = self
-        
-        // If local database is empty, fetch all records from cloud
-        // TODO: get images but don't set them to fetchedResultsController
-//        if fetchedResultsController.fetchedObjects?.count == 0 {
-//            Park.fetchAllFromiCloudAndSave(coreDataStack)
-//            
-//            // Add observer for when cloud fetch completes
-//            defaultNotificationCenter.addObserver(
-//                self,
-//                selector: #selector(ParksListTableViewController.fetchAllFromiCloudAndSaveNotificationHandler(_:)),
-//                name: Notifications.fetchAllFromiCloudAndSaveFinishedNotification,
-//                object: nil
-//            )
-//        }
         
         // For Development
         //Park.deleteAll(coreDataStack)
@@ -55,31 +43,12 @@ class ParksListTableViewController: UITableViewController {
             Park.saveJSONDataToCoreData(coreDataStack)
             _fetchedResultsController = nil
         }
-        
-        // Theme
-        tabBarController?.tabBar.tintColor = Theme.tabBarTint
-        navigationController?.navigationBar.tintColor = Theme.navigationTint
-        
-        //clearBadge()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        //tableView.reloadData()
-        
-//        if userIsSignedIntoiCloud {
-//            Park.subscribeToiCloudChanges()
-//
-//            defaultNotificationCenter.addObserverForName(
-//                CloudKitNotifications.hasNewPhotosFinishedNotification,
-//                object: nil,
-//                queue: NSOperationQueue.mainQueue(),
-//                usingBlock: { [weak weakSelf = self] notification in
-//                    weakSelf!.tableView.reloadData()
-//                }
-//            )
-//        }
+        tableView.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -150,41 +119,6 @@ class ParksListTableViewController: UITableViewController {
         }
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
 
@@ -197,38 +131,6 @@ class ParksListTableViewController: UITableViewController {
             detailViewController.park = fetchedResultsController.objectAtIndexPath(indexPath) as? Park
         }
     }
-
-    
-    
-    // MARK: - Notification Handling
-    
-//    @objc private func fetchAllFromiCloudAndSaveNotificationHandler(notification: NSNotification) {
-//        print("iCloud fetched all records")
-//        //_fetchedResultsController = nil
-//    }
-    
-//    private func iCloudHandleSubscriptionNotification(ckQueryNotification: CKQueryNotification) {
-//        print("iCloudHandleSubscriptionNotification called")
-//        
-//        print("notification info: \(ckQueryNotification.recordID)")
-//        if let recordID = ckQueryNotification.recordID {
-//            Park.getPark(forCKRecordID: recordID, coreDataStack: coreDataStack)
-//            
-//            defaultNotificationCenter.addObserverForName(
-//                Notifications.getParkForCKRecordIDFinishedNotification,
-//                object: nil,
-//                queue: NSOperationQueue.mainQueue(),
-//                usingBlock: { [weak weakSelf = self] notification in
-//                    if let park = notification.userInfo?["Park"] as? Park {
-//                        //park.hasNewPhotos = true
-//                        //weakSelf!.coreDataStack.saveContext()
-//                        weakSelf?._fetchedResultsController = nil
-//                        weakSelf!.tableView.reloadData()
-//                    }
-//                }
-//            )
-//        }
-//    }
     
     
     // MARK: - Helper Methods 
@@ -263,19 +165,6 @@ class ParksListTableViewController: UITableViewController {
         cell.amenityImage4.tintColor = Theme.amenityIconDefaultColor
         cell.backgroundColor = UIColor.whiteColor()
     }
-    
-//    private func clearBadge() {
-//        let badgeResetOperation = CKModifyBadgeOperation(badgeValue: 0)
-//        badgeResetOperation.modifyBadgeCompletionBlock = { (error) -> Void in
-//            if error != nil {
-//                print("Error resetting badge: \(error)")
-//            }
-//            else {
-//                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-//            }
-//        }
-//        CKContainer.defaultContainer().addOperation(badgeResetOperation)
-//    }
 
 }
 
