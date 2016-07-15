@@ -159,10 +159,13 @@ class DetailViewController: UIViewController {
     
     @IBAction func toggleFavorite(sender: UIButton) {
         if park?.isFavorite == true {
-            favoriteButton.setImage(UIImage(named: "Like"), forState: .Normal)
+            //favoriteButton.setImage(UIImage(named: "Like"), forState: .Normal)
+            favoriteButton.changeImageAnimated(UIImage(named: "Like"))
+            
             park?.isFavorite = false
         } else { // false or nil
-            favoriteButton.setImage(UIImage(named: "Like Filled"), forState: .Normal)
+            //favoriteButton.setImage(UIImage(named: "Like Filled"), forState: .Normal)
+            favoriteButton.changeImageAnimated(UIImage(named: "Like Filled"))
             park?.isFavorite = true
         }
         
@@ -383,5 +386,35 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
         }
                 
         return cell
+    }
+}
+
+
+extension UIButton {
+    func changeImageAnimated(image: UIImage?) {
+        guard let imageView = self.imageView, currentImage = imageView.image, newImage = image else {
+            return
+        }
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            self.setImage(newImage, forState: UIControlState.Normal)
+        }
+        let crossFade: CABasicAnimation = CABasicAnimation(keyPath: "contents")
+        crossFade.duration = 0.3
+        crossFade.fromValue = currentImage.CGImage
+        crossFade.toValue = newImage.CGImage
+        crossFade.removedOnCompletion = false
+        crossFade.fillMode = kCAFillModeForwards
+        imageView.layer.addAnimation(crossFade, forKey: "animateContents")
+        CATransaction.commit()
+        
+        let crossFadeColor: CABasicAnimation = CABasicAnimation(keyPath: "contents")
+        crossFadeColor.duration = 0.3
+        crossFadeColor.fromValue = UIColor.blackColor()
+        crossFadeColor.toValue = Theme.isFavoriteIconColor
+        crossFadeColor.removedOnCompletion = false
+        crossFadeColor.fillMode = kCAFillModeForwards
+        imageView.layer.addAnimation(crossFadeColor, forKey: "animateContents")
+        CATransaction.commit()
     }
 }
