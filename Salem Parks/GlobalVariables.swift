@@ -33,10 +33,11 @@ struct CloudKitStrings {
     }
     
     struct Attribute {
-        static let name = "name"
         static let image = "image"
-        static let id = "id"
         static let parkID = "parkID"
+        static let thumbnail = "thumbnail"
+        static let fileName = "fileName"
+        static let displayOrder = "displayOrder"
     }
 }
 

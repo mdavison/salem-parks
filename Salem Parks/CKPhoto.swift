@@ -11,4 +11,5 @@ import CloudKit
 
 class CKPhoto {
     var image: CKAsset?
+    var thumbnail: CKAsset?
 }

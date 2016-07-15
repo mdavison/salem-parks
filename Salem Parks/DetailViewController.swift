@@ -148,6 +148,12 @@ class DetailViewController: UIViewController {
                 if ckPhotos?.count > indexPath.item {
                     if let photo = ckPhotos?[indexPath.item], imageFileURL = photo.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
                         photoViewController.photoImage = UIImage(data: data)
+                    } else {
+                        // Only have thumbnails so need to get full sized-photos
+                        Park.getCKPhotosFromiCloud(forParkID: park?.id as! Int)
+                        // Set an index so we know which one was selected
+                        photoViewController.photoIndex = indexPath.item
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
                     }
                 }
                 
@@ -258,7 +264,7 @@ class DetailViewController: UIViewController {
                 parkNetworkActivity = true
                 photosActivityIndicator.hidden = false
 
-                Park.getCKPhotosFromiCloud(forParkID: id)
+                Park.getCKPhotosThumbnailsFromiCloud(forParkID: id)
             }
             
             // Add observer for when cloud fetch completes
@@ -347,7 +353,8 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
         
         if let ckPhotos = ckPhotos where !ckPhotos.isEmpty {
             let photo = ckPhotos[indexPath.row]
-            if let imageFileURL = photo.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
+            let imageFileURL = photo.thumbnail?.fileURL ?? photo.image?.fileURL
+            if let imageFileURL = imageFileURL, data = NSData(contentsOfURL: imageFileURL) {
                 cell.photoImageView.image = UIImage(data: data)
             }
         }
