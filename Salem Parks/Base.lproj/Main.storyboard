@@ -251,7 +251,7 @@
                                                         <size key="customSize" width="100" height="100"/>
                                                         <connections>
                                                             <outlet property="photoImageView" destination="Ufh-gH-tJy" id="Jf2-P4-HU9"/>
-                                                            <segue destination="maA-04-6ol" kind="show" identifier="showLargePhoto" id="tue-1j-ZHB"/>
+                                                            <segue destination="Yu7-Sg-Mli" kind="show" identifier="showLargePhoto" id="15G-r2-hPs"/>
                                                         </connections>
                                                     </collectionViewCell>
                                                 </cells>
@@ -474,51 +474,62 @@
             </objects>
             <point key="canvasLocation" x="1926" y="464"/>
         </scene>
+        <!--Photo Page View Controller-->
+        <scene sceneID="4ml-Y3-Rmq">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" pageSpacing="10" navigationOrientation="horizontal" spineLocation="none" id="Yu7-Sg-Mli" customClass="PhotoPageViewController" customModule="Salem_Parks" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CJV-ZN-xak" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2590" y="-183"/>
+        </scene>
         <!--Photo View Controller-->
         <scene sceneID="mFd-b1-KkB">
             <objects>
-                <viewController id="maA-04-6ol" customClass="PhotoViewController" customModule="Salem_Parks" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhotoViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="maA-04-6ol" customClass="PhotoViewController" customModule="Salem_Parks" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="V4W-Zu-62C"/>
                         <viewControllerLayoutGuide type="bottom" id="7fw-2Y-RuO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="stI-zV-ZqU">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j8K-Dr-w47">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wxl-EY-gBZ">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jew-M7-Ywr">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="580"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="jew-M7-Ywr" firstAttribute="leading" secondItem="j8K-Dr-w47" secondAttribute="leading" id="0rf-yf-4IA"/>
-                                    <constraint firstAttribute="bottom" secondItem="jew-M7-Ywr" secondAttribute="bottom" id="JRH-qe-R7g"/>
-                                    <constraint firstItem="jew-M7-Ywr" firstAttribute="top" secondItem="j8K-Dr-w47" secondAttribute="top" id="SMm-k1-m2L"/>
-                                    <constraint firstItem="jew-M7-Ywr" firstAttribute="centerX" secondItem="j8K-Dr-w47" secondAttribute="centerX" id="ctl-gB-ybV"/>
-                                    <constraint firstItem="jew-M7-Ywr" firstAttribute="centerY" secondItem="j8K-Dr-w47" secondAttribute="centerY" id="kgT-BB-CzQ"/>
-                                    <constraint firstAttribute="trailing" secondItem="jew-M7-Ywr" secondAttribute="trailing" id="yec-iG-Wbd"/>
+                                    <constraint firstItem="jew-M7-Ywr" firstAttribute="centerX" secondItem="wxl-EY-gBZ" secondAttribute="centerX" id="6lS-ZZ-KyB"/>
+                                    <constraint firstItem="jew-M7-Ywr" firstAttribute="centerY" secondItem="wxl-EY-gBZ" secondAttribute="centerY" id="E5n-zj-RTl"/>
+                                    <constraint firstAttribute="trailing" secondItem="jew-M7-Ywr" secondAttribute="trailing" id="QGw-NQ-7RS"/>
+                                    <constraint firstItem="jew-M7-Ywr" firstAttribute="leading" secondItem="wxl-EY-gBZ" secondAttribute="leading" id="VpQ-G0-Ks2"/>
+                                    <constraint firstAttribute="bottom" secondItem="jew-M7-Ywr" secondAttribute="bottom" id="gaq-bX-hmd"/>
+                                    <constraint firstItem="jew-M7-Ywr" firstAttribute="top" secondItem="wxl-EY-gBZ" secondAttribute="top" id="qS7-J1-isu"/>
                                 </constraints>
                             </scrollView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lfT-Nd-jGm">
-                                <rect key="frame" x="290" y="258" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="j8K-Dr-w47" secondAttribute="trailing" id="2iV-ZL-nfk"/>
-                            <constraint firstItem="lfT-Nd-jGm" firstAttribute="centerX" secondItem="stI-zV-ZqU" secondAttribute="centerX" id="O4h-a4-APO"/>
-                            <constraint firstItem="lfT-Nd-jGm" firstAttribute="centerY" secondItem="stI-zV-ZqU" secondAttribute="centerY" id="bfY-Ad-MgC"/>
-                            <constraint firstItem="7fw-2Y-RuO" firstAttribute="top" secondItem="j8K-Dr-w47" secondAttribute="bottom" id="c5M-EV-rew"/>
-                            <constraint firstItem="j8K-Dr-w47" firstAttribute="leading" secondItem="stI-zV-ZqU" secondAttribute="leading" id="e5v-SH-lDk"/>
-                            <constraint firstItem="j8K-Dr-w47" firstAttribute="top" secondItem="V4W-Zu-62C" secondAttribute="bottom" id="tVy-P8-qlV"/>
+                            <constraint firstItem="wxl-EY-gBZ" firstAttribute="leading" secondItem="stI-zV-ZqU" secondAttribute="leading" id="QrD-wS-zaT"/>
+                            <constraint firstItem="wxl-EY-gBZ" firstAttribute="top" secondItem="V4W-Zu-62C" secondAttribute="bottom" id="aTn-8P-bc9"/>
+                            <constraint firstItem="wxl-EY-gBZ" firstAttribute="centerX" secondItem="stI-zV-ZqU" secondAttribute="centerX" id="jtF-wd-l6X"/>
+                            <constraint firstItem="wxl-EY-gBZ" firstAttribute="centerY" secondItem="stI-zV-ZqU" secondAttribute="centerY" id="qdm-ps-rdU"/>
+                            <constraint firstAttribute="trailing" secondItem="wxl-EY-gBZ" secondAttribute="trailing" id="tUq-Qv-HgN"/>
+                            <constraint firstItem="7fw-2Y-RuO" firstAttribute="top" secondItem="wxl-EY-gBZ" secondAttribute="bottom" id="v2v-t4-5RN"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="jtF-wd-l6X"/>
+                                <exclude reference="qdm-ps-rdU"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="lfT-Nd-jGm" id="AGn-ko-E3b"/>
                         <outlet property="photoImageView" destination="jew-M7-Ywr" id="z8h-kB-KgF"/>
+                        <outlet property="scrollView" destination="wxl-EY-gBZ" id="5lY-Fn-nF6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dLH-Aq-gtk" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -141,18 +141,30 @@ class DetailViewController: UIViewController {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let photoViewController = segue.destinationViewController as? PhotoViewController {
+        //if let photoViewController = segue.destinationViewController as? PhotoViewController {
+        if let photoPageViewController = segue.destinationViewController as? PhotoPageViewController {
             // Need to get the collection view item selected
             if let selectedCell = sender as? PhotoCollectionViewCell, indexPath = photosCollectionView.indexPathForCell(selectedCell) {
                 // Make sure photo exists
                 if ckPhotos?.count > indexPath.item {
-                    if let photo = ckPhotos?[indexPath.item], imageFileURL = photo.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
-                        photoViewController.photoImage = UIImage(data: data)
+//                    if let photo = ckPhotos?[indexPath.item], imageFileURL = photo.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
+//                        photoViewController.photoImage = UIImage(data: data)
+//                    } else {
+//                        // Only have thumbnails so need to get full sized-photos
+//                        Park.getCKPhotosFromiCloud(forParkID: park?.id as! Int)
+//                        // Set an index so we know which one was selected
+//                        photoViewController.photoIndex = indexPath.item
+//                        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+//                    }
+                    
+                    // Set the selected photo
+                    photoPageViewController.photoIndex = indexPath.item
+                    
+                    if ckPhotos?[indexPath.item].image != nil {
+                        photoPageViewController.ckPhotos = ckPhotos
                     } else {
                         // Only have thumbnails so need to get full sized-photos
                         Park.getCKPhotosFromiCloud(forParkID: park?.id as! Int)
-                        // Set an index so we know which one was selected
-                        photoViewController.photoIndex = indexPath.item
                         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
                     }
                 }
@@ -189,9 +201,11 @@ class DetailViewController: UIViewController {
     // MARK: - Notification Handling
     
     @objc private func fetchPhotosForParkFromiCloudNotificationHandler(notification: NSNotification) {
-        // Turn off network activity spinner
-        parkNetworkActivity = false
-        photosActivityIndicator.hidden = true 
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            // Turn off network activity spinner
+            self?.parkNetworkActivity = false
+            self?.photosActivityIndicator.hidden = true
+        } 
         
         if let userInfo = notification.userInfo as? [String: [CKPhoto]], photos = userInfo["Photos"] {
             ckPhotos = photos
