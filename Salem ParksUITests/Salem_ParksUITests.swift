@@ -74,9 +74,7 @@ class Salem_ParksUITests: XCTestCase {
     
     func testSearch() {
         let app = XCUIApplication()
-        let tablesQuery = app.tables
-        tablesQuery.segmentedControls.childrenMatchingType(.Button).matchingIdentifier("Title").elementBoundByIndex(0).tap()
-        tablesQuery.searchFields["Search by park name"]
+        app.searchFields["Search by park name"].tap()
         app.typeText("River\r")
         XCTAssert(app.tables.cells.count == 2)
     }

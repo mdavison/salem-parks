@@ -28,6 +28,7 @@
 		9012FF971D20B6830075519C /* ParkData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF961D20B6830075519C /* ParkData.swift */; };
 		9012FF9B1D2162A10075519C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF9A1D2162A10075519C /* DetailViewController.swift */; };
 		9048BD251D39A7FB005D9164 /* PhotoPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9048BD241D39A7FB005D9164 /* PhotoPageViewController.swift */; };
+		9048BD271D3AB31D005D9164 /* ParksListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9048BD261D3AB31D005D9164 /* ParksListViewController.swift */; };
 		90C1F9DC1D2363F50063B89E /* YelpAPIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C1F9DB1D2363F50063B89E /* YelpAPIKeys.swift */; };
 		90DDBC491D24648800FD2BF3 /* CKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC481D24648800FD2BF3 /* CKPhoto.swift */; };
 		90DDBC4B1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDBC4A1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift */; };
@@ -93,6 +94,7 @@
 		9012FF961D20B6830075519C /* ParkData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkData.swift; sourceTree = "<group>"; };
 		9012FF9A1D2162A10075519C /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		9048BD241D39A7FB005D9164 /* PhotoPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoPageViewController.swift; sourceTree = "<group>"; };
+		9048BD261D3AB31D005D9164 /* ParksListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParksListViewController.swift; sourceTree = "<group>"; };
 		90C1F9DB1D2363F50063B89E /* YelpAPIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpAPIKeys.swift; sourceTree = "<group>"; };
 		90DDBC481D24648800FD2BF3 /* CKPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CKPhoto.swift; sourceTree = "<group>"; };
 		90DDBC4A1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 		9012FF1C1D1C997A0075519C /* Salem Parks */ = {
 			isa = PBXGroup;
 			children = (
+				9048BD261D3AB31D005D9164 /* ParksListViewController.swift */,
 				9012FF511D1CA5290075519C /* ParksListTableViewController.swift */,
 				90DDBC931D2A9ED600FD2BF3 /* ParksListTableViewCell.swift */,
 				9012FF531D1CA55D0075519C /* MapViewController.swift */,
@@ -471,6 +474,7 @@
 				9012FF261D1C997A0075519C /* Salem_Parks.xcdatamodeld in Sources */,
 				90C1F9DC1D2363F50063B89E /* YelpAPIKeys.swift in Sources */,
 				9012FF971D20B6830075519C /* ParkData.swift in Sources */,
+				9048BD271D3AB31D005D9164 /* ParksListViewController.swift in Sources */,
 				9012FF1E1D1C997A0075519C /* AppDelegate.swift in Sources */,
 				90DDBC9B1D358AB200FD2BF3 /* ParkLocationManager.swift in Sources */,
 				9012FF541D1CA55D0075519C /* MapViewController.swift in Sources */,

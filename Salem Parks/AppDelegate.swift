@@ -27,12 +27,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         let tabBarController = window!.rootViewController as! UITabBarController
         let parksListNavController = tabBarController.viewControllers![0] as! UINavigationController
-        let parksListTableViewController = parksListNavController.viewControllers[0] as! ParksListTableViewController
-        parksListTableViewController.coreDataStack = coreDataStack
+        let parksListViewController = parksListNavController.viewControllers[0] as! ParksListViewController
+        parksListViewController.coreDataStack = coreDataStack
         
         let mapViewNavController = tabBarController.viewControllers![1] as! UINavigationController
         let mapViewController = mapViewNavController.viewControllers[0] as! MapViewController
         mapViewController.coreDataStack = coreDataStack
+        
+//        let parksListNavigationController = tabBarController.viewControllers![2] as! UINavigationController
+//        let parksListViewController = parksListNavigationController.viewControllers[0] as! ParksListViewController
+//        parksListViewController.coreDataStack = coreDataStack
         
 //        let settings = UIUserNotificationSettings(forTypes: [.Badge], categories: nil)
 //        application.registerUserNotificationSettings(settings)
