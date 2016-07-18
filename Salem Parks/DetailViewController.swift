@@ -272,7 +272,7 @@ class DetailViewController: UIViewController {
             if let park = park, id = park.id as? Int {
                 // Turn on network activity spinner
                 parkNetworkActivity = true
-                photosActivityIndicator.hidden = false
+                photosActivityIndicator.startAnimating()
 
                 Park.getCKPhotosThumbnailsFromiCloud(forParkID: id)
             }
