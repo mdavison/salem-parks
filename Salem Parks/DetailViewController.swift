@@ -119,7 +119,7 @@ class DetailViewController: UIViewController {
             //Park.unsubscribeToiCloudChanges()
             defaultNotificationCenter.removeObserver(CloudKitNotifications.notificationReceived)
         }
-        defaultNotificationCenter.removeObserver(CloudKitNotifications.notSignedIntoiCloudNotification)
+        //defaultNotificationCenter.removeObserver(CloudKitNotifications.notSignedIntoiCloudNotification)
     }
 
     override func didReceiveMemoryWarning() {
@@ -214,15 +214,15 @@ class DetailViewController: UIViewController {
         }
     }
     
-    @objc private func notSignedIntoiCloudNotificationHandler(notification: NSNotification) {
-        let alertTitle = NSLocalizedString("iCloud Error", comment: "")
-        let alertMessage = NSLocalizedString("You'll need to sign into iCloud in order to see park photos.", comment: "User needs to sign into iCloud to see photos.")
-        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .Alert)
-        let action = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil)
-        alert.addAction(action)
-        
-        presentViewController(alert, animated: true, completion: nil)
-    }
+//    @objc private func notSignedIntoiCloudNotificationHandler(notification: NSNotification) {
+//        let alertTitle = NSLocalizedString("iCloud Error", comment: "")
+//        let alertMessage = NSLocalizedString("You'll need to sign into iCloud in order to see park photos.", comment: "User needs to sign into iCloud to see photos.")
+//        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .Alert)
+//        let action = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil)
+//        alert.addAction(action)
+//        
+//        presentViewController(alert, animated: true, completion: nil)
+//    }
     
     
     // MARK: - Helper Methods 
@@ -247,13 +247,9 @@ class DetailViewController: UIViewController {
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         
-        let settingsAction = UIAlertAction(title: "Open Settings", style: .Default, handler: { (action) in
-            let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-            if let _ = settingsUrl {
-                //UIApplication.sharedApplication().openURL(url) // This opens the settings for this app, not iCloud
-                // Open iCloud Settings
-                UIApplication.sharedApplication().openURL(NSURL(string:"prefs:root=CASTLE")!)
-            }
+        let settingsAction = UIAlertAction(title: "Open Settings", style: .Default, handler: { (action) in            
+            // Open iCloud Settings
+            UIApplication.sharedApplication().openURL(NSURL(string:"prefs:root=CASTLE")!)
         })
         
         alert.addAction(settingsAction)

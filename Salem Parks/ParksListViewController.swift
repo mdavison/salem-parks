@@ -15,8 +15,6 @@ class ParksListViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
-    let defaultNotificationCenter = NSNotificationCenter.defaultCenter()
-    
     var coreDataStack: CoreDataStack!
     var hasSearched = false
     
@@ -50,15 +48,6 @@ class ParksListViewController: UIViewController {
         super.viewWillAppear(animated)
         
         tableView.reloadData()
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        if userIsSignedIntoiCloud {
-            //Park.unsubscribeToiCloudChanges()
-            defaultNotificationCenter.removeObserver(CloudKitNotifications.notificationReceived)
-        }
     }
     
     override func didReceiveMemoryWarning() {

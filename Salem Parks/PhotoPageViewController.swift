@@ -53,6 +53,8 @@ class PhotoPageViewController: UIPageViewController {
                 )
             }
         } else {
+            activityIndicator?.startAnimating()
+            
             // Add observer for when full sized photos come back
             NSNotificationCenter.defaultCenter().addObserverForName(
                 Notifications.fetchPhotosForParkFromiCloudFinishedNotification,
@@ -60,6 +62,7 @@ class PhotoPageViewController: UIPageViewController {
                 queue: NSOperationQueue.mainQueue(),
                 usingBlock: { [weak self] (notification) in
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    self?.activityIndicator?.startAnimating()
                     
                     if let _ = notification.object as? NSError {
                         NSLog("Error downloading large photo")
@@ -96,13 +99,12 @@ class PhotoPageViewController: UIPageViewController {
     
     private func setActivityIndicator() {
         activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-        activityIndicator!.frame = CGRect(
+        activityIndicator?.frame = CGRect(
             x: (view.bounds.width / 2) - 25,
             y: (view.bounds.height / 2) - 50,
             width: 50,
             height: 50)
-        activityIndicator!.hidesWhenStopped = true
-        activityIndicator!.startAnimating()
+        activityIndicator?.hidesWhenStopped = true
         view.addSubview(activityIndicator!)
     }
 

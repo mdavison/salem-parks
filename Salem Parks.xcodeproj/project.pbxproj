@@ -16,7 +16,6 @@
 		9012FF361D1C997B0075519C /* Salem_ParksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF351D1C997B0075519C /* Salem_ParksTests.swift */; };
 		9012FF411D1C997B0075519C /* Salem_ParksUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF401D1C997B0075519C /* Salem_ParksUITests.swift */; };
 		9012FF501D1C99BE0075519C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9012FF4F1D1C99BE0075519C /* CloudKit.framework */; };
-		9012FF521D1CA5290075519C /* ParksListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF511D1CA5290075519C /* ParksListTableViewController.swift */; };
 		9012FF541D1CA55D0075519C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF531D1CA55D0075519C /* MapViewController.swift */; };
 		9012FF571D1CA67C0075519C /* Park+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF551D1CA67C0075519C /* Park+CoreDataProperties.swift */; };
 		9012FF581D1CA67C0075519C /* Park.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9012FF561D1CA67C0075519C /* Park.swift */; };
@@ -82,7 +81,6 @@
 		9012FF421D1C997B0075519C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9012FF4E1D1C99BB0075519C /* Salem Parks.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Salem Parks.entitlements"; sourceTree = "<group>"; };
 		9012FF4F1D1C99BE0075519C /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		9012FF511D1CA5290075519C /* ParksListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParksListTableViewController.swift; sourceTree = "<group>"; };
 		9012FF531D1CA55D0075519C /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		9012FF551D1CA67C0075519C /* Park+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Park+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9012FF561D1CA67C0075519C /* Park.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Park.swift; sourceTree = "<group>"; };
@@ -176,12 +174,11 @@
 			isa = PBXGroup;
 			children = (
 				9048BD261D3AB31D005D9164 /* ParksListViewController.swift */,
-				9012FF511D1CA5290075519C /* ParksListTableViewController.swift */,
 				90DDBC931D2A9ED600FD2BF3 /* ParksListTableViewCell.swift */,
 				9012FF531D1CA55D0075519C /* MapViewController.swift */,
 				9012FF9A1D2162A10075519C /* DetailViewController.swift */,
-				90DDBC961D31541E00FD2BF3 /* PhotoViewController.swift */,
 				9048BD241D39A7FB005D9164 /* PhotoPageViewController.swift */,
+				90DDBC961D31541E00FD2BF3 /* PhotoViewController.swift */,
 				90DDBC4A1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift */,
 				9012FF1D1D1C997A0075519C /* AppDelegate.swift */,
 				9012FF5D1D1D70630075519C /* GlobalVariables.swift */,
@@ -462,7 +459,6 @@
 				9012FF941D209D2A0075519C /* ParkAnnotation.swift in Sources */,
 				9012FF5C1D1CA7DD0075519C /* CoreDataStack.swift in Sources */,
 				90DDBC4B1D24ADB800FD2BF3 /* PhotoCollectionViewCell.swift in Sources */,
-				9012FF521D1CA5290075519C /* ParksListTableViewController.swift in Sources */,
 				9012FF5E1D1D70630075519C /* GlobalVariables.swift in Sources */,
 				90DDBC971D31541E00FD2BF3 /* PhotoViewController.swift in Sources */,
 				9012FF921D209A310075519C /* JSON.swift in Sources */,

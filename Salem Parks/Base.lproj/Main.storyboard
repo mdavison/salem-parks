@@ -521,7 +521,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wxl-EY-gBZ">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wxl-EY-gBZ">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jew-M7-Ywr">
@@ -536,6 +536,9 @@
                                     <constraint firstAttribute="bottom" secondItem="jew-M7-Ywr" secondAttribute="bottom" id="gaq-bX-hmd"/>
                                     <constraint firstItem="jew-M7-Ywr" firstAttribute="top" secondItem="wxl-EY-gBZ" secondAttribute="top" id="qS7-J1-isu"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="maA-04-6ol" id="dIR-3Z-c7R"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
