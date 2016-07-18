@@ -67,8 +67,29 @@
                                     <outlet property="delegate" destination="zXI-fU-JYd" id="UTP-hD-2nC"/>
                                 </connections>
                             </searchBar>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="niJ-Af-Ohs">
+                                <rect key="frame" x="0.0" y="44" width="600" height="44"/>
+                                <items>
+                                    <navigationItem id="0Nl-Ba-0tS">
+                                        <nil key="title"/>
+                                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="JRC-oC-grL">
+                                            <rect key="frame" x="174.5" y="7" width="251" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="All"/>
+                                                <segment title="Playground"/>
+                                                <segment title="Restrooms"/>
+                                            </segments>
+                                            <color key="tintColor" red="0.396078431372549" green="0.69411764705882351" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="segmentChanged:" destination="zXI-fU-JYd" eventType="valueChanged" id="l03-Ox-CTo"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="78" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ngr-2F-AyL">
-                                <rect key="frame" x="0.0" y="44" width="600" height="492"/>
+                                <rect key="frame" x="0.0" y="88" width="600" height="399"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Park" rowHeight="80" id="mtf-UT-TCl" customClass="ParksListTableViewCell" customModule="Salem_Parks" customModuleProvider="target">
@@ -156,21 +177,28 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="ngr-2F-AyL" secondAttribute="bottom" id="JhR-7N-cRP"/>
+                            <constraint firstItem="cT9-lr-Ipc" firstAttribute="top" secondItem="ngr-2F-AyL" secondAttribute="bottom" id="E0Q-iK-2v0"/>
+                            <constraint firstAttribute="trailing" secondItem="niJ-Af-Ohs" secondAttribute="trailing" id="FSk-fB-tRI"/>
+                            <constraint firstAttribute="bottom" secondItem="ngr-2F-AyL" secondAttribute="bottom" constant="49" id="JhR-7N-cRP"/>
+                            <constraint firstItem="niJ-Af-Ohs" firstAttribute="leading" secondItem="qpS-a0-fns" secondAttribute="leading" id="JsX-oC-bWB"/>
                             <constraint firstItem="ngr-2F-AyL" firstAttribute="top" secondItem="3CL-cb-soc" secondAttribute="bottom" id="KLw-8w-rya"/>
                             <constraint firstAttribute="trailing" secondItem="dNL-bD-yJ9" secondAttribute="trailing" id="NBW-7n-LBI"/>
                             <constraint firstItem="dNL-bD-yJ9" firstAttribute="leading" secondItem="qpS-a0-fns" secondAttribute="leading" id="NF3-OX-v6b"/>
+                            <constraint firstItem="niJ-Af-Ohs" firstAttribute="top" secondItem="dNL-bD-yJ9" secondAttribute="bottom" id="OyS-Tn-nPK"/>
                             <constraint firstItem="ngr-2F-AyL" firstAttribute="top" secondItem="dNL-bD-yJ9" secondAttribute="bottom" id="Wd8-mo-hjF"/>
-                            <constraint firstItem="ngr-2F-AyL" firstAttribute="top" secondItem="dNL-bD-yJ9" secondAttribute="bottom" id="b1y-rL-20r"/>
+                            <constraint firstItem="ngr-2F-AyL" firstAttribute="top" secondItem="dNL-bD-yJ9" secondAttribute="bottom" constant="44" id="b1y-rL-20r"/>
                             <constraint firstAttribute="trailing" secondItem="ngr-2F-AyL" secondAttribute="trailing" id="csL-YT-xYG"/>
                             <constraint firstItem="dNL-bD-yJ9" firstAttribute="top" secondItem="3CL-cb-soc" secondAttribute="bottom" id="g3G-cb-dI5"/>
                             <constraint firstItem="ngr-2F-AyL" firstAttribute="leading" secondItem="qpS-a0-fns" secondAttribute="leading" id="lkV-iC-cC3"/>
                             <constraint firstItem="ngr-2F-AyL" firstAttribute="leading" secondItem="dNL-bD-yJ9" secondAttribute="trailing" constant="-600" id="qzW-Y7-4wA"/>
+                            <constraint firstItem="ngr-2F-AyL" firstAttribute="top" secondItem="niJ-Af-Ohs" secondAttribute="bottom" id="uxg-nb-HEH"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="JhR-7N-cRP"/>
                                 <exclude reference="KLw-8w-rya"/>
                                 <exclude reference="Wd8-mo-hjF"/>
+                                <exclude reference="b1y-rL-20r"/>
                                 <exclude reference="qzW-Y7-4wA"/>
                             </mask>
                         </variation>
@@ -178,6 +206,7 @@
                     <navigationItem key="navigationItem" title="List" id="j7X-10-xvT"/>
                     <connections>
                         <outlet property="searchBar" destination="dNL-bD-yJ9" id="mGh-rg-r9v"/>
+                        <outlet property="segmentedControl" destination="JRC-oC-grL" id="vmv-Vo-VcV"/>
                         <outlet property="tableView" destination="ngr-2F-AyL" id="gac-Jd-gXk"/>
                     </connections>
                 </viewController>

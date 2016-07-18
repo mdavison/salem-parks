@@ -35,17 +35,70 @@ class Park: NSManagedObject {
         return nil
     }
     
-    static func getFetchedResultsController(searchText: String?, coreDataStack: CoreDataStack) -> NSFetchedResultsController {
+//    static func getFetchedResultsController(searchText: String?, coreDataStack: CoreDataStack) -> NSFetchedResultsController {
+//        let fetchRequest = NSFetchRequest()
+//        let entity = NSEntityDescription.entityForName(CoreDataStrings.Entity.park, inManagedObjectContext: coreDataStack.managedObjectContext)
+//        fetchRequest.entity = entity
+//        
+//        // Set the batch size to a suitable number.
+//        fetchRequest.fetchBatchSize = 20
+//        
+//        // Predicate
+//        if let searchText = searchText {
+//            fetchRequest.predicate = NSPredicate(format: "name contains[cd] %@", searchText)
+//        }
+//        
+//        // Edit the sort key as appropriate.
+//        let favSortDescriptor = NSSortDescriptor(key: CoreDataStrings.Attribute.isFavorite, ascending: false)
+//        let nameSortDescriptor = NSSortDescriptor(key: CoreDataStrings.Attribute.name, ascending: true)
+//        
+//        fetchRequest.sortDescriptors = [favSortDescriptor, nameSortDescriptor]
+//        
+//        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+//        
+//        do {
+//            try fetchedResultsController.performFetch()
+//        } catch let error as NSError {
+//            NSLog("Error fetching Entry objects: \(error.localizedDescription)")
+//        }
+//        
+//        return fetchedResultsController
+//    }
+
+    static func getFetchedResultsController(searchText: String?, category: Int?, coreDataStack: CoreDataStack) -> NSFetchedResultsController {
         let fetchRequest = NSFetchRequest()
         let entity = NSEntityDescription.entityForName(CoreDataStrings.Entity.park, inManagedObjectContext: coreDataStack.managedObjectContext)
         fetchRequest.entity = entity
         
         // Set the batch size to a suitable number.
         fetchRequest.fetchBatchSize = 20
-        
+
         // Predicate
-        if let searchText = searchText {
-            fetchRequest.predicate = NSPredicate(format: "name contains[cd] %@", searchText)
+        var categoryPredicateString: String?
+        if let category = category {
+            switch category {
+            case 1:
+                categoryPredicateString = "hasPlayEquip == true"
+            case 2:
+                categoryPredicateString = "hasRestrooms == true"
+            default: break
+            }
+        }
+        
+        // Both search and category
+        if let searchText = searchText, categoryPredicateString = categoryPredicateString {
+            fetchRequest.predicate = NSPredicate(format: "name contains[cd] %@ AND \(categoryPredicateString)", searchText)
+        } else {
+            // Only search
+            if let searchText = searchText {
+                fetchRequest.predicate = NSPredicate(format: "name contains[cd] %@", searchText)
+
+            } else {
+                // Only category
+                if let categoryPredicateString = categoryPredicateString {
+                    fetchRequest.predicate = NSPredicate(format: categoryPredicateString)
+                }
+            }
         }
         
         // Edit the sort key as appropriate.

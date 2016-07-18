@@ -13,6 +13,7 @@ import CloudKit
 class ParksListViewController: UIViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     
     var coreDataStack: CoreDataStack!
@@ -63,7 +64,7 @@ class ParksListViewController: UIViewController {
             return _fetchedResultsController!
         }
         
-        let fetchedResultsController = Park.getFetchedResultsController(nil, coreDataStack: coreDataStack)
+        let fetchedResultsController = Park.getFetchedResultsController(nil, category: segmentedControl.selectedSegmentIndex, coreDataStack: coreDataStack)
         fetchedResultsController.delegate = self
         _fetchedResultsController = fetchedResultsController
         
@@ -74,6 +75,14 @@ class ParksListViewController: UIViewController {
             tableView.reloadData()
         }
     }
+    
+    
+    // MARK: - Actions
+    
+    @IBAction func segmentChanged(sender: UISegmentedControl) {
+        performSearch()
+    }
+    
     
     // MARK: - Navigation
     
@@ -121,6 +130,18 @@ class ParksListViewController: UIViewController {
         cell.backgroundColor = UIColor.whiteColor()
     }
 
+    private func performSearch() {
+        searchBar.resignFirstResponder()
+        
+        var searchText: String?
+        if let text = searchBar.text {
+            if !text.isEmpty && text != "" {
+                searchText = searchBar.text
+            }
+        }
+        
+        _fetchedResultsController = Park.getFetchedResultsController(searchText, category: segmentedControl.selectedSegmentIndex, coreDataStack: coreDataStack)
+    }
 
 }
 
@@ -207,16 +228,14 @@ extension ParksListViewController: NSFetchedResultsControllerDelegate {
 extension ParksListViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        //print("The search text is: '\(searchBar.text!)'")
-        searchBar.resignFirstResponder()
+        performSearch()
         hasSearched = true
-        _fetchedResultsController = Park.getFetchedResultsController(searchBar.text, coreDataStack: coreDataStack)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
+        searchBar.text = nil
+        performSearch()
         hasSearched = false
-        _fetchedResultsController = Park.getFetchedResultsController(nil, coreDataStack: coreDataStack)
     }
     
 }

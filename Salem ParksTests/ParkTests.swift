@@ -28,12 +28,23 @@ class ParkTests: XCTestCase {
     }
     
     func testGetFetchedResultsController() {
-        let fetchedResultsController = Park.getFetchedResultsController(nil, coreDataStack: coreDataStack)
+        let fetchedResultsController = Park.getFetchedResultsController(nil, category: nil, coreDataStack: coreDataStack)
         XCTAssertTrue(fetchedResultsController.fetchedObjects!.count == 80)
     }
     
     func testGetFetchedResultsControllerWithSearchText() {
-        let fetchedResultsController = Park.getFetchedResultsController("river", coreDataStack: coreDataStack)
+        let fetchedResultsController = Park.getFetchedResultsController("river", category: nil, coreDataStack: coreDataStack)
+        XCTAssertTrue(fetchedResultsController.fetchedObjects!.count == 2)
+    }
+    
+    func testGetFetchedResultsControllerWithCategory() {
+        let fetchedResultsController = Park.getFetchedResultsController(nil, category: 2, coreDataStack: coreDataStack)
+        //print("number of parks with bathrooms: \(fetchedResultsController.fetchedObjects?.count)")
+        XCTAssertTrue(fetchedResultsController.fetchedObjects!.count == 17)
+    }
+    
+    func testGetFetchedResultsControllerWithSearchTextAndCategory() {
+        let fetchedResultsController = Park.getFetchedResultsController("road", category: 1, coreDataStack: coreDataStack)
         XCTAssertTrue(fetchedResultsController.fetchedObjects!.count == 2)
     }
     

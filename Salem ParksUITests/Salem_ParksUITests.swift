@@ -79,6 +79,19 @@ class Salem_ParksUITests: XCTestCase {
         XCTAssert(app.tables.cells.count == 2)
     }
     
+    func testFilter() {
+        let app = XCUIApplication()
+        XCTAssert(app.tables.cells.count == 80)
+        app.navigationBars.buttons["Playground"].tap()
+        XCTAssert(app.tables.cells.count == 45)
+        app.navigationBars.buttons["Restrooms"].tap()
+        XCTAssert(app.tables.cells.count == 17)
+        app.navigationBars.buttons["All"].tap()
+        XCTAssert(app.tables.cells.count == 80)
+        app.navigationBars.buttons["Restrooms"].tap()
+        XCTAssert(app.tables.cells.count == 17)
+    }
+    
     func testViewMap() {
         let app = XCUIApplication()
         app.tabBars.childrenMatchingType(.Button).elementBoundByIndex(1).tap()
