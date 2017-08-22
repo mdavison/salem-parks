@@ -3,7 +3,4 @@ framework module YelpAPI {
 
   export *
   module * { export * }
-
-  private header "YLPClientPrivate.h"
-  private header "YLPResponsePrivate.h"
 }

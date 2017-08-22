@@ -19,26 +19,32 @@ class ParkData {
     }
     
     var jsonDataArray: [JSONValue]? = {
-        let fileName = NSBundle.mainBundle().pathForResource("park_data", ofType: "json")
-        var data: NSData?
-        var jsonObject: AnyObject?
+        let fileName = Bundle.main.path(forResource: "park_data", ofType: "json")
+        var data: Data?
+        //var jsonObject: AnyObject?
+        var jsonObject: Any?
         
         do {
-            data = try NSData(contentsOfFile: fileName!, options: NSDataReadingOptions(rawValue: 0))
+            data = try Data(contentsOf: URL(fileURLWithPath: fileName!), options: NSData.ReadingOptions(rawValue: 0))
         } catch {
             print("Error getting NSData")
         }
         
-        var errorType: ErrorType?
+        var errorType: Error?
         do {
-            jsonObject = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(rawValue: 0))
+            jsonObject = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue: 0))
         } catch {
             print("Error getting JSON Object")
             errorType = error
         }
         
-        if let jsonObject = jsonObject as? [String: AnyObject] where errorType == nil,
-            let featuresArray = JSONValue.fromObject(jsonObject)?["features"]?.array {
+//        if let jsonObject = jsonObject as? [String: AnyObject], errorType == nil,
+//            let featuresArray = JSONValue.fromObject(jsonObject)?["features"]?.array {
+//            
+//            return featuresArray
+//        }
+        if let jsonObjct = jsonObject as AnyObject?, errorType == nil,
+            let featuresArray = JSONValue.fromObject(jsonObjct)?["features"]?.array {
             
             return featuresArray
         }
@@ -46,7 +52,7 @@ class ParkData {
     }()
     
     
-    private func setParkAnnotations() {
+    fileprivate func setParkAnnotations() {
         if let jsonDataArray = jsonDataArray {
             for feature in jsonDataArray {
                 if let feature = feature.object {
@@ -56,9 +62,9 @@ class ParkData {
                         var discipline: String?
                         
                         if let parkName = parkJSON["PARK_NAME"]?.string,
-                            parkAddress = parkJSON["ADDRESS"]?.string,
-                            parkStatus = parkJSON["STATUS"]?.string,
-                            parkID = parkJSON["OBJECTID"]?.integer {
+                            let parkAddress = parkJSON["ADDRESS"]?.string,
+                            let parkStatus = parkJSON["STATUS"]?.string,
+                            let parkID = parkJSON["OBJECTID"]?.integer {
                             
                             title = parkName
                             locationName = parkAddress

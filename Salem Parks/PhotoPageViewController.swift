@@ -14,14 +14,14 @@ class PhotoPageViewController: UIPageViewController {
     var photoIndex: Int?
     var ckPhotos: [CKPhoto]? {
         didSet {
-            dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+            DispatchQueue.main.async { [unowned self] in
                 self.activityIndicator?.stopAnimating()
                 if let viewController = self.photoViewController(self.photoIndex ?? 0) {
                     let viewControllers = [viewController]
                     
                     self.setViewControllers(
                         viewControllers,
-                        direction: .Forward,
+                        direction: .forward,
                         animated: false,
                         completion: nil
                     )
@@ -38,7 +38,7 @@ class PhotoPageViewController: UIPageViewController {
         super.viewDidLoad()
         
         dataSource = self
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.white
         setActivityIndicator()
 
         if ckPhotos != nil {
@@ -47,7 +47,7 @@ class PhotoPageViewController: UIPageViewController {
 
                 setViewControllers(
                     viewControllers,
-                    direction: .Forward,
+                    direction: .forward,
                     animated: false,
                     completion: nil
                 )
@@ -56,18 +56,19 @@ class PhotoPageViewController: UIPageViewController {
             activityIndicator?.startAnimating()
             
             // Add observer for when full sized photos come back
-            NSNotificationCenter.defaultCenter().addObserverForName(
-                Notifications.fetchPhotosForParkFromiCloudFinishedNotification,
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name(rawValue: Notifications.fetchPhotosForParkFromiCloudFinishedNotification),
                 object: nil,
-                queue: NSOperationQueue.mainQueue(),
-                usingBlock: { [weak self] (notification) in
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                queue: OperationQueue.main,
+                using: { [weak self] (notification) in
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
                     self?.activityIndicator?.startAnimating()
                     
-                    if let _ = notification.object as? NSError {
-                        NSLog("Error downloading large photo")
+                    if let error = notification.object as? NSError {
+                        NSLog("Error downloading large photo: \(error.localizedDescription)")
+                        self?.activityIndicator?.stopAnimating()
                     } else {
-                        if let userInfo = notification.userInfo as? [String: [CKPhoto]], photos = userInfo["Photos"] {
+                        if let userInfo = notification.userInfo as? [String: [CKPhoto]], let photos = userInfo["Photos"] {
                             self?.ckPhotos = photos
                         }
                     }
@@ -84,11 +85,11 @@ class PhotoPageViewController: UIPageViewController {
     
     // MARK: - Helper Methods
     
-    func photoViewController(index: Int) -> PhotoViewController? {
+    func photoViewController(_ index: Int) -> PhotoViewController? {
         if let storyboard = storyboard,
-            page = storyboard.instantiateViewControllerWithIdentifier(Storyboard.photoViewControllerStoryboardID) as? PhotoViewController {
-
-            if let photo = ckPhotos?[index], imageFileURL = photo.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
+            let page = storyboard.instantiateViewController(withIdentifier: Storyboard.photoViewControllerStoryboardID) as? PhotoViewController {
+            
+            if let photo = ckPhotos?[index], let imageFileURL = photo.image?.fileURL, let data = try? Data(contentsOf: imageFileURL) {
                 page.photoImage = UIImage(data: data)
                 page.photoIndex = index
                 return page
@@ -97,8 +98,8 @@ class PhotoPageViewController: UIPageViewController {
         return nil
     }
     
-    private func setActivityIndicator() {
-        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    fileprivate func setActivityIndicator() {
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         activityIndicator?.frame = CGRect(
             x: (view.bounds.width / 2) - 25,
             y: (view.bounds.height / 2) - 50,
@@ -113,7 +114,7 @@ class PhotoPageViewController: UIPageViewController {
 
 extension PhotoPageViewController: UIPageViewControllerDataSource {
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
         if let viewController = viewController as? PhotoViewController {
             var index = viewController.photoIndex
@@ -125,7 +126,7 @@ extension PhotoPageViewController: UIPageViewControllerDataSource {
         return nil
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
         if let viewController = viewController as? PhotoViewController {
             var index = viewController.photoIndex

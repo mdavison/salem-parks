@@ -29,9 +29,9 @@ class ParksListViewController: UIViewController {
         
         // Theme
         tabBarController?.tabBar.tintColor = Theme.tabBarTint
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        navigationController?.navigationBar.tintColor = UIColor.white
         let searchBarCancelButton = searchBar.subviews[0].subviews[2] // UINavigationButton
-        searchBarCancelButton.tintColor = UIColor.whiteColor()
+        searchBarCancelButton.tintColor = UIColor.white
         
         fetchedResultsController.delegate = self
         
@@ -45,7 +45,7 @@ class ParksListViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         tableView.reloadData()
@@ -59,7 +59,7 @@ class ParksListViewController: UIViewController {
     
     // MARK: - Fetched results controller
     
-    var fetchedResultsController: NSFetchedResultsController {
+    var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> {
         if _fetchedResultsController != nil {
             return _fetchedResultsController!
         }
@@ -70,7 +70,7 @@ class ParksListViewController: UIViewController {
         
         return _fetchedResultsController!
     }
-    var _fetchedResultsController: NSFetchedResultsController? = nil {
+    var _fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>? = nil {
         didSet {
             tableView.reloadData()
         }
@@ -79,27 +79,27 @@ class ParksListViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func segmentChanged(sender: UISegmentedControl) {
+    @IBAction func segmentChanged(_ sender: UISegmentedControl) {
         performSearch()
     }
     
     
     // MARK: - Navigation
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Storyboard.ShowParkDetailsSegueIdentifier {
-            let detailViewController = segue.destinationViewController as! DetailViewController
+            let detailViewController = segue.destination as! DetailViewController
             let indexPath = tableView.indexPathForSelectedRow!
             
             detailViewController.coreDataStack = coreDataStack
-            detailViewController.park = fetchedResultsController.objectAtIndexPath(indexPath) as? Park
+            detailViewController.park = fetchedResultsController.object(at: indexPath) as? Park
         }
     }
     
     
     // MARK: - Helper Methods
     
-    private func configureCell(cell: ParksListTableViewCell, park: Park) {
+    fileprivate func configureCell(_ cell: ParksListTableViewCell, park: Park) {
         resetCell(cell)
         cell.parkNameLabel.text = park.name
         
@@ -117,20 +117,20 @@ class ParksListViewController: UIViewController {
         }
         
         if let isFavorite = park.isFavorite as? Bool {
-            cell.isFavoriteImageView.hidden = !isFavorite
+            cell.isFavoriteImageView.isHidden = !isFavorite
         }
     }
     
-    private func resetCell(cell: ParksListTableViewCell) {
-        cell.isFavoriteImageView.hidden = true
+    fileprivate func resetCell(_ cell: ParksListTableViewCell) {
+        cell.isFavoriteImageView.isHidden = true
         cell.amenityImage1.tintColor = Theme.amenityIconDefaultColor
         cell.amenityImage2.tintColor = Theme.amenityIconDefaultColor
         cell.amenityImage3.tintColor = Theme.amenityIconDefaultColor
         cell.amenityImage4.tintColor = Theme.amenityIconDefaultColor
-        cell.backgroundColor = UIColor.whiteColor()
+        cell.backgroundColor = UIColor.white
     }
 
-    private func performSearch() {
+    fileprivate func performSearch() {
         searchBar.resignFirstResponder()
         
         var searchText: String?
@@ -147,11 +147,11 @@ class ParksListViewController: UIViewController {
 
 
 extension ParksListViewController: UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultsController.sections?.count ?? 0
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]
         
         if hasSearched == true && sectionInfo.numberOfObjects == 0 {
@@ -161,15 +161,15 @@ extension ParksListViewController: UITableViewDataSource {
         return sectionInfo.numberOfObjects
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if fetchedResultsController.fetchedObjects?.count == 0 {
-            let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+            let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
             cell.textLabel?.text = "Nothing found"
-            cell.selectionStyle = .None
+            cell.selectionStyle = .none
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.CellReuseIdentifier, forIndexPath: indexPath) as! ParksListTableViewCell
-            if let park = fetchedResultsController.objectAtIndexPath(indexPath) as? Park {
+            let cell = tableView.dequeueReusableCell(withIdentifier: Storyboard.CellReuseIdentifier, for: indexPath) as! ParksListTableViewCell
+            if let park = fetchedResultsController.object(at: indexPath) as? Park {
                 configureCell(cell, park: park)
             }
             return cell
@@ -180,36 +180,36 @@ extension ParksListViewController: UITableViewDataSource {
 
 extension ParksListViewController: NSFetchedResultsControllerDelegate {
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.beginUpdates()
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {
-        case .Insert:
-            self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-        case .Delete:
-            self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        case .insert:
+            self.tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+        case .delete:
+            self.tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
         default:
             return
         }
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
-        case .Insert:
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-        case .Delete:
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-        case .Update:
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+        case .update:
             break
-        case .Move:
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
         }
     }
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.endUpdates()
     }
     
@@ -227,12 +227,12 @@ extension ParksListViewController: NSFetchedResultsControllerDelegate {
 
 extension ParksListViewController: UISearchBarDelegate {
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         performSearch()
         hasSearched = true
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
         performSearch()
         hasSearched = false

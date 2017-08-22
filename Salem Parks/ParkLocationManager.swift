@@ -25,21 +25,21 @@ class ParkLocationManager {
     
     func startMonitoringNearbyParks() {
         //print("monitorNearbyParks()")
-        isMonitoringRegions = true 
-        if CLLocationManager.isMonitoringAvailableForClass(CLCircularRegion) {
+        isMonitoringRegions = true
+        if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
             locationManager.delegate = mapViewController
             
             switch CLLocationManager.authorizationStatus() {
-            case .NotDetermined, .AuthorizedWhenInUse:
+            case .notDetermined, .authorizedWhenInUse:
                 locationManager.requestAlwaysAuthorization()
-            case .AuthorizedAlways:
+            case .authorizedAlways:
                 
                 locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
                 locationManager.distanceFilter = 500
                 locationManager.startMonitoringSignificantLocationChanges()
                 
                 monitorRegions()
-            case .Denied, .Restricted:
+            case .denied, .restricted:
                 showAlert(withTitle: "Error", message: "Location access has been disabled. Please enable it in settings and try again", viewController: mapViewController)
                 break
             }
@@ -59,14 +59,14 @@ class ParkLocationManager {
         for region in regions {
             //print("region: \(region.description)")
             region.notifyOnEntry = true
-            locationManager.startMonitoringForRegion(region)
+            locationManager.startMonitoring(for: region)
             
             // Find out if already inside a region
-            locationManager.requestStateForRegion(region)
+            locationManager.requestState(for: region)
         }
     }
     
-    func handleUpdateLocations(locations: [CLLocation], parkAnnotations: [ParkAnnotation]) {
+    func handleUpdateLocations(_ locations: [CLLocation], parkAnnotations: [ParkAnnotation]) {
         //print("didUpdateLocations")
         // If it's a relatively recent event, turn off updates to save power
         if let location = locations.last {
@@ -81,10 +81,10 @@ class ParkLocationManager {
         }
     }
     
-    private func clearMonitoredRegions() {
+    fileprivate func clearMonitoredRegions() {
         for region in locationManager.monitoredRegions {
             //print("stopping: \(region.description)")
-            locationManager.stopMonitoringForRegion(region)
+            locationManager.stopMonitoring(for: region)
         }
     }
 

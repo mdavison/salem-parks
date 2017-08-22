@@ -34,7 +34,7 @@ class Salem_ParksUITests: XCTestCase {
         let tablesQuery = app.tables
         tablesQuery.staticTexts["Riverfront Park"].tap()
         XCTAssert(app.navigationBars.staticTexts["Riverfront Park"].exists)
-        XCTAssert(app.scrollViews.otherElements.containingType(.StaticText, identifier:"200 Water St NE").element.exists)
+        XCTAssert(app.scrollViews.otherElements.containing(.staticText, identifier:"200 Water St NE").element.exists)
     }
     
     func testParkImages() {
@@ -49,11 +49,11 @@ class Salem_ParksUITests: XCTestCase {
         XCTAssert(app.scrollViews.otherElements.collectionViews.cells.count == 1)
         
         // 3 images will be loaded asynchonously
-        let lastImage = app.scrollViews.otherElements.collectionViews.cells.images.elementBoundByIndex(2)
+        let lastImage = app.scrollViews.otherElements.collectionViews.cells.images.element(boundBy: 2)
         
         let existsPredicate = NSPredicate(format: "exists == true")
-        expectationForPredicate(existsPredicate, evaluatedWithObject: lastImage, handler: nil)
-        waitForExpectationsWithTimeout(10, handler: nil)
+        expectation(for: existsPredicate, evaluatedWith: lastImage, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testFavoritingPark() {
@@ -69,7 +69,7 @@ class Salem_ParksUITests: XCTestCase {
         let app = XCUIApplication()
         app.tables.staticTexts["Aldrich Park"].tap()
         XCTAssert(app.scrollViews.tables.staticTexts["Reservable"].exists)
-        XCTAssert(app.scrollViews.tables.cells.elementBoundByIndex(21).staticTexts["No"].exists)
+        XCTAssert(app.scrollViews.tables.cells.element(boundBy: 21).staticTexts["No"].exists)
     }
     
     func testSearch() {
@@ -94,13 +94,13 @@ class Salem_ParksUITests: XCTestCase {
     
     func testViewMap() {
         let app = XCUIApplication()
-        app.tabBars.childrenMatchingType(.Button).elementBoundByIndex(1).tap()
+        app.tabBars.children(matching: .button).element(boundBy: 1).tap()
         XCTAssert(app.navigationBars.staticTexts["Map"].exists)
     }
     
     func testAnnotationsExist() {
         let app = XCUIApplication()
-        app.tabBars.childrenMatchingType(.Button).elementBoundByIndex(1).tap()
+        app.tabBars.children(matching: .button).element(boundBy: 1).tap()
         XCTAssert(app.otherElements["Ellen Lane Property, 3101 Garrett St NW"].exists)
         XCTAssert(app.otherElements["Brush College Park, 2600 Doaks Ferry Rd NW"].exists)
         XCTAssert(app.otherElements["Grice Hill Property, 2201 27th Pl NW"].exists)
@@ -108,7 +108,7 @@ class Salem_ParksUITests: XCTestCase {
     
     func testNearbyButton() {
         let app = XCUIApplication()
-        app.tabBars.childrenMatchingType(.Button).elementBoundByIndex(1).tap()
+        app.tabBars.children(matching: .button).element(boundBy: 1).tap()
         app.navigationBars["Map"].buttons["Near Me"].tap()
         XCTAssert(app.navigationBars["Map"].buttons["Near Me Filled"].exists)
         app.navigationBars["Map"].buttons["Near Me Filled"].tap()
@@ -118,7 +118,7 @@ class Salem_ParksUITests: XCTestCase {
     
     func testAnnotationRightCalloutAccessoryTapped() {
         let app = XCUIApplication()
-        app.tabBars.childrenMatchingType(.Button).elementBoundByIndex(1).tap()
+        app.tabBars.children(matching: .button).element(boundBy: 1).tap()
         let ellenLaneAnnotation = app.otherElements["Ellen Lane Property, 3101 Garrett St NW"]
         ellenLaneAnnotation.tap()
         XCTAssert(ellenLaneAnnotation.exists)
@@ -136,7 +136,7 @@ class Salem_ParksUITests: XCTestCase {
     
     func testAnnotationLeftCalloutAccessoryTapped() {
         let app = XCUIApplication()
-        app.tabBars.childrenMatchingType(.Button).elementBoundByIndex(1).tap()
+        app.tabBars.children(matching: .button).element(boundBy: 1).tap()
         app.otherElements["Ellen Lane Property, 3101 Garrett St NW"].tap()
         app.buttons["Car"].tap()
     }

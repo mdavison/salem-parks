@@ -38,7 +38,7 @@ class PhotoViewController: UIViewController {
 
 extension PhotoViewController: UIScrollViewDelegate {
     
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return photoImageView
     }
 }

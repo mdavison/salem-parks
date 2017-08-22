@@ -35,7 +35,7 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         
         // Theme
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        navigationController?.navigationBar.tintColor = UIColor.white
         
         parkLocationManager = ParkLocationManager(mapViewController: self)
         parkAnnotations = parkData.getMapAnnotations()
@@ -57,9 +57,9 @@ class MapViewController: UIViewController {
 
     // MARK: - Navigation
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Storyboard.ShowParkDetailsSegueIdentifier {
-            if let detailViewController = segue.destinationViewController as? DetailViewController {
+            if let detailViewController = segue.destination as? DetailViewController {
                 detailViewController.coreDataStack = coreDataStack 
                 detailViewController.park = park
             }
@@ -68,7 +68,7 @@ class MapViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func showNearbyParks(sender: AnyObject) {
+    @IBAction func showNearbyParks(_ sender: AnyObject) {
         if isMonitoringRegions == true { // Turn it OFF
             parkLocationManager.stopMonitoringNearbyParks()
             //nearbyButton.title = "Nearby"
@@ -85,7 +85,7 @@ class MapViewController: UIViewController {
     
     // MARK: - Helper Methods
     
-    private func centerMapOnLocation(location: CLLocation) {
+    fileprivate func centerMapOnLocation(_ location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
     }
@@ -95,11 +95,11 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? ParkAnnotation {
             let identifier = "pin"
             var view: MKPinAnnotationView
-            if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView {
+            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
                 dequeuedView.annotation = annotation
                 view = dequeuedView
             } else {
@@ -109,16 +109,16 @@ extension MapViewController: MKMapViewDelegate {
                 //view.calloutOffset = CGPoint(x: -5, y: 5)
                 //let rightButton = UIButton(type: .DetailDisclosure)
                 let rightButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.bounds.size.height, height: view.bounds.size.height))
-                rightButton.setImage(UIImage(named: "More Than"), forState: .Normal)
-                rightButton.tintColor = UIColor.lightGrayColor()
+                rightButton.setImage(UIImage(named: "More Than"), for: UIControlState())
+                rightButton.tintColor = UIColor.lightGray
                 view.rightCalloutAccessoryView = rightButton
                 
                 let leftButton = AnnotationButton(frame: CGRect(x: 0, y: 0, width: view.bounds.size.height + 8, height: view.bounds.size.height + 12))
                 leftButton.view = view
                 leftButton.backgroundColor = leftButton.tintColor
-                leftButton.setImage(UIImage(named: "Car"), forState: .Normal)
-                leftButton.tintColor = UIColor.whiteColor()
-                leftButton.addTarget(self, action: #selector(MapViewController.getDrivingDirections(_:)), forControlEvents: .TouchUpInside)
+                leftButton.setImage(UIImage(named: "Car"), for: UIControlState())
+                leftButton.tintColor = UIColor.white
+                leftButton.addTarget(self, action: #selector(MapViewController.getDrivingDirections(_:)), for: .touchUpInside)
                 view.leftCalloutAccessoryView = leftButton
             }
             
@@ -128,17 +128,17 @@ extension MapViewController: MKMapViewDelegate {
         return nil
     }
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if let annotation = view.annotation as? ParkAnnotation {
             park = Park.getPark(forID: annotation.objectID, coreDataStack: coreDataStack)
-            performSegueWithIdentifier(Storyboard.ShowParkDetailsSegueIdentifier, sender: self)
+            performSegue(withIdentifier: Storyboard.ShowParkDetailsSegueIdentifier, sender: self)
         }
     }
     
-    func getDrivingDirections(button: AnnotationButton) {
+    func getDrivingDirections(_ button: AnnotationButton) {
         if let location = button.view?.annotation as? ParkAnnotation {
             let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-            location.mapItem().openInMapsWithLaunchOptions(launchOptions)
+            location.mapItem().openInMaps(launchOptions: launchOptions)
         }
     }
 }
@@ -146,22 +146,22 @@ extension MapViewController: MKMapViewDelegate {
 
 extension MapViewController: CLLocationManagerDelegate {
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         parkLocationManager.handleUpdateLocations(locations, parkAnnotations: parkAnnotations)
     }
     
-    func locationManager(manager: CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error: NSError) {
-        NSLog("Monitering failed for region: \(region?.identifier). Error: \(error)")
+    func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
+        NSLog("Monitering failed for region: \(String(describing: region?.identifier)). Error: \(error)")
         print("managed regions: \(manager.monitoredRegions.count)")
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         NSLog("Location manager failed with the following error: \(error)")
     }
     
-    func locationManager(manager: CLLocationManager, didDetermineState state: CLRegionState, forRegion region: CLRegion) {
+    func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
         NSLog("User is already in region: \(region.identifier)")
-        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             appDelegate.handleRegionEvent(region)
         }
     }

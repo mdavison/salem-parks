@@ -9,7 +9,7 @@
 import UIKit
 
 struct YelpPark {
-    static func convertRatingToStarsImages(rating: Double) -> [String: String] {
+    static func convertRatingToStarsImages(_ rating: Double) -> [String: String] {
         struct ImageNames {
             static let star = "Star"
             static let starFilled = "Star Filled"
@@ -115,28 +115,31 @@ struct YelpPark {
     }
     
     
-    static func getBusinessIDForParkID(parkID: Int) -> String? {
-        if let path = NSBundle.mainBundle().pathForResource("Yelp", ofType: "plist") {
+    static func getBusinessIDForParkID(_ parkID: Int) -> String? {
+        if let path = Bundle.main.path(forResource: "Yelp", ofType: "plist") {
             if let parks = NSDictionary(contentsOfFile: path) {
-                return parks.objectForKey("\(parkID)")?.objectForKey("businessID") as? String
+                if let businessID = parks.object(forKey: "\(parkID)") as AnyObject? {
+                    return businessID.object(forKey: "businessID") as? String
+                }
+                return nil
             }
         }
         return nil
     }
     
     static func yelpIsInstalled() -> Bool {
-        if let url = NSURL(string: "yelp:") {
-            return UIApplication.sharedApplication().canOpenURL(url)
+        if let url = URL(string: "yelp:") {
+            return UIApplication.shared.canOpenURL(url)
         }
         
         return false
     }
     
-    static func getURL(identifier: String) -> NSURL? {
+    static func getURL(_ identifier: String) -> URL? {
         if YelpPark.yelpIsInstalled() == true {
-            return NSURL(string: "yelp:///biz/\(identifier)")
+            return URL(string: "yelp:///biz/\(identifier)")
         } else {
-            return NSURL(string: "https://www.yelp.com/biz/\(identifier)")
+            return URL(string: "https://www.yelp.com/biz/\(identifier)")
         }
     }
 }

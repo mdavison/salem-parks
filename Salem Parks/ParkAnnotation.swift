@@ -32,10 +32,10 @@ class ParkAnnotation: NSObject, MKAnnotation {
     }
     
     static func getCoordinate(forParkID parkID: Int) -> CLLocationCoordinate2D? {
-        if let path = NSBundle.mainBundle().pathForResource("ParkCoordinates", ofType: "plist") {
+        if let path = Bundle.main.path(forResource: "ParkCoordinates", ofType: "plist") {
             if let parks = NSDictionary(contentsOfFile: path) {
-                if let lat = parks.objectForKey("\(parkID)")?.objectForKey("latitude") as? Double,
-                    long = parks.objectForKey("\(parkID)")?.objectForKey("longitude") as? Double {
+                if let lat = (parks.object(forKey: "\(parkID)") as AnyObject).object(forKey: "latitude") as? Double,
+                    let long = (parks.object(forKey: "\(parkID)") as AnyObject).object(forKey: "longitude") as? Double {
 
                     return CLLocationCoordinate2D(latitude: lat, longitude: long)
                 }

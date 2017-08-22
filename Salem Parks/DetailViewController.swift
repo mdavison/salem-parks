@@ -8,6 +8,30 @@
 
 import UIKit
 import YelpAPI
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class DetailViewController: UIViewController {
 
@@ -70,7 +94,7 @@ class DetailViewController: UIViewController {
     var park: Park?
     var ckPhotos: [CKPhoto]? {
         didSet {
-            dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+            DispatchQueue.main.async { [unowned self] in
                 self.photosCollectionView.reloadData()
             }
         }
@@ -87,7 +111,7 @@ class DetailViewController: UIViewController {
     }
     var yelpBusiness: YLPBusiness?
     
-    let defaultNotificationCenter = NSNotificationCenter.defaultCenter()
+    let defaultNotificationCenter = NotificationCenter.default
     
     struct Storyboard {
         static let parkImageCellReuseIdentifier = "ParkImageCell"
@@ -108,11 +132,11 @@ class DetailViewController: UIViewController {
         setYelpData()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         if userIsSignedIntoiCloud {
@@ -130,7 +154,7 @@ class DetailViewController: UIViewController {
 
     // MARK: - Navigation
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == Storyboard.showLargePhotoSegueIdentifier {
             if ckPhotos?.count < 1 {
                 return false
@@ -140,11 +164,11 @@ class DetailViewController: UIViewController {
         return true
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //if let photoViewController = segue.destinationViewController as? PhotoViewController {
-        if let photoPageViewController = segue.destinationViewController as? PhotoPageViewController {
+        if let photoPageViewController = segue.destination as? PhotoPageViewController {
             // Need to get the collection view item selected
-            if let selectedCell = sender as? PhotoCollectionViewCell, indexPath = photosCollectionView.indexPathForCell(selectedCell) {
+            if let selectedCell = sender as? PhotoCollectionViewCell, let indexPath = photosCollectionView.indexPath(for: selectedCell) {
                 // Make sure photo exists
                 if ckPhotos?.count > indexPath.item {
 //                    if let photo = ckPhotos?[indexPath.item], imageFileURL = photo.image?.fileURL, data = NSData(contentsOfURL: imageFileURL) {
@@ -165,7 +189,7 @@ class DetailViewController: UIViewController {
                     } else {
                         // Only have thumbnails so need to get full sized-photos
                         Park.getCKPhotosFromiCloud(forParkID: park?.id as! Int)
-                        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                        UIApplication.shared.isNetworkActivityIndicatorVisible = true
                     }
                 }
                 
@@ -175,7 +199,7 @@ class DetailViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func toggleFavorite(sender: UIButton) {
+    @IBAction func toggleFavorite(_ sender: UIButton) {
         if park?.isFavorite == true {
             //favoriteButton.setImage(UIImage(named: "Like"), forState: .Normal)
             favoriteButton.changeImageAnimated(UIImage(named: "Like"))
@@ -190,24 +214,25 @@ class DetailViewController: UIViewController {
         coreDataStack.saveContext()
     }
     
-    @IBAction func openYelp(sender: UIButton) {
+    @IBAction func openYelp(_ sender: UIButton) {
         if let yelpBusiness = yelpBusiness {
             if let url = YelpPark.getURL(yelpBusiness.identifier) {
-                UIApplication.sharedApplication().openURL(url)
+                //UIApplication.shared.openURL(url)
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         }
     }
     
     // MARK: - Notification Handling
     
-    @objc private func fetchPhotosForParkFromiCloudNotificationHandler(notification: NSNotification) {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+    @objc fileprivate func fetchPhotosForParkFromiCloudNotificationHandler(_ notification: Notification) {
+        DispatchQueue.main.async { [weak self] in
             // Turn off network activity spinner
             self?.parkNetworkActivity = false
-            self?.photosActivityIndicator.hidden = true
+            self?.photosActivityIndicator.isHidden = true
         } 
         
-        if let userInfo = notification.userInfo as? [String: [CKPhoto]], photos = userInfo["Photos"] {
+        if let userInfo = notification.userInfo as? [String: [CKPhoto]], let photos = userInfo["Photos"] {
             ckPhotos = photos
         } else if let _ = notification.object as? NSError {
             // iCloud fetch error
@@ -227,7 +252,7 @@ class DetailViewController: UIViewController {
     
     // MARK: - Helper Methods 
     
-    private func setAmenityImages() {
+    fileprivate func setAmenityImages() {
         if park?.hasRestrooms == true {
             amenityImage1.tintColor = Theme.amenityIconHighlightColor
         }
@@ -242,34 +267,36 @@ class DetailViewController: UIViewController {
         }
     }
     
-    private func createiCloudSignInAlert() {
-        let alert = UIAlertController(title: "iCloud Error", message: "You will need to sign into iCloud in order to see any available park photos.", preferredStyle: .Alert)
+    fileprivate func createiCloudSignInAlert() {
+        let alert = UIAlertController(title: "iCloud Error", message: "You will need to sign into iCloud in order to see any available park photos.", preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//        
+//        let settingsAction = UIAlertAction(title: "Open Settings", style: .default, handler: { (action) in            
+//            // Open iCloud Settings
+//            UIApplication.shared.open(URL(string:"prefs:root=CASTLE")!, options: [:], completionHandler: nil)
+//        })
         
-        let settingsAction = UIAlertAction(title: "Open Settings", style: .Default, handler: { (action) in            
-            // Open iCloud Settings
-            UIApplication.sharedApplication().openURL(NSURL(string:"prefs:root=CASTLE")!)
-        })
+        alert.addAction(okAction)
+        //alert.addAction(cancelAction)
+        //alert.addAction(settingsAction)
         
-        alert.addAction(settingsAction)
-        alert.addAction(cancelAction)
-        
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
         
         userHasBeenAlertedToiCloudSignInRequired = true
     }
     
-    private func setFavorite() {
+    fileprivate func setFavorite() {
         if park?.isFavorite == true {
-            favoriteButton.setImage(UIImage(named: "Like Filled"), forState: .Normal)
+            favoriteButton.setImage(UIImage(named: "Like Filled"), for: UIControlState())
         } 
     }
     
-    private func setParkImages() {
+    fileprivate func setParkImages() {
         if userIsSignedIntoiCloud {
             // Fetch CKPark from cloudkit to populate image
-            if let park = park, id = park.id as? Int {
+            if let park = park, let id = park.id as? Int {
                 // Turn on network activity spinner
                 parkNetworkActivity = true
                 photosActivityIndicator.startAnimating()
@@ -281,7 +308,7 @@ class DetailViewController: UIViewController {
             defaultNotificationCenter.addObserver(
                 self,
                 selector: #selector(DetailViewController.fetchPhotosForParkFromiCloudNotificationHandler(_:)),
-                name: Notifications.fetchPhotosForParkFromiCloudFinishedNotification,
+                name: NSNotification.Name(rawValue: Notifications.fetchPhotosForParkFromiCloudFinishedNotification),
                 object: nil
             )
         } else {
@@ -291,46 +318,46 @@ class DetailViewController: UIViewController {
         }
     }
     
-    private func setYelpData() {
-        let client = YLPClient(consumerKey: YelpAPIKeys.consumerKey,
-                               consumerSecret: YelpAPIKeys.consumerSecret,
-                               token: YelpAPIKeys.token,
-                               tokenSecret: YelpAPIKeys.tokenSecret)
-        
-        if let park = park, parkItemID = park.id as? Int, businessID = YelpPark.getBusinessIDForParkID(parkItemID) {
+    fileprivate func setYelpData() {
+        if let park = park, let parkItemID = park.id as? Int, let businessID = YelpPark.getBusinessIDForParkID(parkItemID) {
             // Turn on network activity spinner
             yelpNetworkActivity = true
             
-            client.businessWithId(businessID) { [weak self] (business, error) in
-                self?.yelpBusiness = business
-                if let rating = business?.rating {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self?.setStarsForRating(rating)
-                    })
+            YLPClient.authorize(withAppId: YelpAPIKeys.clientID, secret: YelpAPIKeys.clientSecret) { (client, error) in
+                client?.business(withId: businessID) { [weak self] (business, error) in
+                    self?.yelpBusiness = business
+                    if let rating = business?.rating {
+                        DispatchQueue.main.async {
+                            // Set stars
+                            self?.setStarsForRating(rating)
+                        }
+                    }
                 }
-                
-                // Turn off network activity spinner
-                self?.yelpNetworkActivity = false
             }
+        }
+        
+        DispatchQueue.main.async {
+            // Turn off network activity spinner
+            self.yelpNetworkActivity = false
         }
     }
     
     // Coordinate multiple network activity indicators
-    private func toggleNetworkActivitySpinner() {
-        let sharedApplication = UIApplication.sharedApplication()
+    fileprivate func toggleNetworkActivitySpinner() {
+        let sharedApplication = UIApplication.shared
 
         if parkNetworkActivity == false && yelpNetworkActivity == false {
-            sharedApplication.networkActivityIndicatorVisible = false
+            sharedApplication.isNetworkActivityIndicatorVisible = false
         } else {
-            sharedApplication.networkActivityIndicatorVisible = true
+            sharedApplication.isNetworkActivityIndicatorVisible = true
         }
     }
     
-    private func setStarsForRating(rating: Double) {
+    fileprivate func setStarsForRating(_ rating: Double) {
         let stars = YelpPark.convertRatingToStarsImages(rating)
         
-        if let image1 = stars["image1"], image2 = stars["image2"], image3 = stars["image3"],
-            image4 = stars["image4"], image5 = stars["image5"] {
+        if let image1 = stars["image1"], let image2 = stars["image2"], let image3 = stars["image3"],
+            let image4 = stars["image4"], let image5 = stars["image5"] {
             
             ratingStarImage1.image = UIImage(named: image1)
             ratingStarImage2.image = UIImage(named: image2)
@@ -346,25 +373,25 @@ class DetailViewController: UIViewController {
 // Photos Collection View
 extension DetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let ckPhotos = ckPhotos where !ckPhotos.isEmpty {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let ckPhotos = ckPhotos, !ckPhotos.isEmpty {
             return ckPhotos.count
         }
         return 1
         
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = photosCollectionView.dequeueReusableCellWithReuseIdentifier(Storyboard.parkImageCellReuseIdentifier, forIndexPath: indexPath) as! PhotoCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = photosCollectionView.dequeueReusableCell(withReuseIdentifier: Storyboard.parkImageCellReuseIdentifier, for: indexPath) as! PhotoCollectionViewCell
         
-        if let ckPhotos = ckPhotos where !ckPhotos.isEmpty {
+        if let ckPhotos = ckPhotos, !ckPhotos.isEmpty {
             let photo = ckPhotos[indexPath.row]
             let imageFileURL = photo.thumbnail?.fileURL ?? photo.image?.fileURL
-            if let imageFileURL = imageFileURL, data = NSData(contentsOfURL: imageFileURL) {
+            if let imageFileURL = imageFileURL, let data = try? Data(contentsOf: imageFileURL) {
                 cell.photoImageView.image = UIImage(data: data)
             }
         }
@@ -377,21 +404,21 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
 
 // Amenities Table View
 extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let amenities = park?.getAmenities() where !amenities.isEmpty {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let amenities = park?.getAmenities(), !amenities.isEmpty {
             return amenities.count
         }
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.amenityCellReuseIdentifier, forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Storyboard.amenityCellReuseIdentifier, for: indexPath)
         
-        if let amenities = park?.getAmenities() where !amenities.isEmpty {
+        if let amenities = park?.getAmenities(), !amenities.isEmpty {
             let dict = amenities[indexPath.row]
             for (key, value) in dict {
                 cell.textLabel?.text = key
@@ -408,30 +435,30 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
 
 
 extension UIButton {
-    func changeImageAnimated(image: UIImage?) {
-        guard let imageView = self.imageView, currentImage = imageView.image, newImage = image else {
+    func changeImageAnimated(_ image: UIImage?) {
+        guard let imageView = self.imageView, let currentImage = imageView.image, let newImage = image else {
             return
         }
         CATransaction.begin()
         CATransaction.setCompletionBlock {
-            self.setImage(newImage, forState: UIControlState.Normal)
+            self.setImage(newImage, for: UIControlState())
         }
         let crossFade: CABasicAnimation = CABasicAnimation(keyPath: "contents")
         crossFade.duration = 0.3
-        crossFade.fromValue = currentImage.CGImage
-        crossFade.toValue = newImage.CGImage
-        crossFade.removedOnCompletion = false
+        crossFade.fromValue = currentImage.cgImage
+        crossFade.toValue = newImage.cgImage
+        crossFade.isRemovedOnCompletion = false
         crossFade.fillMode = kCAFillModeForwards
-        imageView.layer.addAnimation(crossFade, forKey: "animateContents")
+        imageView.layer.add(crossFade, forKey: "animateContents")
         CATransaction.commit()
         
         let crossFadeColor: CABasicAnimation = CABasicAnimation(keyPath: "contents")
         crossFadeColor.duration = 0.3
-        crossFadeColor.fromValue = UIColor.blackColor()
+        crossFadeColor.fromValue = UIColor.black
         crossFadeColor.toValue = Theme.isFavoriteIconColor
-        crossFadeColor.removedOnCompletion = false
+        crossFadeColor.isRemovedOnCompletion = false
         crossFadeColor.fillMode = kCAFillModeForwards
-        imageView.layer.addAnimation(crossFadeColor, forKey: "animateContents")
+        imageView.layer.add(crossFadeColor, forKey: "animateContents")
         CATransaction.commit()
     }
 }

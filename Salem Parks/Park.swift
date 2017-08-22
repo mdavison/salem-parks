@@ -10,10 +10,23 @@ import Foundation
 import CoreData
 import CloudKit
 import MapKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class Park: NSManagedObject {
     
-    static let cloudKitDatabase = CKContainer.defaultContainer().publicCloudDatabase
+    static let cloudKitDatabase = CKContainer.default().publicCloudDatabase
     static let subscriptionID = "All park photos creations, deletions, and updates"
     static var fetchAllFromiCloudQuery: CKQuery {
         let predicate = NSPredicate(format: "TRUEPREDICATE")
@@ -23,10 +36,10 @@ class Park: NSManagedObject {
         return query
     }
     
-    static func getAll(coreDataStack: CoreDataStack) -> [Park]? {
-        let fetchRequest = NSFetchRequest(entityName: CoreDataStrings.Entity.park)
+    static func getAll(_ coreDataStack: CoreDataStack) -> [Park]? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: CoreDataStrings.Entity.park)
         do {
-            let results = try coreDataStack.managedObjectContext.executeFetchRequest(fetchRequest) as? [Park]
+            let results = try coreDataStack.managedObjectContext.fetch(fetchRequest) as? [Park]
             return results
         } catch let error as NSError {
             NSLog("Error fetching parks: \(error.localizedDescription)")
@@ -65,9 +78,9 @@ class Park: NSManagedObject {
 //        return fetchedResultsController
 //    }
 
-    static func getFetchedResultsController(searchText: String?, category: Int?, coreDataStack: CoreDataStack) -> NSFetchedResultsController {
-        let fetchRequest = NSFetchRequest()
-        let entity = NSEntityDescription.entityForName(CoreDataStrings.Entity.park, inManagedObjectContext: coreDataStack.managedObjectContext)
+    static func getFetchedResultsController(_ searchText: String?, category: Int?, coreDataStack: CoreDataStack) -> NSFetchedResultsController<NSFetchRequestResult> {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+        let entity = NSEntityDescription.entity(forEntityName: CoreDataStrings.Entity.park, in: coreDataStack.managedObjectContext)
         fetchRequest.entity = entity
         
         // Set the batch size to a suitable number.
@@ -86,7 +99,7 @@ class Park: NSManagedObject {
         }
         
         // Both search and category
-        if let searchText = searchText, categoryPredicateString = categoryPredicateString {
+        if let searchText = searchText, let categoryPredicateString = categoryPredicateString {
             fetchRequest.predicate = NSPredicate(format: "name contains[cd] %@ AND \(categoryPredicateString)", searchText)
         } else {
             // Only search
@@ -119,11 +132,11 @@ class Park: NSManagedObject {
     }
     
     static func getPark(forID id: Int, coreDataStack: CoreDataStack) -> Park? {
-        let fetchRequest = NSFetchRequest(entityName: CoreDataStrings.Entity.park)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: CoreDataStrings.Entity.park)
         fetchRequest.predicate = NSPredicate(format: "id == %i", id)
         
         do {
-            if let results = try coreDataStack.managedObjectContext.executeFetchRequest(fetchRequest) as? [Park] {
+            if let results = try coreDataStack.managedObjectContext.fetch(fetchRequest) as? [Park] {
                 return results.first
             }
             
@@ -151,7 +164,7 @@ class Park: NSManagedObject {
 //        }
 //    }
     
-    static func saveJSONDataToCoreData(coreDataStack: CoreDataStack) {
+    static func saveJSONDataToCoreData(_ coreDataStack: CoreDataStack) {
         let parkData = ParkData()
         
         if let jsonDataArray = parkData.jsonDataArray {
@@ -161,15 +174,15 @@ class Park: NSManagedObject {
                     if let parkJSON = feature["attributes"] {
                         
                         if let parkName = parkJSON["PARK_NAME"]?.string,
-                            parkAddress = parkJSON["ADDRESS"]?.string,
-                            objectID = parkJSON["OBJECTID"]?.integer {
+                            let parkAddress = parkJSON["ADDRESS"]?.string,
+                            let objectID = parkJSON["OBJECTID"]?.integer {
                             
-                            if let parkEntity = NSEntityDescription.entityForName(CoreDataStrings.Entity.park, inManagedObjectContext: coreDataStack.managedObjectContext) {
+                            if let parkEntity = NSEntityDescription.entity(forEntityName: CoreDataStrings.Entity.park, in: coreDataStack.managedObjectContext) {
                             
-                                let park = Park(entity: parkEntity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
+                                let park = Park(entity: parkEntity, insertInto: coreDataStack.managedObjectContext)
                                 park.name = parkName
                                 park.street = parkAddress
-                                park.id = objectID
+                                park.id = objectID as NSNumber
                                 
                                 if let status = parkJSON["STATUS"]?.string {
                                     park.status = status
@@ -326,13 +339,13 @@ class Park: NSManagedObject {
                                  NSSortDescriptor(key: "creationDate", ascending: true)]
         
         let queryOperation = CKQueryOperation(query: query)
-        queryOperation.qualityOfService = NSQualityOfService.UserInitiated
+        queryOperation.qualityOfService = QualityOfService.userInitiated
         queryOperation.desiredKeys = [CloudKitStrings.Attribute.thumbnail]
         
         var ckPhotos = [CKPhoto]()
         
         queryOperation.recordFetchedBlock = { record in
-            if let thumbnail = record.objectForKey(CloudKitStrings.Attribute.thumbnail) as? CKAsset {
+            if let thumbnail = record.object(forKey: CloudKitStrings.Attribute.thumbnail) as? CKAsset {
                 let ckPhoto = CKPhoto()
                 ckPhoto.thumbnail = thumbnail
                 ckPhotos.append(ckPhoto)
@@ -341,20 +354,20 @@ class Park: NSManagedObject {
         
         queryOperation.queryCompletionBlock = { (cursor, error) in
             if error !=  nil {
-                NSLog("Error fetching from iCloud: \(error?.localizedDescription)")
+                NSLog("Error fetching from iCloud: \(String(describing: error?.localizedDescription))")
                 
                 // Post notification that iCloud fetched but got error
-                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.fetchPhotosForParkFromiCloudFinishedNotification, object: error)
+                NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.fetchPhotosForParkFromiCloudFinishedNotification), object: error)
             } else {
                 // Post notification that Cloud fetch finished
-                NSNotificationCenter.defaultCenter().postNotificationName(
-                    Notifications.fetchPhotosForParkFromiCloudFinishedNotification,
+                NotificationCenter.default.post(
+                    name: Notification.Name(rawValue: Notifications.fetchPhotosForParkFromiCloudFinishedNotification),
                     object: self,
                     userInfo: ["Photos": ckPhotos])
             }
         }
         
-        cloudKitDatabase.addOperation(queryOperation)
+        cloudKitDatabase.add(queryOperation)
     }
     
     static func getCKPhotosFromiCloud(forParkID id: Int) {
@@ -365,14 +378,14 @@ class Park: NSManagedObject {
                                  NSSortDescriptor(key: "creationDate", ascending: true)]
         
         let queryOperation = CKQueryOperation(query: query)
-        queryOperation.qualityOfService = NSQualityOfService.UserInitiated
+        queryOperation.qualityOfService = QualityOfService.userInitiated
         queryOperation.desiredKeys = [CloudKitStrings.Attribute.thumbnail, CloudKitStrings.Attribute.image]
         
         var ckPhotos = [CKPhoto]()
         
         queryOperation.recordFetchedBlock = { record in
-            if let thumbnail = record.objectForKey(CloudKitStrings.Attribute.thumbnail) as? CKAsset,
-                image = record.objectForKey(CloudKitStrings.Attribute.image) as? CKAsset {
+            if let thumbnail = record.object(forKey: CloudKitStrings.Attribute.thumbnail) as? CKAsset,
+                let image = record.object(forKey: CloudKitStrings.Attribute.image) as? CKAsset {
                 
                 let ckPhoto = CKPhoto()
                 ckPhoto.thumbnail = thumbnail
@@ -383,20 +396,21 @@ class Park: NSManagedObject {
         
         queryOperation.queryCompletionBlock = { (cursor, error) in
             if error !=  nil {
-                NSLog("Error fetching from iCloud: \(error?.localizedDescription)")
+                NSLog("Error fetching from iCloud: \(String(describing: error?.localizedDescription))")
+                //NSLog("Error fetching from iCloud: \(error?.localizedDescription)")
                 
                 // Post notification that iCloud fetched but got error
-                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.fetchPhotosForParkFromiCloudFinishedNotification, object: error)
+                NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.fetchPhotosForParkFromiCloudFinishedNotification), object: error)
             } else {
                 // Post notification that Cloud fetch finished
-                NSNotificationCenter.defaultCenter().postNotificationName(
-                    Notifications.fetchPhotosForParkFromiCloudFinishedNotification,
+                NotificationCenter.default.post(
+                    name: Notification.Name(rawValue: Notifications.fetchPhotosForParkFromiCloudFinishedNotification),
                     object: self,
                     userInfo: ["Photos": ckPhotos])
             }
         }
         
-        cloudKitDatabase.addOperation(queryOperation)
+        cloudKitDatabase.add(queryOperation)
     }
     
     static func getRegions(forAnnotations annotations: [ParkAnnotation], currentLocation: CLLocation) -> [CLCircularRegion] {
@@ -407,11 +421,11 @@ class Park: NSManagedObject {
         // Get all the distances in dictionary
         for annotation in annotations {
             let annotationLocation = CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
-            let distance = annotationLocation.distanceFromLocation(currentLocation)
+            let distance = annotationLocation.distance(from: currentLocation)
             annotationLocations[annotation] = distance
         }
         // Sort the dictionary and just take the first 20
-        let sortedKeys = Array(annotationLocations.keys).sort({annotationLocations[$0] < annotationLocations[$1]}).prefix(20)
+        let sortedKeys = Array(annotationLocations.keys).sorted(by: {annotationLocations[$0] < annotationLocations[$1]}).prefix(20)
         
         for annotation in sortedKeys {
             let coordinate = annotation.coordinate
@@ -477,14 +491,14 @@ class Park: NSManagedObject {
 //        coreDataStack.saveContext()
 //    }
     
-    static func deleteAll(coreDataStack: CoreDataStack) {
-        let fetchRequest = NSFetchRequest(entityName: CoreDataStrings.Entity.park)
+    static func deleteAll(_ coreDataStack: CoreDataStack) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: CoreDataStrings.Entity.park)
         
         do {
-            if let parks = try coreDataStack.managedObjectContext.executeFetchRequest(fetchRequest) as? [Park] {
+            if let parks = try coreDataStack.managedObjectContext.fetch(fetchRequest) as? [Park] {
                 for park in parks {
                     //print("Deleting object: \(park)")
-                    coreDataStack.managedObjectContext.deleteObject(park)
+                    coreDataStack.managedObjectContext.delete(park)
                 }
             }
         } catch let error as NSError {

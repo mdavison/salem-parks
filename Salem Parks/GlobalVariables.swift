@@ -58,10 +58,10 @@ func showAlert(withTitle title: String, message: String, viewController: UIViewC
     if viewController.presentedViewController == nil { // Prevent multiple alerts at the same time
         let localizedTitle = NSLocalizedString(title, comment: "")
         let localizedMessage = NSLocalizedString(message, comment: "")
-        let alert = UIAlertController(title: localizedTitle, message: localizedMessage, preferredStyle: .Alert)
-        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let alert = UIAlertController(title: localizedTitle, message: localizedMessage, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(action)
         
-        viewController.presentViewController(alert, animated: true, completion: nil)
+        viewController.present(alert, animated: true, completion: nil)
     }
 }

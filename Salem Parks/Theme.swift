@@ -21,6 +21,6 @@ struct Theme {
     static let isFavoriteIconColor = Theme.red
     static let ratingStarIconColor = Theme.yellow
     static let tabBarTint = Theme.blue
-    static let navigationTextColor = UIColor.whiteColor()
+    static let navigationTextColor = UIColor.white
     
 }
