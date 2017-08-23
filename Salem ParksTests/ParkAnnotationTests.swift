@@ -37,7 +37,7 @@ class ParkAnnotationTests: XCTestCase {
             coordinate: coordinate!,
             objectID: 32)
         XCTAssertTrue(parkAnnotation.title == "Ellen Lane Property")
-        XCTAssert(parkAnnotation.isKindOfClass(ParkAnnotation))
+        XCTAssert(parkAnnotation.isKind(of: ParkAnnotation.self))
     }
     
     func testMapItem() {
@@ -50,7 +50,7 @@ class ParkAnnotationTests: XCTestCase {
             objectID: 32)
         
         let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-        XCTAssertTrue(parkAnnotation.mapItem().openInMapsWithLaunchOptions(launchOptions))
+        XCTAssertTrue(parkAnnotation.mapItem().openInMaps(launchOptions: launchOptions))
     }
     
 
