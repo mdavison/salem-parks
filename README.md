@@ -1,0 +1,2 @@
+# Salem Parks
+This is an iOS app that I built to learn Core Location and the Yelp API. It lists all the city parks in Salem, Oregon. It parses a JSON file stored locally and sourced from the city of Salem GIS data and then uses Core Data to store user-favorited parks. It also pulls in photos from iCloud with Cloud Kit. For parks that have been rated on Yelp, it shows the average rating. All the parks are shown on a map view with links to driving directions and the user can enable location services to have the app send a notification whenever the user drives near a park.
